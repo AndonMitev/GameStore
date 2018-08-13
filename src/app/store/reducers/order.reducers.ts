@@ -3,7 +3,7 @@ import { OrderState } from '../state/order.state';
 
 const initialState: OrderState = {
   all: [],
-  orders: []
+  completedOrders: []
 };
 
 function getAllOrderedGames(state, games) {
@@ -31,14 +31,15 @@ function deleteOrderedGame(state, index) {
 function completeOrder(state, order) {
   return {
     ...state,
-    orders: [...state.orders, order]
+    completedOrders: [...state.completedOrders, order]
   };
 }
 
-function getCompletedOrder(state, id) {
+function getCompletedOrder(state, orders) {
+  console.log(orders.map(x => x.order));
   return {
     ...state,
-    orders: id
+    completedOrders: orders
   };
 }
 

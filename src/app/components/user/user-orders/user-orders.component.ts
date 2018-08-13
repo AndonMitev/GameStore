@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { GetProfileService } from '../../../core/services/profile-services/get-profile.service';
 import { Store, select } from '@ngrx/store';
 import { AppState } from '../../../store/app.state';
+import { GetCompletedOrdersService } from '../../../core/services/order.services/get-user-orders.service';
 
 @Component({
   selector: 'user-orders',
@@ -9,7 +9,19 @@ import { AppState } from '../../../store/app.state';
   styleUrls: ['./user-orders.component.css']
 })
 export class UserOrdersComponent implements OnInit {
-  constructor(private store: Store<AppState>) {}
+  private orders$;
 
-  ngOnInit() {}
+  constructor(
+    private store: Store<AppState>,
+    private orderService: GetCompletedOrdersService
+  ) {}
+
+  ngOnInit() {
+    const userId = localStorage.getItem('userId');
+    this.orderService.getCompletedOrders(userId).subscribe(res => {
+      this.orders$ = this.store.pipe(
+        select(state => state.orders.completedOrders)
+      );
+    });
+  }
 }

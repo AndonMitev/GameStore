@@ -18,7 +18,7 @@ export class ProfileComponent implements OnInit {
     private profileService: GetProfileService,
     private store: Store<AppState>
   ) {
-    this.showOrders = false;
+    this.showOrders = true;
     this.showSubscriptions = false;
     this.showComments = false;
   }

@@ -15,19 +15,20 @@
         <h2>City: {{profile.countryData.city}}</h2>
         <h2>State: {{profile.countryData.state}}</h2>
         <h2>ZipCode: {{profile.countryData.zipcode}}</h2>
-        <h2>State: {{profile.countryData.state}}</h2>
+
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <ul class="justify-content-between">
+          <li class="btn btn-link text-info" (click)="showComponent('orders')"><strong>Orders</strong></li>
+          <li class="btn btn-link offset-4 text-info" (click)="showComponent('subscriptions')"><strong>Subscriptions</strong></li>
+          <li class="btn btn-link  offset-4 text-info" (click)="showComponent('comments')"><strong>Comments</strong></li>
+        </ul>
       </div>
     </div>
   </div>
-  <div class="row">
-    <div class="col-md-12">
-      <ul class="justify-content-between">
-        <li class="btn btn-link" (click)="showComponent('orders')">Orders</li>
-        <li class="btn btn-link offset-4" (click)="showComponent('subscriptions')">Subscriptions</li>
-        <li class="btn btn-link  offset-4" (click)="showComponent('comments')">Comments</li>
-      </ul>
-    </div>
-  </div>
+
   <div class="row">
     <div class="col-md-12">
       <div *ngIf="this.showOrders">
