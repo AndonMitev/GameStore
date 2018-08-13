@@ -1,0 +1,12 @@
+<div *ngIf="allComments$">
+  <div>
+    <div *ngFor="let comment of allComments$ | async" class="list-group-item list-group-item-action">
+      <p class="text-justify col-md-12">{{comment.description}}</p>
+      <span class="text-justify ">
+        <small> Posted by:
+          <em>{{comment.creator}}</em> at: {{comment._kmd.ect | date}}</small>
+        <delete-comment [commentId]="comment._id"></delete-comment>
+      </span>
+    </div>
+  </div>
+</div>

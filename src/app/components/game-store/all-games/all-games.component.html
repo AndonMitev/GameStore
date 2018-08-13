@@ -1,0 +1,39 @@
+<div *ngIf="allGames$">
+  <div class="container border rounded shadow-lg mt-3 bg-white">
+    <h1 class="display-3 text-center">Game Store</h1>
+    <hr>
+    <div class="row">
+      <div class="col-md-3">
+        <categories></categories>
+      </div>
+      <div class="col-md-9">
+        <h3 class="text-center">Games</h3>
+        <div class="row">
+          <div *ngFor="let game of allGames$ | async ; let i = index" class="col-lg-4 align-items-stretch mt-3">
+            <div class="card shadow-lg">
+              <a routerLink="/game/details/{{game._id}}">
+                <img class="card-img-top fix-img-size" [src]=game.image [alt]=game.title />
+              </a>
+              <div class="card-body bg-secondary text-center h-25 edit-color">
+                <h5 class="card-title">{{game.title}}</h5>
+              </div>
+              <div class="card-footer bg-dark">
+                <p class="card-text mt-2">
+                  <add-to-cart [game]=game></add-to-cart>
+                  <span class="mt-5 text-white">
+                    <strong>{{game.price | currency}}</strong>
+                  </span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--
+             
+-->

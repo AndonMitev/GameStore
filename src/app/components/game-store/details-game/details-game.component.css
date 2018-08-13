@@ -1,0 +1,8 @@
+.img-fluid {
+  width: 550px;
+  height: 460px;
+}
+
+.break-text p {
+  word-wrap: break-word;
+}

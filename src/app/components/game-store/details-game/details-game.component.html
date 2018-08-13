@@ -1,0 +1,77 @@
+<div *ngIf="detailsGame$ | async as detailsGame">
+  <div class="container border rounded shadow-lg mt-3 bg-white">
+    <div class="row mb-2">
+      <div class="col-md-3">
+        <img class="img-fluid rounded mt-5" [src]=detailsGame.image [alt]=detailsGame.title />
+        <h4 class="text-center">Price {{detailsGame.price | currency}}</h4>
+        <add-to-cart class="btn-primary" [game]=detailsGame></add-to-cart>
+        <button class="float-left btn btn-success">Subscribe</button>
+      </div>
+      <div class="col-md-4">
+        <h2 class="text-center">Game details</h2>
+        <div class="row">
+          <ul class="list-group ml-4 fix-height">
+            <li class="list-group-item">
+              <h4>{{detailsGame.title}}</h4>
+            </li>
+            <li class="list-group-item mt-1">
+              <h4>Platform: {{detailsGame.selectedPlatform | uppercase}}</h4>
+            </li>
+            <li class="list-group-item mt-1">
+              <h4>Publisher: {{detailsGame.publisher}}</h4>
+            </li>
+            <li class="list-group-item mt-1">
+              <h4>Developer: {{detailsGame.developer}}</h4>
+            </li>
+            <li class="list-group-item mt-1">
+              <h4>Series: {{detailsGame.series}}</h4>
+            </li>
+            <li class="list-group-item mt-1">
+              <h4>Release date: {{detailsGame.release | date}}</h4>
+            </li>
+            <li class="list-group-item mt-1">
+              <h4>Genre: {{detailsGame.genre}}</h4>
+            </li>
+            <li class="list-group-item mt-1">
+              <h4>Mode: {{detailsGame.mode}}</h4>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-md-5">
+        <h2 class="text-center">Comments</h2>
+        <div class="row">
+          <div class="col-md-12">
+            <all-comments-game></all-comments-game>
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        <div class="row mb-2">
+          <div class="col-md-6 mt-3 break-text">
+            <h2 class="offset-3">Description</h2>
+            <div class="row">
+              <div class="col-md-12">
+                <p class="text-justify">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
+                  standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it
+                  to make a type specimen book. It has survived not only five centuries, but also the leap into electronic
+                  typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset
+                  sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker
+                  including versions of Lorem Ipsum
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 mt-3">
+            <h2 class="offset-3">Write a comment</h2>
+            <div class="row">
+              <div class="col-md-12">
+                <create-comment-game></create-comment-game>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
