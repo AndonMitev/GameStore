@@ -1,0 +1,80 @@
+<div *ngIf="userData$ | async as profile">
+  <div class="container border rounded shadow-lg mt-3 bg-white">
+    <h1 class="display-3 text-center">Profile</h1>
+    <div class="row">
+      <div class="col-md-3 mb-3">
+        <img class="img-fluid rounded-circle" src="https://www.cryptocompare.com/media/19582/icon-user-default.png" alt="" />
+      </div>
+      <div class="col-md-4">
+        <h2>Username: {{profile.username}}</h2>
+        <h2>Age: {{profile.age}}</h2>
+        <h2>Email: {{profile.email}}</h2>
+      </div>
+      <div class="col-md-4">
+        <h2>Country: {{profile.countryData.country}}</h2>
+        <h2>City: {{profile.countryData.city}}</h2>
+        <h2>State: {{profile.countryData.state}}</h2>
+        <h2>ZipCode: {{profile.countryData.zipcode}}</h2>
+        <h2>State: {{profile.countryData.state}}</h2>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <ul class="justify-content-between">
+        <li class="btn btn-link" (click)="showComponent('orders')">Orders</li>
+        <li class="btn btn-link offset-4" (click)="showComponent('subscriptions')">Subscriptions</li>
+        <li class="btn btn-link  offset-4" (click)="showComponent('comments')">Comments</li>
+      </ul>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div *ngIf="this.showOrders">
+        <user-orders></user-orders>
+      </div>
+      <div *ngIf="this.showSubscriptions">
+        <user-subscriptions></user-subscriptions>
+      </div>
+      <div *ngIf="this.showComments">
+        <user-comments></user-comments>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--
+  <div class="container border rounded shadow-lg mt-3 bg-white">
+    <h1 class="display-3 text-center">Game Store</h1>
+    <hr>
+    <div class="row">
+      <div class="col-md-3">
+        <categories></categories>
+      </div>
+      <div class="col-md-9">
+        <h3 class="text-center">Games</h3>
+        <div class="row">
+          <div *ngFor="let game of allGames$ | async ; let i = index" class="col-lg-4 align-items-stretch mt-3">
+            <div class="card shadow-lg">
+              <a routerLink="/game/details/{{game._id}}">
+                <img class="card-img-top fix-img-size" [src]=game.image [alt]=game.title />
+              </a>
+              <div class="card-body bg-secondary text-center h-25 edit-color">
+                <h5 class="card-title">{{game.title}}</h5>
+              </div>
+              <div class="card-footer bg-dark">
+                <p class="card-text mt-2">
+                  <add-to-cart [game]=game></add-to-cart>
+                  <span class="mt-5 text-white">
+                    <strong>{{game.price | currency}}</strong>
+                  </span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+-->

@@ -1,0 +1,24 @@
+<h3 class="text-center">Categories</h3>
+<ul class="list-group flex-column rounded bg-dark mt-3">
+  <li class="nav-item">
+    <a [routerLink]="['/game/all']" [queryParams]="{ category: 'pc'}" class=" nav-link text-white">PC</a>
+  </li>
+  <li class="nav-item ">
+    <a [routerLink]="['/game/all']" [queryParams]="{ category: 'ps4'}" class="nav-link text-white ">PS4</a>
+  </li>
+  <li class="nav-item ">
+    <a [routerLink]="['/game/all']" [queryParams]="{ category: 'ps3'}" class="nav-link text-white ">PS3</a>
+  </li>
+  <li class="nav-item ">
+    <a [routerLink]="['/game/all']" [queryParams]="{ category: 'xbox360'}" class="nav-link text-white ">Xbox 360</a>
+  </li>
+  <li class="nav-item ">
+    <a [routerLink]="['/game/all']" [queryParams]="{ category: 'xboxOne'}" class="nav-link text-white ">Xbox One</a>
+  </li>
+  <li class="nav-item ">
+    <a [routerLink]="['/game/all']" [queryParams]="{ category: 'upcomming'}" class="nav-link text-white ">Comming soon</a>
+  </li>
+  <li class="nav-item ">
+    <a [routerLink]="['/game/all']" class="nav-link text-white ">All Games</a>
+  </li>
+</ul>

@@ -1,0 +1,34 @@
+<div>
+  <h1 class="display-3 text-center">Sign in</h1>
+  <hr>
+
+  <form class="form-group" [formGroup]="loginForm" (ngSubmit)="submitLoginForm()">
+
+    <div class="form-group">
+      <label>
+        <strong>Username</strong>
+      </label>
+      <input type="text" class="form-control" formControlName="username" />
+      <div class="alert alert-danger" *ngIf="username.invalid && (username.dirty || username.touched)">
+        Username is required.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>
+        <strong>Password</strong>
+      </label>
+      <input type="password" class="form-control" formControlName="password" />
+      <div class="alert alert-danger" *ngIf="password.invalid && (password.dirty || password.touched)">
+        Password is required.
+      </div>
+    </div>
+
+    <div>
+      <button type="submit" [disabled]="loginForm.invalid" class="btn btn-primary">Sign in</button>
+      <span class="float-right">You dont have account? Click
+        <a routerLink="/register">here</a> and you will be set up in a minute</span>
+    </div>
+
+  </form>
+</div>
