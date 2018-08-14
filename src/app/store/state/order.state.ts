@@ -3,4 +3,5 @@ import { CompleteOrderModel } from '../../core/models/view-models/complete-order
 export interface OrderState {
   all: CompleteOrderModel[];
   completedOrders: CompleteOrderModel[];
+  details: CompleteOrderModel
 }

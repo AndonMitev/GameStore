@@ -1,6 +1,7 @@
 <div *ngIf="userData$ | async as profile">
   <div class="container border rounded shadow-lg mt-3 bg-white">
     <h1 class="display-3 text-center">Profile</h1>
+    <hr>
     <div class="row">
       <div class="col-md-3 mb-3">
         <img class="img-fluid rounded-circle" src="https://www.cryptocompare.com/media/19582/icon-user-default.png" alt="" />
@@ -21,9 +22,15 @@
     <div class="row">
       <div class="col-md-12">
         <ul class="justify-content-between">
-          <li class="btn btn-link text-info" (click)="showComponent('orders')"><strong>Orders</strong></li>
-          <li class="btn btn-link offset-4 text-info" (click)="showComponent('subscriptions')"><strong>Subscriptions</strong></li>
-          <li class="btn btn-link  offset-4 text-info" (click)="showComponent('comments')"><strong>Comments</strong></li>
+          <li class="btn btn-link text-info" (click)="showComponent('orders')">
+            <strong>Orders</strong>
+          </li>
+          <li class="btn btn-link offset-4 text-info" (click)="showComponent('subscriptions')">
+            <strong>Subscriptions</strong>
+          </li>
+          <li class="btn btn-link  offset-4 text-info" (click)="showComponent('comments')">
+            <strong>Comments</strong>
+          </li>
         </ul>
       </div>
     </div>

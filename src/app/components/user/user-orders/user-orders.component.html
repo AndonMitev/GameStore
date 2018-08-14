@@ -1,19 +1,10 @@
-<div *ngIf="orders$">
+<div *ngIf="orders">
   <div class="col-md-12">
     <h2 class="text-center">Previous orders</h2>
-    <div *ngFor="let data of orders$ | async" class="list-group-item list-group-item-action">
-      <a href="">
+    <div *ngFor="let data of orders" class="list-group-item list-group-item-action">
+      <button (click)="dispatchFullOrder(data.order)" class="btn btn-link offset-2 clear">
         <p class="h4 text-center">Number: {{data._id}}, Ordered at: {{data._kmd.ect | date}}</p>
-      </a>
+      </button>
     </div>
   </div>
 </div>
-
-<!--<div *ngFor="let comment of allComments$ | async" class="list-group-item list-group-item-action">
-      <p class="text-justify">{{comment.description}}</p>
-      <span class="text-justify ">
-        <small> Posted by:
-          <em>{{comment.creator}}</em> at: {{comment._kmd.ect | date}}</small>
-        <delete-comment [commentId]="comment._id"></delete-comment>
-      </span>
-    </div>-->

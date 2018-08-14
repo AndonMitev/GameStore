@@ -7,6 +7,7 @@ export const ORDER_GAME = '[ORDER] Add';
 export const DELETE_GAME_FROM_ORDER_LIST = '[ORDER] Delete';
 export const COMPLETE_ORDER = '[ORDER] Complete';
 export const GET_ALL_COMPLETED_ORDERS = '[ORDER] AllCompleted';
+export const GET_COMPLETED_ORDER_DETAILS = '[ORDER] CompletedDetails';
 
 export class GetAllOrderedGames implements Action {
   readonly type: string = GET_ALL_ORDERED_GAMES;
@@ -28,9 +29,14 @@ export class CompleteOrder implements Action {
   constructor(public payload: CompleteOrderModel[]) {}
 }
 
-export class GetCompletedOrder implements Action {
+export class GetCompletedOrders implements Action {
   readonly type: string = GET_ALL_COMPLETED_ORDERS;
-  constructor(public payload: CompleteOrder[]) {}
+  constructor(public payload: CompleteOrderModel[]) {}
+}
+
+export class GetCompletedOrderDetails implements Action {
+  readonly type: string = GET_COMPLETED_ORDER_DETAILS;
+  constructor(public payload: CompleteOrderModel) {}
 }
 
 export type Types =
@@ -38,4 +44,5 @@ export type Types =
   | GetAllOrderedGames
   | DeleteGameFromOrderedList
   | CompleteOrder
-  | GetCompletedOrder;
+  | GetCompletedOrders
+  | GetCompletedOrderDetails;

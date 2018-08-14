@@ -3,28 +3,29 @@ import { OrderState } from '../state/order.state';
 
 const initialState: OrderState = {
   all: [],
-  completedOrders: []
+  completedOrders: [],
+  details: null
 };
 
-function getAllOrderedGames(state, games) {
-  return {
-    ...state,
-    all: games
-  };
-}
-
-function orderGame(state, game) {
+function addGameToOrder(state, game) {
   return {
     ...state,
     all: [...state.all, game]
   };
 }
 
-function deleteOrderedGame(state, index) {
+function deleteGameFromOrder(state, index) {
   const GAME_TO_REMOVE = state.all[index];
   return {
     ...state,
     all: [...state.all.filter(game => game !== GAME_TO_REMOVE)]
+  };
+}
+
+function viewAllAddedGamesToOrder(state, games) {
+  return {
+    ...state,
+    all: games
   };
 }
 
@@ -36,10 +37,16 @@ function completeOrder(state, order) {
 }
 
 function getCompletedOrder(state, orders) {
-  console.log(orders.map(x => x.order));
   return {
     ...state,
     completedOrders: orders
+  };
+}
+
+function getCompletedOrderDetails(state, order) {
+  return {
+    ...state,
+    details: JSON.parse(order)
   };
 }
 
@@ -49,15 +56,17 @@ export function orderReducer(
 ) {
   switch (action.type) {
     case OrderActions.ORDER_GAME:
-      return orderGame(state, action.payload);
+      return addGameToOrder(state, action.payload);
     case OrderActions.GET_ALL_ORDERED_GAMES:
-      return getAllOrderedGames(state, action.payload);
+      return viewAllAddedGamesToOrder(state, action.payload);
     case OrderActions.DELETE_GAME_FROM_ORDER_LIST:
-      return deleteOrderedGame(state, action.payload);
+      return deleteGameFromOrder(state, action.payload);
     case OrderActions.COMPLETE_ORDER:
       return completeOrder(state, action.payload);
     case OrderActions.GET_ALL_COMPLETED_ORDERS:
       return getCompletedOrder(state, action.payload);
+    case OrderActions.GET_COMPLETED_ORDER_DETAILS:
+      return getCompletedOrderDetails(state, action.payload);
     default:
       return state;
   }

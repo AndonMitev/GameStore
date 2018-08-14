@@ -11,6 +11,7 @@ import { CartComponent } from './components/game-store/cart/cart.component';
 //Modules
 import { GameStoreModule } from './components/game-store/game-store.module';
 import { ProfileComponent } from './components/user/profile/profile.component';
+import { UserFullOrderComponent } from './components/user/user-full-order/user-full-order.component';
 
 export const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -22,7 +23,8 @@ export const routes: Routes = [
     path: 'game',
     loadChildren: () => GameStoreModule
   },
-  { path: 'user/profile', component: ProfileComponent }
+  { path: 'user/profile', component: ProfileComponent },
+  { path: 'user/completed', component: UserFullOrderComponent }
 ];
 
 @NgModule({
