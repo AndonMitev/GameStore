@@ -5,7 +5,7 @@
         <img class="img-fluid rounded mt-5" [src]=detailsGame.image [alt]=detailsGame.title />
         <h4 class="text-center">Price {{detailsGame.price | currency}}</h4>
         <add-to-cart class="btn-primary" [game]=detailsGame></add-to-cart>
-        <button class="float-left btn btn-success">Subscribe</button>
+        <subscribe-button [detailsGame]=detailsGame></subscribe-button>
       </div>
       <div class="col-md-4">
         <h2 class="text-center">Game details</h2>

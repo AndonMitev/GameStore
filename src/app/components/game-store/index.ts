@@ -7,6 +7,7 @@ import { DeleteCommentComponent } from '../shared/delete-comment/delete-comment.
 import { AddToCartComponent } from '../shared/add-to-cart/add-to-cart.component';
 import { CategoriesComponent } from '../shared/categories/categories.component';
 import { CartComponent } from './cart/cart.component';
+import { SubscribeButtonComponent } from '../shared/subscribe-button/subscribe-button.component';
 
 export const gameStoreComponents = [
   CreateGameComponent,
@@ -17,5 +18,6 @@ export const gameStoreComponents = [
   DeleteCommentComponent,
   AddToCartComponent,
   CategoriesComponent,
-  CartComponent
+  CartComponent,
+  SubscribeButtonComponent
 ];

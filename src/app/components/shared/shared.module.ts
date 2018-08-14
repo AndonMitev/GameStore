@@ -10,7 +10,6 @@ import { AppRoutingModule } from '../../app.routing.module';
 //Directives
 import { CompareValidatorDirective } from './directives/compare-validator.directive';
 import { UniqueUsernameValidatorDirective } from './directives/username.directive';
-import { CategoriesComponent } from './categories/categories.component';
 
 @NgModule({
   imports: [CommonModule, AppRoutingModule],

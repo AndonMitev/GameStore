@@ -19,9 +19,3 @@ export class CompleteOrderService {
     return this.http.post(order, 'orders', 'appdata');
   }
 }
-
-/* .pipe(
-        map((res: CompleteOrderModel[]) => {
-          this.store.dispatch(new CompleteOrder(res))
-        })
-      )*/
