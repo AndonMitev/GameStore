@@ -1,3 +1,29 @@
 <div *ngIf="fullOrder$">
-  <div class="container shadow-lg"></div>
+  <div class="container border rounded shadow-lg mt-3 bg-white">
+    <h1 class="display-3 text-center">Completed Order View</h1>
+    <hr>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <div *ngFor="let game of fullOrder$ | async" class="col-lg-3 align-items-stretch mt-3">
+            <div class="card shadow-lg">
+              <a routerLink="/game/details/{{game._id}}">
+                <img class="card-img-top img-fluid  fix-img-size" [src]=game.image [alt]=game.title />
+              </a>
+              <div class="card-body bg-secondary text-center h-25 edit-color">
+                <h5 class="card-title">{{game.title}}</h5>
+              </div>
+              <div class="card-footer bg-dark">
+                <p class="card-text mt-2">
+                  <span class="mt-5 text-white">
+                    <strong>{{game.price | currency}}</strong>
+                  </span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

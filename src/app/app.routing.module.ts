@@ -24,7 +24,7 @@ export const routes: Routes = [
     loadChildren: () => GameStoreModule
   },
   { path: 'user/profile', component: ProfileComponent },
-  { path: 'user/completed', component: UserFullOrderComponent }
+  { path: 'user/completed/:id', component: UserFullOrderComponent }
 ];
 
 @NgModule({

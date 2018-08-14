@@ -2,7 +2,7 @@
   <div class="col-md-12">
     <h2 class="text-center">Previous orders</h2>
     <div *ngFor="let data of orders" class="list-group-item list-group-item-action">
-      <button (click)="dispatchFullOrder(data.order)" class="btn btn-link offset-2 clear">
+      <button (click)="getFullOrderView(data._id)" class="btn btn-link offset-2 clear">
         <p class="h4 text-center">Number: {{data._id}}, Ordered at: {{data._kmd.ect | date}}</p>
       </button>
     </div>

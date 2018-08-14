@@ -36,11 +36,10 @@ export class UserOrdersComponent implements OnInit {
     });
   }
 
-  dispatchFullOrder(orderId) {
-    if (this.subscription) {
+  getFullOrderView(orderId) {
+    if(this.subscription) {
       this.subscription.unsubscribe();
-      this.store.dispatch(new GetCompletedOrderDetails(orderId));
-      this.router.navigate(['/user/completed']);
+      this.router.navigate([`/user/completed/${orderId}`]);
     }
   }
 }

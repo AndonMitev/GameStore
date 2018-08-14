@@ -43,10 +43,10 @@ function getCompletedOrder(state, orders) {
   };
 }
 
-function getCompletedOrderDetails(state, order) {
+function getCompletedOrderDetails(state, orderData) {
   return {
     ...state,
-    details: JSON.parse(order)
+    details: JSON.parse(orderData.order)
   };
 }
 
