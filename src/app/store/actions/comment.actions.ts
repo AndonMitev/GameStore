@@ -6,6 +6,7 @@ import { AllCommentsGameModel } from '../../core/models/view-models/all-comments
 export const ADD_COMMENT = '[COMMENT] Add';
 export const GET_ALL_COMMENTS = '[COMMENTS] All';
 export const DELETE_COMMENT = '[COMMENT] Delete';
+export const GET_ALL_USER_COMMENTS = '[COMMENTS] User';
 
 export class GetAllComments implements Action {
   readonly type: string = GET_ALL_COMMENTS;
@@ -22,4 +23,9 @@ export class DeleteComment implements Action {
   constructor(public payload: string) {}
 }
 
-export type Types = AddComment | GetAllComments | DeleteComment;
+export class GetUserComments implements Action {
+  readonly type: string = GET_ALL_USER_COMMENTS;
+  constructor(public payload: AllCommentsGameModel[]) { }
+}
+
+export type Types = AddComment | GetAllComments | DeleteComment | GetUserComments;

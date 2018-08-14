@@ -6,18 +6,17 @@ const initialState: SubscriptionState = {
 };
 
 function getAllUserSubscriptions(state, userSubscriptions) {
+  console.log(userSubscriptions);
   return {
     ...state,
-    subscriptions: userSubscriptions
+    all: userSubscriptions
   };
 }
 
 function subscribeToGame(state, game) {
-  console.log(state);
-  console.log(game);
   return {
     ...state,
-    subscriptions: [...state.all, game]
+    all: [...state.all, game]
   };
 }
 

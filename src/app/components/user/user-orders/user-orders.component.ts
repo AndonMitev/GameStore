@@ -28,16 +28,13 @@ export class UserOrdersComponent implements OnInit {
     const userId = localStorage.getItem('userId');
     this.orderService.getCompletedOrders(userId).subscribe(res => {
       this.subscription = this.store
-        .pipe(
-          tap(state => console.log(state.orders.completedOrders)),
-          select(state => state.orders.completedOrders)
-        )
+        .pipe(select(state => state.orders.completedOrders))
         .subscribe(res => (this.orders = res));
     });
   }
 
   getFullOrderView(orderId) {
-    if(this.subscription) {
+    if (this.subscription) {
       this.subscription.unsubscribe();
       this.router.navigate([`/user/completed/${orderId}`]);
     }

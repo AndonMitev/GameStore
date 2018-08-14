@@ -9,6 +9,7 @@ import { GetDetailsGameService } from '../../../core/services/game-store-service
 import { DetailsGameModel } from '../../../core/models/view-models/details-game.model';
 //State
 import { AppState } from '../../../store/app.state';
+import { GetUserSubscriptionsService } from '../../../core/services/subscription.services.ts/get-user-subscribes.service';
 
 @Component({
   selector: 'details-game',
@@ -21,17 +22,23 @@ export class DetailsGameComponent implements OnInit {
   constructor(
     private gameService: GetDetailsGameService,
     private store: Store<AppState>,
-    private router: ActivatedRoute
+    private router: ActivatedRoute,
+    private subscribeService: GetUserSubscriptionsService
   ) {}
 
   ngOnInit(): void {
     this.router.paramMap.subscribe(res => {
-      const id: string = res['params']['id'];
-      this.gameService.getGameById(id).subscribe(() => {
-        this.detailsGame$ = this.store.pipe(
-          select(state => state.games.details)
-        );
+      const USER_ID = localStorage.getItem('userId');
+      this.subscribeService.getUserSubscriptions(USER_ID).subscribe(() => {
+        const id: string = res['params']['id'];
+        this.gameService.getGameById(id).subscribe(() => {
+          this.detailsGame$ = this.store.pipe(
+            select(state => state.games.details)
+          );
+        });
       });
     });
   }
+
+  showOrHideSubscribeButton() {}
 }

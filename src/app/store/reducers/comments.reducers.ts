@@ -26,6 +26,14 @@ function deleteComment(state, id) {
   };
 }
 
+function getUserComments(state, userComments) {
+  console.log(userComments);
+  return {
+    ...state,
+    all: userComments
+  };
+}
+
 export function commentsReducer(
   state: CommentsState = initialState,
   action: CommentsActions.Types
@@ -37,6 +45,8 @@ export function commentsReducer(
       return getAllComments(state, action.payload);
     case CommentsActions.DELETE_COMMENT:
       return deleteComment(state, action.payload);
+    case CommentsActions.GET_ALL_USER_COMMENTS:
+      return getUserComments(state, action.payload);
     default:
       return state;
   }
