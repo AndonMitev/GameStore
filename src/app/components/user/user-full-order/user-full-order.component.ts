@@ -24,7 +24,7 @@ export class UserFullOrderComponent implements OnInit {
     this.showSpinner = true;
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.router.paramMap.subscribe(res => {
       const ORDER_ID = res['params']['id'];
       this.orderService.getCompletedOrderDetails(ORDER_ID).subscribe(res => {
