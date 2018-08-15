@@ -12,7 +12,9 @@ import { Router } from '@angular/router';
 import { catchError } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class ErrorInterceptor implements HttpInterceptor {
   constructor(private router: Router, private toast: ToastrService) {}
 
@@ -25,13 +27,12 @@ export class ErrorInterceptor implements HttpInterceptor {
         console.log(err.error.error);
         switch (err.status) {
           case 400:
-            this.toast.error(err.error.error, 'Warning!');
+            this.toast.error(err.error.error);
             break;
           case 401:
-            this.toast.error(err.error.error, 'Warning!');
+            this.toast.error(err.error.error);
             break;
         }
-
         return throwError(err);
       })
     );

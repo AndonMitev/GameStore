@@ -27,7 +27,7 @@ export class AllGamesComponent implements OnInit {
     this.showSpinner = true;
   }
 
-  ngOnInit(): void { 
+  ngOnInit(): void {
     this.router.queryParamMap.subscribe(res => {
       const CATEGORY: string = res['params']['category'];
       this.gameService.getAllGames(CATEGORY).subscribe(() => {
