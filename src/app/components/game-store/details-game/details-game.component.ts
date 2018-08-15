@@ -17,14 +17,17 @@ import { GetUserSubscriptionsService } from '../../../core/services/subscription
   styleUrls: ['./details-game.component.css']
 })
 export class DetailsGameComponent implements OnInit {
-  private detailsGame$: Observable<DetailsGameModel>;
+  public detailsGame$: Observable<DetailsGameModel>;
+  public showSpinner: boolean;
 
   constructor(
     private gameService: GetDetailsGameService,
     private store: Store<AppState>,
     private router: ActivatedRoute,
     private subscribeService: GetUserSubscriptionsService
-  ) {}
+  ) {
+    this.showSpinner = true;
+  }
 
   ngOnInit(): void {
     this.router.paramMap.subscribe(res => {
@@ -35,6 +38,7 @@ export class DetailsGameComponent implements OnInit {
           this.detailsGame$ = this.store.pipe(
             select(state => state.games.details)
           );
+          this.showSpinner = false;
         });
       });
     });

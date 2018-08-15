@@ -1,3 +1,6 @@
+<div *ngIf="showSpinner">
+  <loading-spinner></loading-spinner>
+</div>
 <div *ngIf="detailsGame$ | async as detailsGame">
   <div class="container border rounded shadow-lg mt-3 bg-white">
     <div class="row mb-2">

@@ -15,9 +15,9 @@ import { CreateCommentGameService } from '../../../core/services/comment-service
   styleUrls: ['./create-comment-game.component.css']
 })
 export class CreateCommentGameComponent implements OnInit, OnDestroy {
-  commentForm: FormGroup;
-  commentModel: CommentGameInputModel;
-  subscription: Subscription;
+  public commentForm: FormGroup;
+  private commentModel: CommentGameInputModel;
+  private subscription: Subscription;
 
   constructor(
     private fb: FormBuilder,

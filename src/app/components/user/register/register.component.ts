@@ -26,14 +26,17 @@ import { UserRegisterService } from '../../../core/services/authentication/regis
 export class RegisterComponent implements OnInit, OnDestroy {
   private userModel: RegisterInputModel;
   private subscription: Subscription;
-  private registerForm: FormGroup;
+  public registerForm: FormGroup;
+  public showSpinner: boolean;
 
   constructor(
     private fb: FormBuilder,
     private registerService: UserRegisterService,
     private router: Router,
     private toast: ToastrService
-  ) {}
+  ) {
+    this.showSpinner = false;
+  }
 
   ngOnInit(): void {
     this.initializeRegisterForm();
@@ -83,6 +86,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   submitRegisterForm(): void {
+    this.showSpinner = true;
     const userData = this.registerForm.value;
     delete userData['confirmPassword'];
     delete userData['confirmEmail'];
@@ -101,6 +105,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
       .subscribe(data => {
         this.registerService.saveData(data);
         this.router.navigate(['/home']);
+        this.showSpinner = false;
         this.toast.success(`Hello for first time, ${userData['username']}!`);
       });
   }

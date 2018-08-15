@@ -6,6 +6,7 @@ import { UniqueUsernameValidatorDirective } from './directives/username.directiv
 import { FooterComponent } from './footer/footer.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { SubscribeButtonComponent } from './subscribe-button/subscribe-button.component';
+import { SpinnerComponent } from './loading-spinner/loading-spinner.component';
 
 export const sharedComponentsImp = [
   AddToCartComponent,
@@ -15,5 +16,6 @@ export const sharedComponentsImp = [
   UniqueUsernameValidatorDirective,
   FooterComponent,
   NavbarComponent,
-  SubscribeButtonComponent
+  SubscribeButtonComponent,
+  SpinnerComponent
 ];

@@ -9,10 +9,11 @@ import { AppState } from '../../../store/app.state';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-  private userData$;
-  private showOrders: boolean;
-  private showSubscriptions: boolean;
-  private showComments: boolean;
+  public userData$;
+  public showOrders: boolean;
+  public showSubscriptions: boolean;
+  public showComments: boolean;
+  public showSpinner: boolean;
 
   constructor(
     private profileService: GetProfileService,
@@ -21,12 +22,14 @@ export class ProfileComponent implements OnInit {
     this.showOrders = false;
     this.showSubscriptions = false;
     this.showComments = false;
+    this.showSpinner = true;
   }
 
   ngOnInit() {
     const USER_ID = localStorage.getItem('userId');
     this.profileService.getProfile(USER_ID).subscribe(res => {
       this.userData$ = this.store.pipe(select(state => state.users.user));
+      this.showSpinner = false;
     });
   }
 

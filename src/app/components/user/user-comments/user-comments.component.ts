@@ -13,17 +13,21 @@ import { AllCommentsGameModel } from '../../../core/models/view-models/all-comme
   styleUrls: ['./user-comments.component.css']
 })
 export class UserCommentsComponent implements OnInit {
-  userComments$: Observable<AllCommentsGameModel[]>;
+  public userComments$: Observable<AllCommentsGameModel[]>;
+  public showSpinner: boolean;
 
   constructor(
     private getUserComments: GetUserCommentsService,
     private store: Store<AppState>
-  ) {}
+  ) {
+    this.showSpinner = true;
+  }
 
   ngOnInit() {
     const USER_ID = localStorage.getItem('userId');
     this.getUserComments.getUserComments(USER_ID).subscribe(() => {
       this.userComments$ = this.store.pipe(select(state => state.comments.all));
+      this.showSpinner = false;
     });
   }
 }

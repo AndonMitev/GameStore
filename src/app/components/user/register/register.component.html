@@ -1,5 +1,8 @@
 <div>
   <h1 class="display-3 text-center">Sign up</h1>
+  <div *ngIf="showSpinner">
+    <loading-spinner></loading-spinner>
+  </div>
   <hr>
   <form class="form-group" [formGroup]=registerForm (ngSubmit)="submitRegisterForm()">
 

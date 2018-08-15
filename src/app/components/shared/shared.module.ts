@@ -1,9 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-//Components
 
-//Module
+//Components
 import { sharedComponentsImp } from './import-shared-components';
 import { sharedComponentsEx } from './export-shared-components';
 

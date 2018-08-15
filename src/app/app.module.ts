@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StoreModule } from '@ngrx/store';
@@ -16,12 +17,23 @@ import { TokenInterceptor } from './core/interceptors/token.interceptor';
 import { ErrorInterceptor } from './core/interceptors/error.interceptor';
 //Reducers
 import { appReducers } from './store/app.reducers';
+import { HomeComponent } from './components/home/home.component';
+import { RegisterComponent } from './components/user/register/register.component';
+import { LoginComponent } from './components/user/login/login.component';
+import { LogoutComponent } from './components/user/logout/logout.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    RegisterComponent,
+    LoginComponent,
+    LogoutComponent
+  ],
   imports: [
     BrowserModule,
     HttpClientModule,
+    ReactiveFormsModule,
     BrowserAnimationsModule,
     SharedModule,
     AppRoutingModule,

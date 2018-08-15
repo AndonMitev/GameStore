@@ -1,3 +1,6 @@
+<div *ngIf="showSpinner">
+  <loading-spinner></loading-spinner>
+</div>
 <div *ngIf="fullOrder$">
   <div class="container border rounded shadow-lg mt-3 bg-white">
     <h1 class="display-3 text-center">Completed Order View</h1>

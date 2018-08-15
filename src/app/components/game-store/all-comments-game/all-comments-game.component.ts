@@ -16,13 +16,16 @@ import { AppState } from '../../../store/app.state';
   styleUrls: ['./all-comments-game.component.css']
 })
 export class AllCommentsGameComponent implements OnInit {
-  private allComments$: Observable<AllCommentsGameModel[]>;
+  public allComments$: Observable<AllCommentsGameModel[]>;
+  public showSpinner: boolean;
 
   constructor(
     private router: ActivatedRoute,
     private store: Store<AppState>,
     private getCommentsService: GetAllCommentsService
-  ) {}
+  ) {
+    this.showSpinner = true;
+  }
 
   ngOnInit() {
     this.router.paramMap.subscribe(res => {
@@ -31,6 +34,7 @@ export class AllCommentsGameComponent implements OnInit {
         this.allComments$ = this.store.pipe(
           select(state => state.comments.all)
         );
+        this.showSpinner = false;
       });
     });
   }

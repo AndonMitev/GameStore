@@ -6,6 +6,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
 import { CompareValidatorDirective } from './directives/compare-validator.directive';
 import { UniqueUsernameValidatorDirective } from './directives/username.directive';
+import { SpinnerComponent } from './loading-spinner/loading-spinner.component';
 
 export const sharedComponentsEx = [
   DeleteCommentComponent,
@@ -15,5 +16,6 @@ export const sharedComponentsEx = [
   NavbarComponent,
   FooterComponent,
   CompareValidatorDirective,
-  UniqueUsernameValidatorDirective
+  UniqueUsernameValidatorDirective,
+  SpinnerComponent
 ];

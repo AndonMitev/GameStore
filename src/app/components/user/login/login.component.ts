@@ -20,16 +20,19 @@ import { UserLoginService } from '../../../core/services/authentication/login.se
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit, OnDestroy {
+  public loginForm: FormGroup;
+  public showSpinner: boolean;
   private userModel: LoginInputModel;
   private subscription$: Subscription;
-  private loginForm: FormGroup;
 
   constructor(
     private fb: FormBuilder,
     private loginService: UserLoginService,
     private router: Router,
     private toast: ToastrService
-  ) {}
+  ) {
+    this.showSpinner = false;
+  }
 
   ngOnInit(): void {
     this.initializeLoginForm();
@@ -54,12 +57,13 @@ export class LoginComponent implements OnInit, OnDestroy {
       userData['username'],
       userData['password']
     );
-
+    this.showSpinner = true;
     this.subscription$ = this.loginService
       .loginUser(this.userModel)
       .subscribe(res => {
         this.loginService.saveData(res);
         this.router.navigate(['/home']);
+        this.showSpinner = false;
         this.toast.success(`Welcome again, ${userData['username']}!`);
       });
   }

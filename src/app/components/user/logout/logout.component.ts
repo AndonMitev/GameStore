@@ -22,7 +22,7 @@ export class LogoutComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscription$ = this.user.logoutUser().subscribe(() => {
       localStorage.clear();
-      this.router.navigate(['/user/login']);
+      this.router.navigate(['/login']);
       this.toast.success('You have been successfully logged out!');
     });
   }

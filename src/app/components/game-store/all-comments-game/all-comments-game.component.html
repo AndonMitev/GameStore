@@ -1,3 +1,6 @@
+<div *ngIf="showSpinner">
+  <loading-spinner></loading-spinner>
+</div>
 <div *ngIf="allComments$">
   <div>
     <div *ngFor="let comment of allComments$ | async" class="list-group-item list-group-item-action">

@@ -1,3 +1,6 @@
+<div *ngIf="showSpinner">
+  <loading-spinner></loading-spinner>
+</div>
 <div *ngIf="userComments$">
   <div *ngFor="let comment of userComments$ | async" class="list-group-item list-group-item-action">
     <p class="text-justify">{{comment.description}}</p>
