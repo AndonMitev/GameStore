@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpServices } from '../http.services';
 import { SubscribeToGameModel } from '../../models/view-models/subscribe-to-game.model';
-import { Store } from '../../../../../node_modules/@ngrx/store';
+import { Store } from '@ngrx/store';
 import { AppState } from '../../../store/app.state';
 import { GetAllUserSubscriptions } from '../../../store/actions/subscription.actions';
 import { map } from 'rxjs/operators';

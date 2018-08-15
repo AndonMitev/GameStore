@@ -5,6 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { CreateGameComponent } from './create-game/create-game.component';
 import { AllGamesComponent } from './all-games/all-games.component';
 import { DetailsGameComponent } from './details-game/details-game.component';
+import { CartComponent } from './cart/cart.component';
 
 //Guards
 import { AdminGuard } from '../../core/guards/admin.guard';
@@ -25,7 +26,12 @@ const routes: Routes = [
     path: 'details/:id',
     canActivate: [AuthGuard],
     component: DetailsGameComponent
-  }
+  },
+  {
+    path: 'cart',
+    canActivate: [AuthGuard],
+    component: CartComponent
+  } 
 ];
 
 @NgModule({

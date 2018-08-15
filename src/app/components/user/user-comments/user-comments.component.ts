@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { Store, select } from '@ngrx/store';
+import { Observable } from 'rxjs';
+
 import { GetUserCommentsService } from '../../../core/services/comment-services/get-user-comments.service';
-import { Store, select } from '../../../../../node_modules/@ngrx/store';
 import { AppState } from '../../../store/app.state';
-import { Observable } from '../../../../../node_modules/rxjs';
+
 import { AllCommentsGameModel } from '../../../core/models/view-models/all-comments-game.model';
 
 @Component({
@@ -20,13 +22,8 @@ export class UserCommentsComponent implements OnInit {
 
   ngOnInit() {
     const USER_ID = localStorage.getItem('userId');
-    this.getUserComments
-      .getUserComments(USER_ID)
-      .subscribe(
-        () =>
-          (this.userComments$ = this.store.pipe(
-            select(state => state.comments.all)
-          ))
-      );
+    this.getUserComments.getUserComments(USER_ID).subscribe(() => {
+      this.userComments$ = this.store.pipe(select(state => state.comments.all));
+    });
   }
 }

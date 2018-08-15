@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 
 //Components
@@ -7,28 +6,25 @@ import { HomeComponent } from './components/home/home.component';
 import { RegisterComponent } from './components/user/register/register.component';
 import { LoginComponent } from './components/user/login/login.component';
 import { LogoutComponent } from './components/user/logout/logout.component';
-import { CartComponent } from './components/game-store/cart/cart.component';
-//Modules
-import { GameStoreModule } from './components/game-store/game-store.module';
 import { ProfileComponent } from './components/user/profile/profile.component';
 import { UserFullOrderComponent } from './components/user/user-full-order/user-full-order.component';
+//Modules
+import { GameStoreModule } from './components/game-store/game-store.module';
 
 export const routes: Routes = [
   { path: 'home', component: HomeComponent },
-  { path: 'register', component: RegisterComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'logout', component: LogoutComponent },
-  { path: 'user/cart', component: CartComponent },
+  {
+    path: 'user',
+    loadChildren: './components/user/user.module#UserModule'
+  },
   {
     path: 'game',
-    loadChildren: () => GameStoreModule
+    loadChildren: './components/game-store/game-store.module#GameStoreModule'
   },
-  { path: 'user/profile', component: ProfileComponent },
-  { path: 'user/completed/:id', component: UserFullOrderComponent }
 ];
 
 @NgModule({
-  imports: [CommonModule, RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes)],
   declarations: [HomeComponent],
   exports: [RouterModule]
 })

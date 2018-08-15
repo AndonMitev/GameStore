@@ -4,10 +4,10 @@
       <a class="nav-link" routerLink="/home">Home</a>
     </li>
     <li class="nav-item mr-3" *ngIf="!userVerification.hasUser()">
-      <a class="nav-link" routerLink="/register">Register</a>
+      <a class="nav-link" routerLink="/user/register">Register</a>
     </li>
     <li class="nav-item mr-3" *ngIf="!userVerification.hasUser()">
-      <a class="nav-link" routerLink="/login" class="nav-link">Login</a>
+      <a class="nav-link" routerLink="/user/login" class="nav-link">Login</a>
     </li>
     <li class="nav-item mr-3" *ngIf="userVerification.isAdmin()">
       <a class="nav-link" routerLink="/game/create">Create game</a>
@@ -16,11 +16,11 @@
       <a class="nav-link" routerLink="/game/all">All games</a>
     </li>
     <li class="nav-item mr-3" *ngIf="userVerification.hasUser()">
-      <a class="nav-link" routerLink="/logout">Logout</a>
+      <a class="nav-link" routerLink="/user/logout">Logout</a>
     </li>
     <div class="ml-auto row">
       <li class="nav-item mr-3" *ngIf="userVerification.hasUser()">
-        <a class="nav-link" routerLink="/user/cart">My Cart</a>
+        <a class="nav-link" routerLink="/game/cart">My Cart</a>
       </li>
       <li class="nav-item mr-3" *ngIf="userVerification.hasUser()">
         <a class="nav-link" routerLink="/user/profile">Profile</a>

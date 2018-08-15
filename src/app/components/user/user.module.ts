@@ -4,17 +4,22 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 //Custom Modules
-import { AppRoutingModule } from '../../app.routing.module';
+import { SharedModule } from '../shared/shared.module';
+import { UserRouterModule } from './user-routing.module';
 //Components
-import { userComponents } from '.';
+
+import { userComponentsImp } from './import-user-components';
+import { userComponentsEx } from './export-user-components';
 
 @NgModule({
   imports: [
     CommonModule,
+    UserRouterModule,
     ReactiveFormsModule,
     HttpClientModule,
-    AppRoutingModule
+    SharedModule
   ],
-  declarations: [...userComponents]
+  declarations: [...userComponentsImp],
+  exports: [...userComponentsEx]
 })
 export class UserModule {}

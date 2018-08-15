@@ -3,7 +3,7 @@ import { HttpServices } from '../http.services';
 
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../store/app.state';
-import { map } from '../../../../../node_modules/rxjs/operators';
+import { map } from 'rxjs/operators';
 import { CompleteOrderModel } from '../../models/view-models/complete-order.model';
 import { GetCompletedOrderDetails } from '../../../store/actions/order.actions';
 

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpServices } from '../http.services';
-import { Store } from '../../../../../node_modules/@ngrx/store';
+import { Store } from '@ngrx/store';
 import { AppState } from '../../../store/app.state';
 import { SubscribeToGameModel } from '../../models/view-models/subscribe-to-game.model';
 import { SubscribeToGame } from '../../../store/actions/subscription.actions';

@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { SubscribeToGameService } from '../../../core/services/subscription.services.ts/subscribe-to-game.service';
-import { ToastrService } from '../../../../../node_modules/ngx-toastr';
+import { ToastrService } from 'ngx-toastr';
 import { SubscribeToGameModel } from '../../../core/models/view-models/subscribe-to-game.model';
 
 @Component({

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpServices } from '../http.services';
-import { map } from '../../../../../node_modules/rxjs/operators';
-import { Store } from '../../../../../node_modules/@ngrx/store';
+import { map } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
 import { AppState } from '../../../store/app.state';
 import { AllCommentsGameModel } from '../../models/view-models/all-comments-game.model';
 import { GetUserComments } from '../../../store/actions/comment.actions';

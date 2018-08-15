@@ -3,10 +3,10 @@ import { Router } from '@angular/router';
 import { Store, select } from '@ngrx/store';
 import { AppState } from '../../../store/app.state';
 import { GetCompletedOrdersService } from '../../../core/services/order.services/get-user-orders.service';
-import { tap } from '../../../../../node_modules/rxjs/operators';
+import { tap } from 'rxjs/operators';
 import { GetCompletedOrderDetailsService } from '../../../core/services/order.services/get-complete-order-details.service';
 import { GetCompletedOrderDetails } from '../../../store/actions/order.actions';
-import { Subscription } from '../../../../../node_modules/rxjs';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'user-orders',

@@ -7,7 +7,7 @@ import { UserSubscriptionsComponent } from './user-subscriptions/user-subscripti
 import { UserCommentsComponent } from './user-comments/user-comments.component';
 import { UserFullOrderComponent } from './user-full-order/user-full-order.component';
 
-export const userComponents = [
+export const userComponentsImp = [
   RegisterComponent,
   LoginComponent,
   LogoutComponent,

@@ -1,13 +1,26 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from '../../core/guards/auth.guard';
-import { UserOrdersComponent } from './user-orders/user-orders.component';
 
- /*const routes: Routes = [
+import { RegisterComponent } from './register/register.component';
+import { LoginComponent } from './login/login.component';
+import { LogoutComponent } from './logout/logout.component';
+import { ProfileComponent } from './profile/profile.component';
+import { UserFullOrderComponent } from './user-full-order/user-full-order.component';
+
+const routes: Routes = [
+  { path: 'register', component: RegisterComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'logout', component: LogoutComponent },
   {
-    path: 'user/orders',
+    path: 'profile',
     canActivate: [AuthGuard],
-    component: UserOrdersComponent
+    component: ProfileComponent
+  },
+  {
+    path: 'completed/:id',
+    canActivate: [AuthGuard],
+    component: UserFullOrderComponent
   }
 ];
 
@@ -15,4 +28,4 @@ import { UserOrdersComponent } from './user-orders/user-orders.component';
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class UserRouterModule {} */
+export class UserRouterModule {}

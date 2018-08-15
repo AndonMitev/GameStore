@@ -1,24 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { RouterModule, Routes } from '@angular/router';
 //Components
-import { NavbarComponent } from './navbar/navbar.component';
-import { FooterComponent } from './footer/footer.component';
-//Module
-import { AppRoutingModule } from '../../app.routing.module';
 
-//Directives
-import { CompareValidatorDirective } from './directives/compare-validator.directive';
-import { UniqueUsernameValidatorDirective } from './directives/username.directive';
+//Module
+import { sharedComponentsImp } from './import-shared-components';
+import { sharedComponentsEx } from './export-shared-components';
 
 @NgModule({
-  imports: [CommonModule, AppRoutingModule],
-  declarations: [
-    NavbarComponent,
-    FooterComponent,
-    CompareValidatorDirective,
-    UniqueUsernameValidatorDirective
-  ],
-  exports: [NavbarComponent, FooterComponent]
+  imports: [CommonModule, RouterModule],
+  declarations: [...sharedComponentsImp],
+  exports: [...sharedComponentsEx]
 })
 export class SharedModule {}
