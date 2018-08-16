@@ -21,7 +21,7 @@ export class OrderGame implements Action {
 
 export class DeleteGameFromOrderedList implements Action {
   readonly type: string = DELETE_GAME_FROM_ORDER_LIST;
-  constructor(public payload: number) {}
+  constructor(public payload: string) {}
 }
 
 export class CompleteOrder implements Action {

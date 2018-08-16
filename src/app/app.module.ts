@@ -15,6 +15,7 @@ import { AppComponent } from './app.component';
 //Interceptors
 import { TokenInterceptor } from './core/interceptors/token.interceptor';
 import { ErrorInterceptor } from './core/interceptors/error.interceptor';
+import { CachingInterceptor } from './core/interceptors/caching.interceptor';
 //Reducers
 import { appReducers } from './store/app.reducers';
 import { HomeComponent } from './components/home/home.component';
@@ -53,7 +54,8 @@ import { LogoutComponent } from './components/user/logout/logout.component';
       provide: HTTP_INTERCEPTORS,
       useClass: ErrorInterceptor,
       multi: true
-    }
+    },
+    { provide: HTTP_INTERCEPTORS, useClass: CachingInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })

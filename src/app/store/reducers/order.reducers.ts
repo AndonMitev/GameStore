@@ -1,7 +1,7 @@
 import * as OrderActions from '../actions/order.actions';
 import { OrderState } from '../state/order.state';
 
-const initialState: OrderState = {
+const INITIAL_STATE: OrderState = {
   all: [],
   completedOrders: [],
   details: null
@@ -15,10 +15,9 @@ function addGameToOrder(state, game) {
 }
 
 function deleteGameFromOrder(state, index) {
-  const GAME_TO_REMOVE = state.all[index];
   return {
     ...state,
-    all: [...state.all.filter(game => game !== GAME_TO_REMOVE)]
+    all: [...state.all.filter((game, idx) => idx !== index)]
   };
 }
 
@@ -51,7 +50,7 @@ function getCompletedOrderDetails(state, orderData) {
 }
 
 export function orderReducer(
-  state: OrderState = initialState,
+  state: OrderState = INITIAL_STATE,
   action: OrderActions.Types
 ) {
   switch (action.type) {

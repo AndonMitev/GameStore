@@ -1,6 +1,8 @@
 export class CompleteOrderModel {
   constructor(
-    public userId: string,
-    public order: string,
+    public gameId: string,
+    public title: string,
+    public price: number,
+    public image: string
   ) {}
 }

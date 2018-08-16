@@ -19,6 +19,7 @@ import { CompleteOrderModel } from '../../models/view-models/complete-order.mode
 })
 export class OrderGameService {
   private games: CompleteOrderModel[];
+  private game: CompleteOrderModel;
 
   constructor(
     private localStorage: LocalStorage,
@@ -27,28 +28,32 @@ export class OrderGameService {
     this.games = [];
   }
 
-  orderGame(game: CompleteOrderModel): Observable<void> {
-    this.games.push(game);
-    return this.localStorage.setItem('order', this.games).pipe(
-      map(() => {
-        this.store.dispatch(new OrderGame(game));
-      })
-    );
+  orderGame(index, gameId, title, price, image) {
+    this.game = new CompleteOrderModel(gameId, title, price, image);
+    index = index.toString() + 'custKey';
+    sessionStorage.setItem(index, JSON.stringify(this.game));
+    this.store.dispatch(new OrderGame(this.game));
   }
 
-  viewOrder(): Observable<void> {
-    return this.localStorage.getItem('order').pipe(
-      map((res: CompleteOrderModel[]) => {
-        this.store.dispatch(new GetAllOrderedGames(res));
-      })
-    );
+  viewOrder() {
+    const ALL_GAMES = [];
+    for (let k in sessionStorage) {
+      if (k.endsWith('custKey')) {
+        ALL_GAMES.push(JSON.parse(sessionStorage[k]));
+      }
+    }
+
+    /* for (let i = 0; i < sessionStorage.length; i++) {
+      console.log(sessionStorage.getItem(localStorage.key(i)));
+      ALL_GAMES.push(sessionStorage[i]);
+    } */
+    console.log(ALL_GAMES);
+    this.store.dispatch(new GetAllOrderedGames(ALL_GAMES));
   }
 
-  deleteGame(index) {
-    return this.localStorage.getItem('order').pipe(
-      map(() => {
-        this.store.dispatch(new DeleteGameFromOrderedList(index));
-      })
-    );
+  deleteGame(id) {
+    console.log(id + 'custKey');
+    sessionStorage.removeItem(id + 'custKey');
+    this.store.dispatch(new DeleteGameFromOrderedList(id));
   }
 }

@@ -1,20 +1,19 @@
-import { Component, Input, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
-
-//Services
+import { Component, Input } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { OrderGameService } from '../../../core/services/order.services/order-game.service';
+//Services
 
+import { OrderGameService } from '../../../core/services/order.services/order-game.service';
 
 @Component({
   selector: 'add-to-cart',
   templateUrl: './add-to-cart.component.html',
   styleUrls: ['./add-to-cart.component.css']
 })
-export class AddToCartComponent implements OnDestroy {
+export class AddToCartComponent {
   @Input('game')
   game;
-  private subscription: Subscription
+  @Input('index')
+  index;
 
   constructor(
     private orderService: OrderGameService,
@@ -22,16 +21,16 @@ export class AddToCartComponent implements OnDestroy {
   ) {}
 
   orderSelectedGame() {
-    this.subscription = this.orderService
-      .orderGame(this.game)
-      .subscribe(() =>
-        this.toast.success(`${this.game.title} successful added!`)
-      );
-  }
+    this.orderService.orderGame(
+      this.index,
+      this.game._id,
+      this.game.title,
+      this.game.price,
+      this.game.image
+    );
 
-  ngOnDestroy() {
-    if(this.subscription){
-      this.subscription.unsubscribe();
-    }
+    this.toast.success(
+      `${this.game.title} was successfully added to your cart`
+    );
   }
 }
