@@ -8,7 +8,7 @@ import { Store } from '@ngrx/store';
 import { UserLogoutService } from '../../../core/services/authentication/logout.service';
 
 import { AppState } from '../../../store/app.state';
-import { GetAllOrderedGames } from '../../../store/actions/order.actions';
+
 
 @Component({
   selector: 'logout',
@@ -31,8 +31,8 @@ export class LogoutComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscription$ = this.user.logoutUser().subscribe(() => {
       localStorage.clear();
+      sessionStorage.clear();
       this.router.navigate(['/login']);
-      this.store.dispatch(new GetAllOrderedGames([]));
       this.showSpinner = false;
       this.toast.success('You have been successfully logged out!');
     });

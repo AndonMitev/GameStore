@@ -1,9 +1,5 @@
 import { Injectable } from '@angular/core';
-import { LocalStorage } from '@ngx-pwa/local-storage';
-import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { map, tap, filter } from 'rxjs/operators';
-//model
 
 import { AppState } from '../../../store/app.state';
 
@@ -18,42 +14,35 @@ import { CompleteOrderModel } from '../../models/view-models/complete-order.mode
   providedIn: 'root'
 })
 export class OrderGameService {
-  private games: CompleteOrderModel[];
   private game: CompleteOrderModel;
 
-  constructor(
-    private localStorage: LocalStorage,
-    private store: Store<AppState>
-  ) {
-    this.games = [];
-  }
+  constructor(private store: Store<AppState>) {}
 
-  orderGame(index, gameId, title, price, image) {
+  orderGame(
+    index,
+    gameId: string,
+    title: string,
+    price: number,
+    image: string
+  ): void {
     this.game = new CompleteOrderModel(gameId, title, price, image);
-    index = index.toString() + 'custKey';
-    sessionStorage.setItem(index, JSON.stringify(this.game));
+    gameId = gameId + 'custKey';
+    sessionStorage.setItem(gameId, JSON.stringify(this.game));
     this.store.dispatch(new OrderGame(this.game));
   }
 
-  viewOrder() {
+  viewOrder(): void {
     const ALL_GAMES = [];
     for (let k in sessionStorage) {
       if (k.endsWith('custKey')) {
         ALL_GAMES.push(JSON.parse(sessionStorage[k]));
       }
     }
-
-    /* for (let i = 0; i < sessionStorage.length; i++) {
-      console.log(sessionStorage.getItem(localStorage.key(i)));
-      ALL_GAMES.push(sessionStorage[i]);
-    } */
-    console.log(ALL_GAMES);
     this.store.dispatch(new GetAllOrderedGames(ALL_GAMES));
   }
 
-  deleteGame(id) {
-    console.log(id + 'custKey');
-    sessionStorage.removeItem(id + 'custKey');
-    this.store.dispatch(new DeleteGameFromOrderedList(id));
+  deleteGame(gameId: string): void {
+    sessionStorage.removeItem(gameId + 'custKey');
+    this.store.dispatch(new DeleteGameFromOrderedList(gameId));
   }
 }

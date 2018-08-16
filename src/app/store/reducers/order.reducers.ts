@@ -8,16 +8,17 @@ const INITIAL_STATE: OrderState = {
 };
 
 function addGameToOrder(state, game) {
+  console.log(game);
   return {
     ...state,
     all: [...state.all, game]
   };
 }
 
-function deleteGameFromOrder(state, index) {
+function deleteGameFromOrder(state, gameId) {
   return {
     ...state,
-    all: [...state.all.filter((game, idx) => idx !== index)]
+    all: [...state.all.filter(game => game.gameId !== gameId)]
   };
 }
 

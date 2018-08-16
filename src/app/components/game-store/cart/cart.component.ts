@@ -34,8 +34,8 @@ export class CartComponent implements OnInit {
       .subscribe();
   }
 
-  removeItem(i) {
-    this.cartService.deleteGame(i);
+  removeItem(gameId) {
+    this.cartService.deleteGame(gameId);
     this.toast.success(`Game was successfully deleted from your cart!`);
   }
 

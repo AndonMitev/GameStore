@@ -12,8 +12,8 @@ import { OrderGameService } from '../../../core/services/order.services/order-ga
 export class AddToCartComponent {
   @Input('game')
   game;
-  @Input('index')
-  index;
+  @Input('id')
+  id;
 
   constructor(
     private orderService: OrderGameService,
@@ -21,8 +21,9 @@ export class AddToCartComponent {
   ) {}
 
   orderSelectedGame() {
+    console.log(this.id);
     this.orderService.orderGame(
-      this.index,
+      this.id,
       this.game._id,
       this.game.title,
       this.game.price,
