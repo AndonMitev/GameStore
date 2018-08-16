@@ -21,7 +21,7 @@ import { UserLoginService } from '../../../core/services/authentication/login.se
 })
 export class LoginComponent implements OnInit, OnDestroy {
   public loginForm: FormGroup;
-  public showSpinner: boolean = false;
+  public showSpinner: boolean;
   private userModel: LoginInputModel;
   private subscription$: Subscription;
 
@@ -30,7 +30,9 @@ export class LoginComponent implements OnInit, OnDestroy {
     private loginService: UserLoginService,
     private router: Router,
     private toast: ToastrService
-  ) {}
+  ) {
+    this.showSpinner = false;
+  }
 
   ngOnInit(): void {
     this.initializeLoginForm();
@@ -50,7 +52,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   submitLoginForm(): void {
-    this.showSpinner = false;
     const userData = this.loginForm.value;
     this.userModel = new LoginInputModel(
       userData['username'],
@@ -62,6 +63,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       .subscribe(res => {
         this.loginService.saveData(res);
         this.router.navigate(['/home']);
+        this.showSpinner = false;
         this.toast.success(`Welcome again, ${userData['username']}!`);
       });
   }

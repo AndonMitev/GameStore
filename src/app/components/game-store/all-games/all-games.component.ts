@@ -17,7 +17,7 @@ import { AllGamesModel } from '../../../core/models/view-models/all-games.model'
 })
 export class AllGamesComponent implements OnInit {
   public allGames$: Observable<AllGamesModel[]>;
-  public showSpinner: boolean;
+  public showSpinner: boolean
 
   constructor(
     private gameService: GetAllGamesService,
@@ -29,8 +29,8 @@ export class AllGamesComponent implements OnInit {
 
   ngOnInit(): void {
     this.router.queryParamMap.subscribe(res => {
-      const CATEGORY: string = res['params']['category'];
-      this.gameService.getAllGames(CATEGORY).subscribe(() => {
+      const category: string = res['params']['category'];
+      this.gameService.getAllGames(category).subscribe(() => {
         this.allGames$ = this.store.pipe(select(state => state.games.all));
         this.showSpinner = false;
       });

@@ -6,6 +6,7 @@ const initialState: SubscriptionState = {
 };
 
 function getAllUserSubscriptions(state, userSubscriptions) {
+  console.log(userSubscriptions);
   return {
     ...state,
     all: userSubscriptions
