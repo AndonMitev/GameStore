@@ -6,8 +6,6 @@ const initialState: MessageState = {
 };
 
 function getAllMessages(state, messages) {
-  console.log(state);
-  console.log(messages);
   return {
     ...state,
     all: [...messages]
@@ -17,7 +15,7 @@ function getAllMessages(state, messages) {
 function createMessage(state, message) {
   return {
     ...state,
-    all: [...state.all, message]
+    all: [...state.all]
   };
 }
 

@@ -59,7 +59,7 @@ export class CreateMessageComponent implements OnInit, OnDestroy {
 
   submitMessageForm() {
     const RECIPIENT =
-      this.messageForm.value['recipient'] || this.verification.getAdminId();
+      this.messageForm.value['recipient'] || 'Admin'
     const TITLE = this.messageForm.value['title'];
     const CONTENT = this.messageForm.value['content'];
 

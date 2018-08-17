@@ -12,10 +12,10 @@ import { CreateMessageInputModel } from '../../models/input-models/message-model
 export class GetAllUserMessagesService {
   constructor(private http: HttpServices, private store: Store<AppState>) {}
 
-  getAllUserMessages(userId: string) {
+  getAllUserMessages(username: string) {
     return this.http
       .get(
-        `messages?query={"recipient":"${userId}"}&sort={"_kmd.ect": -1}`,
+        `messages?query={"recipient":"${username}"}&sort={"_kmd.ect": -1}`,
         'appdata'
       )
       .pipe(

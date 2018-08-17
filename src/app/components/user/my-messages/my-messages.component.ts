@@ -24,17 +24,16 @@ export class MyMessagesComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.actRoute.paramMap.subscribe((res: ParamMap) => {
-      const USER_ID: string = res['params']['id'];
-      this.subscription = this.messageService
-        .getAllUserMessages(USER_ID)
-        .subscribe(
-          () =>
-            (this.userMessages$ = this.store.pipe(
-              select(state => state.messages.all)
-            ))
-        );
-    });
+    const USER_ID: string = localStorage.getItem('username');
+
+    this.subscription = this.messageService
+      .getAllUserMessages(USER_ID)
+      .subscribe(
+        () =>
+          (this.userMessages$ = this.store.pipe(
+            select(state => state.messages.all)
+          ))
+      );
   }
 
   ngOnDestroy() {
