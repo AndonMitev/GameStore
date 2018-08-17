@@ -13,6 +13,7 @@ export class ProfileComponent implements OnInit {
   public showOrders: boolean;
   public showSubscriptions: boolean;
   public showComments: boolean;
+  public showMessages: boolean;
   public showSpinner: boolean;
 
   constructor(
@@ -22,6 +23,7 @@ export class ProfileComponent implements OnInit {
     this.showOrders = false;
     this.showSubscriptions = false;
     this.showComments = false;
+    this.showMessages = true;
     this.showSpinner = true;
   }
 
@@ -39,16 +41,25 @@ export class ProfileComponent implements OnInit {
         this.showOrders = true;
         this.showSubscriptions = false;
         this.showComments = false;
+        this.showMessages = false;
         break;
       case 'subscriptions':
         this.showOrders = false;
         this.showSubscriptions = true;
         this.showComments = false;
+        this.showMessages = false;
         break;
       case 'comments':
         this.showOrders = false;
         this.showSubscriptions = false;
         this.showComments = true;
+        this.showMessages = false;
+        break;
+      case 'messages':
+        this.showOrders = false;
+        this.showSubscriptions = false;
+        this.showComments = false;
+        this.showMessages = true;
         break;
     }
   }

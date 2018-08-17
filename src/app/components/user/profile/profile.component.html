@@ -22,21 +22,26 @@
 
       </div>
     </div>
-    <div class="row">
-      <div class="col-md-12">
-        <ul class="justify-content-between">
-          <li class="btn btn-link text-info" (click)="showComponent('orders')">
+
+    <div class="row justify-content-end">
+      <div class="col-md-12 ">
+        <ul>
+          <li class="btn btn-link text-info mr-5" (click)="showComponent('orders')">
             <strong>Orders</strong>
           </li>
-          <li class="btn btn-link offset-4 text-info" (click)="showComponent('subscriptions')">
+          <li class="btn btn-link offset-2 text-info" (click)="showComponent('subscriptions')">
             <strong>Subscriptions</strong>
           </li>
-          <li class="btn btn-link  offset-4 text-info" (click)="showComponent('comments')">
+          <li class="btn btn-link offset-2 text-info" (click)="showComponent('comments')">
             <strong>Comments</strong>
+          </li>
+          <li class="btn btn-link offset-2 text-info" (click)="showComponent('messages')">
+            <strong>Messages</strong>
           </li>
         </ul>
       </div>
     </div>
+
   </div>
 
   <div class="row">
@@ -49,6 +54,9 @@
       </div>
       <div *ngIf="this.showComments">
         <user-comments></user-comments>
+      </div>
+      <div *ngIf="this.showMessages">
+        <create-message></create-message>
       </div>
     </div>
   </div>
