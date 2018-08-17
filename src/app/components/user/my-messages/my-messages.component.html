@@ -1,0 +1,17 @@
+<div class="row">
+  <div class="col-md-12">
+    <h2 class="text-center">My messages</h2>
+    <div *ngIf="userMessages$" class="mt-4">
+      <div class="mr-3 list-group-item list-group-item-action" *ngFor="let message of userMessages$ | async">
+        <a routerLink="/message/{{message._id}}">
+          <h4 class="text-justify">{{message.title}}</h4>
+        </a>
+        <p>{{message.content}}</p>
+        <span class="text-justify">
+          <small> Sended by:
+            <em>{{message._acl.creator}}</em> at: {{message._kmd.ect | date}}</small>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>

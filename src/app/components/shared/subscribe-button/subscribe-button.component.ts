@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { SubscribeToGameService } from '../../../core/services/subscription.services.ts/subscribe-to-game.service';
+//import { SubscribeToGameService } from '../../../core/services/subscription.services.ts/subscribe-to-game.service';
 import { ToastrService } from 'ngx-toastr';
 import { SubscribeToGameModel } from '../../../core/models/view-models/subscribe-to-game.model';
 
@@ -15,7 +15,7 @@ export class SubscribeButtonComponent {
   private subscribeModel: SubscribeToGameModel;
 
   constructor(
-    private subscribeUserService: SubscribeToGameService,
+    //private subscribeUserService: SubscribeToGameService,
     private toast: ToastrService
   ) {}
 
@@ -26,12 +26,12 @@ export class SubscribeButtonComponent {
       this.detailsGame['title'],
       this.detailsGame['image']
     );
-    this.subscribeUserService
+  /*  this.subscribeUserService
       .subscribeUser(this.subscribeModel)
       .subscribe(() =>
         this.toast.success(
           `Successfully subscribe to ${this.detailsGame['title']}`
         )
-      );
+      ); */
   }
 }

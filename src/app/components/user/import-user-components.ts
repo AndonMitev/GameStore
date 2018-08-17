@@ -4,6 +4,7 @@ import { UserSubscriptionsComponent } from './user-subscriptions/user-subscripti
 import { UserCommentsComponent } from './user-comments/user-comments.component';
 import { UserFullOrderComponent } from './user-full-order/user-full-order.component';
 import { CreateMessageComponent } from './create-message/create-message.component';
+import { MyMessagesComponent } from './my-messages/my-messages.component';
 
 export const userComponentsImp = [
   ProfileComponent,
@@ -11,5 +12,6 @@ export const userComponentsImp = [
   UserSubscriptionsComponent,
   UserCommentsComponent,
   UserFullOrderComponent,
-  CreateMessageComponent
+  CreateMessageComponent,
+  MyMessagesComponent
 ];

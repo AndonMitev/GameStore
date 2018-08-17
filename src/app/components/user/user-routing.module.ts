@@ -7,7 +7,7 @@ import { UserFullOrderComponent } from './user-full-order/user-full-order.compon
 
 const routes: Routes = [
   {
-    path: 'profile',
+    path: 'profile/:id',
     canActivate: [AuthGuard],
     component: ProfileComponent
   },

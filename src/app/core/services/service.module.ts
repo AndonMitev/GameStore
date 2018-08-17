@@ -6,7 +6,8 @@ import { AUTHENTICATION_SERVICES } from './authentication';
 import { GAME_SERVICES } from './game-store-services';
 import { COMMENT_SERVICES } from './comment-services';
 import { ORDER_SERVICES } from './order.services';
-import { SUBSCRIPTION_SERVICES } from './subscription.services.ts';
+//import { SUBSCRIPTION_SERVICES } from './subscription.services.ts';
+import { MESSAGE_SERVICES } from './message-services';
 
 @NgModule({
   providers: [
@@ -14,7 +15,8 @@ import { SUBSCRIPTION_SERVICES } from './subscription.services.ts';
     ...GAME_SERVICES,
     ...COMMENT_SERVICES,
     ...ORDER_SERVICES,
-    ...SUBSCRIPTION_SERVICES
+    // ...SUBSCRIPTION_SERVICES
+    ...MESSAGE_SERVICES
   ],
   imports: [CommonModule]
 })

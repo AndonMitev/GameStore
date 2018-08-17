@@ -11,7 +11,6 @@ import { UserRouterModule } from './user-routing.module';
 import { userComponentsImp } from './import-user-components';
 import { userComponentsEx } from './export-user-components';
 
-
 @NgModule({
   imports: [
     CommonModule,

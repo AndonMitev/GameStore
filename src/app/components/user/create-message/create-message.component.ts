@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import {
   FormGroup,
   FormBuilder,
@@ -9,6 +9,7 @@ import { Subscription } from 'rxjs';
 
 //Services
 import { UserVerificationService } from '../../../core/services/authentication/verification.service';
+import { CreateMessageService } from '../../../core/services/message-services/create-message.service';
 //Model
 import { CreateMessageInputModel } from '../../../core/models/input-models/message-model';
 
@@ -17,18 +18,25 @@ import { CreateMessageInputModel } from '../../../core/models/input-models/messa
   templateUrl: './create-message.component.html',
   styleUrls: ['./create-message.component.css']
 })
-export class CreateMessageComponent implements OnInit {
+export class CreateMessageComponent implements OnInit, OnDestroy {
   public messageForm: FormGroup;
   private subscription: Subscription;
   private messageModel: CreateMessageInputModel;
 
   constructor(
     private fb: FormBuilder,
-    private verification: UserVerificationService
+    private verification: UserVerificationService,
+    private createMessageService: CreateMessageService
   ) {}
 
   ngOnInit(): void {
     this.initializeMessageForm();
+  }
+
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
   initializeMessageForm(): void {
@@ -56,6 +64,10 @@ export class CreateMessageComponent implements OnInit {
     const CONTENT = this.messageForm.value['content'];
 
     this.messageModel = new CreateMessageInputModel(RECIPIENT, TITLE, CONTENT);
+
+    this.subscription = this.createMessageService
+      .createNewMessage(this.messageModel)
+      .subscribe();
   }
 
   get title(): AbstractControl {

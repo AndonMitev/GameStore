@@ -5,18 +5,20 @@ const initialState: MessageState = {
   all: []
 };
 
-function getAllMessages(state, messages){
+function getAllMessages(state, messages) {
+  console.log(state);
+  console.log(messages);
   return {
     ...state,
-    all: messages
-  }
+    all: [...messages]
+  };
 }
 
 function createMessage(state, message) {
   return {
     ...state,
     all: [...state.all, message]
-  }
+  };
 }
 
 export function messageReducer(
@@ -25,10 +27,10 @@ export function messageReducer(
 ) {
   switch (action.type) {
     case MessageActions.GET_ALL_MESSAGES:
-      return;
+      return getAllMessages(state, action.payload);
     case MessageActions.CREATE_MESSAGE:
-      return;
-      default:
+      return createMessage(state, action.payload);
+    default:
       return state;
   }
 }
