@@ -4,13 +4,15 @@
       <h2 class="text-center">Create message</h2>
       <form class="form-group" [formGroup]="messageForm" (ngSubmit)="submitMessageForm()">
 
-        <div *ngIf="verification.isAdmin()" class="form-group">
-          <label>
-            <strong>Recipient</strong>
-          </label>
-          <input class="form-control" type="text" formControlName="recipient" />
-          <div class="alert alert-danger" *ngIf="recipient.invalid && (recipient.touched || recipient.dirty)">
-            <div *ngIf="recipient.errors['required']">Recipient is required</div>
+        <div *ngIf="verification.isAdmin()">
+          <div class="form-group">
+            <label>
+              <strong>Recipient</strong>
+            </label>
+            <input class="form-control" type="text" formControlName="recipient" />
+            <div class="alert alert-danger" *ngIf="recipient.invalid && (recipient.touched || recipient.dirty)">
+              <div *ngIf="recipient.errors['required']">Recipient is required</div>
+            </div>
           </div>
         </div>
 

@@ -33,7 +33,7 @@ export class CreateMessageComponent implements OnInit {
 
   initializeMessageForm(): void {
     this.messageForm = this.fb.group({
-      recipient: ['', Validators.required],
+      recipient: [''],
       title: [
         '',
         [Validators.required, Validators.minLength(3), Validators.maxLength(25)]
@@ -50,7 +50,12 @@ export class CreateMessageComponent implements OnInit {
   }
 
   submitMessageForm() {
-    console.log(this.messageForm.value);
+    const RECIPIENT =
+      this.messageForm.value['recipient'] || this.verification.getAdminId();
+    const TITLE = this.messageForm.value['title'];
+    const CONTENT = this.messageForm.value['content'];
+
+    this.messageModel = new CreateMessageInputModel(RECIPIENT, TITLE, CONTENT);
   }
 
   get title(): AbstractControl {

@@ -1,3 +1,3 @@
 export class CreateMessageInputModel {
-  constructor(public userId: string, public title: string, public content: string) {}
+  constructor(public recipient: string, public title: string, public content: string) {}
 }

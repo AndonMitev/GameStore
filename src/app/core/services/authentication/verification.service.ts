@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
-const ADMIN_ID = '404cf295-d9ee-41fd-a8db-00e8a5a27527';
+const ADMIN_ID = '5b6c375257fa3260bf995d21';
+const ADMIN_ROLE_ID = '404cf295-d9ee-41fd-a8db-00e8a5a27527';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,10 @@ export class UserVerificationService {
     return false;
   }
 
+  getAdminId(): string {
+    return ADMIN_ID;
+  }
+
   saveUserData(res): void {
     localStorage.setItem('authtoken', res._kmd.authtoken);
     localStorage.setItem('username', res.username);
@@ -27,8 +32,8 @@ export class UserVerificationService {
 
     if (res['_kmd']['roles']) {
       const ID = res['_kmd']['roles'][0].roleId;
-      if (ID === ADMIN_ID) {
-        localStorage.setItem('roleId', ADMIN_ID);
+      if (ID === ADMIN_ROLE_ID) {
+        localStorage.setItem('roleId', ADMIN_ROLE_ID);
       }
     }
   }
