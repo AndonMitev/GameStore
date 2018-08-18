@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 
 //Service
 import { HttpServices } from '../http.services';
-import { Store } from '@ngrx/store';
+//State
 import { AppState } from '../../../store/app.state';
+//Action
 import { DeleteComment } from '../../../store/actions/comment.actions';
 
 @Injectable({
@@ -13,9 +16,9 @@ import { DeleteComment } from '../../../store/actions/comment.actions';
 export class DeleteCommentService {
   constructor(private http: HttpServices, private store: Store<AppState>) {}
 
-  deleteComment(id) {
+  deleteComment(id: string): Observable<void> {
     return this.http
-      .delete(`comments/${id}`, 'appdata')
+      .delete<string>(`comments/${id}`, 'appdata')
       .pipe(map(() => this.store.dispatch(new DeleteComment(id))));
   }
 }

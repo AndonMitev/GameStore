@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 
+//State
 import { AppState } from '../../../store/app.state';
-
+//Action
 import {
   OrderGame,
   GetAllOrderedGames,
   DeleteGameFromOrderedList
 } from '../../../store/actions/order.actions';
+//Model
 import { CompleteOrderModel } from '../../models/view-models/complete-order.model';
 
 @Injectable({

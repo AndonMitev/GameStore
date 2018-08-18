@@ -18,7 +18,10 @@ import { RequestCache } from '../services/request-cache.service';
 export class CachingInterceptor implements HttpInterceptor {
   constructor(private cache: RequestCache) {}
 
-  intercept(req: HttpRequest<any>, next: HttpHandler) {
+  intercept(
+    req: HttpRequest<any>,
+    next: HttpHandler
+  ): Observable<HttpEvent<any>> {
     if (req.method === 'POST') {
       this.cache.cache.clear();
       return next.handle(req);

@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { GetMessageDetailsService } from '../../../core/services/message-services/get-message-details';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute, ParamMap } from '@angular/router';
+import { GetMessageDetailsService } from '../../../core/services/message-services/get-message-details.service';
 import { Store, select } from '@ngrx/store';
 import { AppState } from '../../../store/app.state';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { CreateMessageInputModel } from '../../../core/models/input-models/message-model';
 
 @Component({
@@ -13,6 +13,7 @@ import { CreateMessageInputModel } from '../../../core/models/input-models/messa
 })
 export class MessageDetailsComponent implements OnInit {
   public messageDetails$: Observable<CreateMessageInputModel>;
+  private subscription: Subscription;
 
   constructor(
     private actRoute: ActivatedRoute,
@@ -20,17 +21,24 @@ export class MessageDetailsComponent implements OnInit {
     private messageDetailsService: GetMessageDetailsService
   ) {}
 
-  ngOnInit() {
-    this.actRoute.paramMap.subscribe(res => {
-      const MESSAGE_ID = res['params']['id'];
+  ngOnInit(): void {
+    this.subscription = this.actRoute.paramMap.subscribe((res: ParamMap) => {
+      const MESSAGE_ID: string = res['params']['id'];
+
       this.messageDetailsService
         .getMessageDetails(MESSAGE_ID)
         .subscribe(
           () =>
             (this.messageDetails$ = this.store.pipe(
-              select(state => state.messages.details)
+              select((state: AppState) => state.messages.details)
             ))
         );
     });
+  }
+
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 }

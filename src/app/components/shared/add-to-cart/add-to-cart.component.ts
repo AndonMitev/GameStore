@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-//Services
 
+//Services
 import { OrderGameService } from '../../../core/services/order.services/order-game.service';
 
 @Component({
@@ -13,15 +13,14 @@ export class AddToCartComponent {
   @Input('game')
   game;
   @Input('id')
-  id;
+  id: string;
 
   constructor(
     private orderService: OrderGameService,
     private toast: ToastrService
   ) {}
 
-  orderSelectedGame() {
-    console.log(this.id);
+  orderSelectedGame(): void {
     this.orderService.orderGame(
       this.id,
       this.game._id,

@@ -2,13 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { ToastrService } from 'ngx-toastr';
 
+//Services
 import { OrderGameService } from '../../../core/services/order.services/order-game.service';
-
-import { AppState } from '../../../store/app.state';
 import { CompleteOrderService } from '../../../core/services/order.services/complete-order.service';
+//State
+import { AppState } from '../../../store/app.state';
+//Model
 import { CompleteOrderModel } from '../../../core/models/view-models/complete-order.model';
-import { LocalStorage } from '@ngx-pwa/local-storage';
-import { tap, map } from 'rxjs/operators';
 
 @Component({
   selector: 'cart',
@@ -23,14 +23,13 @@ export class CartComponent implements OnInit {
     private cartService: OrderGameService,
     private store: Store<AppState>,
     private toast: ToastrService,
-    private completeService: CompleteOrderService,
-    private localStorage: LocalStorage
+    private completeService: CompleteOrderService
   ) {}
 
   ngOnInit(): void {
     this.cartService.viewOrder();
     this.store
-      .pipe(select(state => (this.order$ = state.orders.all)))
+      .pipe(select((state: AppState) => (this.order$ = state.orders.all)))
       .subscribe();
   }
 

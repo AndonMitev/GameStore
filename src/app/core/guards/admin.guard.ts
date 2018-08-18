@@ -6,6 +6,7 @@ import {
 } from '@angular/router';
 import { Router } from '@angular/router';
 
+//Service
 import { UserVerificationService } from '../services/authentication/verification.service';
 
 @Injectable({
@@ -24,7 +25,7 @@ export class AdminGuard implements CanActivate {
     return this.checkIfUserIsAdmin();
   }
 
-  checkIfUserIsAdmin() {
+  checkIfUserIsAdmin(): boolean {
     if (this.userServices.isAdmin()) {
       return true;
     }

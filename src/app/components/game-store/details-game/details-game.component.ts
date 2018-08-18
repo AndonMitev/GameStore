@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Store, select } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 //Service
 import { GetDetailsGameService } from '../../../core/services/game-store-services/get-details-game.service';
@@ -15,28 +15,36 @@ import { AppState } from '../../../store/app.state';
   templateUrl: './details-game.component.html',
   styleUrls: ['./details-game.component.css']
 })
-export class DetailsGameComponent implements OnInit {
+export class DetailsGameComponent implements OnInit, OnDestroy {
   public detailsGame$: Observable<DetailsGameModel>;
   public showSpinner: boolean;
+  private subscription: Subscription;
 
   constructor(
     private gameService: GetDetailsGameService,
     private store: Store<AppState>,
-    private router: ActivatedRoute //private subscribeService: GetUserSubscriptionsService
+    private router: ActivatedRoute
   ) {
     this.showSpinner = true;
   }
 
   ngOnInit(): void {
-    this.router.paramMap.subscribe(res => {
-      const GAME_ID = res['params']['id'];
+    this.subscription = this.router.paramMap.subscribe((res: ParamMap) => {
+      const GAME_ID: string = res['params']['id'];
+
       this.gameService.getGameById(GAME_ID).subscribe(() => {
         this.detailsGame$ = this.store.pipe(
-          select(state => state.games.details)
+          select((state: AppState) => state.games.details)
         );
         this.showSpinner = false;
       });
     });
+  }
+
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
   showOrHideSubscribeButton() {}

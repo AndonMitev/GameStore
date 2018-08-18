@@ -1,11 +1,16 @@
 import { Injectable } from '@angular/core';
-import { HttpServices } from '../http.services';
-import { Store } from '@ngrx/store';
-import { AppState } from '../../../store/app.state';
 import { map } from 'rxjs/operators';
-import { GetMessageDetails } from '../../../store/actions/message.actions';
-import { CreateMessageInputModel } from '../../models/input-models/message-model';
+import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+
+//Services
+import { HttpServices } from '../http.services';
+//State
+import { AppState } from '../../../store/app.state';
+//Model
+import { CreateMessageInputModel } from '../../models/input-models/message-model';
+//Action
+import { GetMessageDetails } from '../../../store/actions/message.actions';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +20,7 @@ export class GetMessageDetailsService {
 
   getMessageDetails(id: string): Observable<void> {
     return this.http
-      .get(`messages/${id}`, 'appdata')
+      .get<CreateMessageInputModel>(`messages/${id}`, 'appdata')
       .pipe(
         map((res: CreateMessageInputModel) =>
           this.store.dispatch(new GetMessageDetails(res))

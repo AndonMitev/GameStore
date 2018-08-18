@@ -1,18 +1,21 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+
+//Service
 import { HttpServices } from '../http.services';
-import { Store } from '../../../../../node_modules/@ngrx/store';
-import { AppState } from '../../../store/app.state';
-import { map } from '../../../../../node_modules/rxjs/operators';
-import { GetUserByUsername } from '../../../store/actions/user.actions';
+//Model
 import { RegisterInputModel } from '../../models/input-models/register.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GetUserIdByUsernameService {
-  constructor(private http: HttpServices, private store: Store<AppState>) {}
+  constructor(private http: HttpServices) {}
 
-  getUserIdByUsername(username: string) {
-    return this.http.get(`?query={"username":"${username}"}`, 'user');
+  getUserIdByUsername(username: string): Observable<Object> {
+    return this.http.get<RegisterInputModel>(
+      `?query={"username":"${username}"}`,
+      'user'
+    );
   }
 }

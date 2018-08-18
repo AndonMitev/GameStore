@@ -24,10 +24,10 @@ import { UserRegisterService } from '../../../core/services/authentication/regis
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit, OnDestroy {
-  private userModel: RegisterInputModel;
-  private subscription: Subscription;
   public registerForm: FormGroup;
   public showSpinner: boolean;
+  private userModel: RegisterInputModel;
+  private subscription: Subscription;
 
   constructor(
     private fb: FormBuilder,
@@ -87,17 +87,17 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   submitRegisterForm(): void {
     this.showSpinner = true;
-    const userData = this.registerForm.value;
-    delete userData['confirmPassword'];
-    delete userData['confirmEmail'];
+    const USER_DATA = this.registerForm.value;
+    delete USER_DATA['confirmPassword'];
+    delete USER_DATA['confirmEmail'];
 
     this.userModel = new RegisterInputModel(
-      userData['username'],
-      userData['password'],
-      userData['email'],
-      userData['age'],
-      userData['countryData'],
-      userData['streetAddress']
+      USER_DATA['username'],
+      USER_DATA['password'],
+      USER_DATA['email'],
+      USER_DATA['age'],
+      USER_DATA['countryData'],
+      USER_DATA['streetAddress']
     );
 
     this.subscription = this.registerService
@@ -106,7 +106,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
         this.registerService.saveData(data);
         this.router.navigate(['/home']);
         this.showSpinner = false;
-        this.toast.success(`Hello for first time, ${userData['username']}!`);
+        this.toast.success(`Hello for first time, ${USER_DATA['username']}!`);
       });
   }
 

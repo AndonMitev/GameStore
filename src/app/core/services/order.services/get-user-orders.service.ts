@@ -1,13 +1,16 @@
 import { Injectable } from '@angular/core';
-import { HttpServices } from '../http.services';
-import { map } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+
+//Service
+import { HttpServices } from '../http.services';
+//State
 import { AppState } from '../../../store/app.state';
-import {
-  GetCompletedOrders,
-  CompleteOrder
-} from '../../../store/actions/order.actions';
+//Model
 import { CompleteOrderModel } from '../../models/view-models/complete-order.model';
+//Action
+import { GetCompletedOrders } from '../../../store/actions/order.actions';
 
 @Injectable({
   providedIn: 'root'
@@ -15,9 +18,9 @@ import { CompleteOrderModel } from '../../models/view-models/complete-order.mode
 export class GetCompletedOrdersService {
   constructor(private http: HttpServices, private store: Store<AppState>) {}
 
-  getCompletedOrders(id: string) {
+  getCompletedOrders(id: string): Observable<void> {
     return this.http
-      .get(`orders?query={"userId":"${id}"}&sort={"_kmd.ect": -1}`, 'appdata')
+      .get<CompleteOrderModel[]>(`orders?query={"userId":"${id}"}&sort={"_kmd.ect": -1}`, 'appdata')
       .pipe(
         map((res: CompleteOrderModel[]) => {
           this.store.dispatch(new GetCompletedOrders(res));

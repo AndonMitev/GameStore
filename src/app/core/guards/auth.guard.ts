@@ -6,13 +6,17 @@ import {
 } from '@angular/router';
 import { Router } from '@angular/router';
 
+//Service
 import { UserVerificationService } from '../services/authentication/verification.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
-  constructor(private userServices: UserVerificationService, private router: Router) {}
+  constructor(
+    private userServices: UserVerificationService,
+    private router: Router
+  ) {}
 
   canActivate(
     next: ActivatedRouteSnapshot,
@@ -21,7 +25,7 @@ export class AuthGuard implements CanActivate {
     return this.checkIfUserIsLoggedIn();
   }
 
-  checkIfUserIsLoggedIn() {
+  checkIfUserIsLoggedIn(): boolean {
     if (this.userServices.hasUser()) {
       return true;
     }

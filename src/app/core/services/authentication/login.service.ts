@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
+//Services
 import { HttpServices } from '../http.services';
+import { UserVerificationService } from './verification.service';
 //Model
 import { LoginInputModel } from '../../models/input-models/login.model';
-import { UserVerificationService } from './verification.service';
 
 @Injectable({
   providedIn: 'root'

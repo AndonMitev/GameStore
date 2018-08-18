@@ -51,18 +51,21 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   submitLoginForm(): void {
     this.showSpinner = false;
-    const userData = this.loginForm.value;
+    const USER_DATA = this.loginForm.value;
+
     this.userModel = new LoginInputModel(
-      userData['username'],
-      userData['password']
+      USER_DATA['username'],
+      USER_DATA['password']
     );
+
     this.showSpinner = true;
+
     this.subscription$ = this.loginService
       .loginUser(this.userModel)
       .subscribe(res => {
         this.loginService.saveData(res);
         this.router.navigate(['/home']);
-        this.toast.success(`Welcome again, ${userData['username']}!`);
+        this.toast.success(`Welcome again, ${USER_DATA['username']}!`);
       });
   }
 

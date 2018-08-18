@@ -12,7 +12,7 @@ export class NavbarComponent {
   public userId: string;
   constructor(private userVerification: UserVerificationService) {}
 
-  getUserId() {
+  getUserId(): string {
     return localStorage.getItem('userId');
   }
 }

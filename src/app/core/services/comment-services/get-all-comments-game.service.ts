@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 //Services
 import { HttpServices } from '../http.services';
-//Comments
-import { AllCommentsGameModel } from '../../models/view-models/all-comments-game.model';
 //State
 import { AppState } from '../../../store/app.state';
-import { GetAllComments } from '../../../store/actions/comment.actions';
+//Model
+import { AllCommentsGameModel } from '../../models/view-models/all-comments-game.model';
 //Action
-//import { GetCommentsGame } from '../../../store/actions/game.actions';
+import { GetAllComments } from '../../../store/actions/comment.actions';
 
 @Injectable({
   providedIn: 'root'
@@ -18,12 +18,11 @@ import { GetAllComments } from '../../../store/actions/comment.actions';
 export class GetAllCommentsService {
   constructor(private http: HttpServices, private store: Store<AppState>) {}
 
-  getAllComments(gameId: string) {
+  getAllComments(gameId: string): Observable<void> {
     return this.http
       .get<AllCommentsGameModel[]>(
         `comments?query={"id":"${gameId}"}&sort={"_kmd.ect": -1}`,
         'appdata'
-        //
       )
       .pipe(
         map((res: AllCommentsGameModel[]) =>

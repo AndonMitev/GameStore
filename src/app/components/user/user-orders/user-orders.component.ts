@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Store, select } from '@ngrx/store';
-import { AppState } from '../../../store/app.state';
-import { GetCompletedOrdersService } from '../../../core/services/order.services/get-user-orders.service';
-import { tap } from 'rxjs/operators';
-import { GetCompletedOrderDetailsService } from '../../../core/services/order.services/get-complete-order-details.service';
-import { GetCompletedOrderDetails } from '../../../store/actions/order.actions';
 import { Subscription } from 'rxjs';
+
+//Service
+import { GetCompletedOrdersService } from '../../../core/services/order.services/get-user-orders.service';
+//State
+import { AppState } from '../../../store/app.state';
+//Model
 import { CompleteOrderModel } from '../../../core/models/view-models/complete-order.model';
 
 @Component({
@@ -29,12 +30,13 @@ export class UserOrdersComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.subscription = this.actRoute.paramMap.subscribe(res => {
-      const USER_ID = res['params']['id'];
+    this.subscription = this.actRoute.paramMap.subscribe((res: ParamMap) => {
+      const USER_ID: string = res['params']['id'];
+
       this.orderService.getCompletedOrders(USER_ID).subscribe(() => {
         this.store
-          .pipe(select(state => state.orders.completedOrders))
-          .subscribe(res => {
+          .pipe(select((state: AppState) => state.orders.completedOrders))
+          .subscribe((res: CompleteOrderModel[]) => {
             this.orders = res;
             this.showSpinner = false;
           });

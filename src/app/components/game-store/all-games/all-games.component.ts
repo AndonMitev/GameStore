@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Observable } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
+import { Observable, Subscription } from 'rxjs';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Store, select } from '@ngrx/store';
 
 //Serivces
@@ -15,9 +15,10 @@ import { AllGamesModel } from '../../../core/models/view-models/all-games.model'
   templateUrl: './all-games.component.html',
   styleUrls: ['./all-games.component.css']
 })
-export class AllGamesComponent implements OnInit {
+export class AllGamesComponent implements OnInit, OnDestroy {
   public allGames$: Observable<AllGamesModel[]>;
   public showSpinner: boolean;
+  private subscription: Subscription;
 
   constructor(
     private gameService: GetAllGamesService,
@@ -28,12 +29,20 @@ export class AllGamesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.router.queryParamMap.subscribe(res => {
+    this.subscription = this.router.queryParamMap.subscribe((res: ParamMap) => {
       const CATEGORY: string = res['params']['category'];
       this.gameService.getAllGames(CATEGORY).subscribe(() => {
-        this.allGames$ = this.store.pipe(select(state => state.games.all));
+        this.allGames$ = this.store.pipe(
+          select((state: AppState) => state.games.all)
+        );
         this.showSpinner = false;
       });
     });
+  }
+
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 }

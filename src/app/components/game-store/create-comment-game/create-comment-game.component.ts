@@ -1,6 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  AbstractControl
+} from '@angular/forms';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 
@@ -26,27 +31,27 @@ export class CreateCommentGameComponent implements OnInit, OnDestroy {
     private toast: ToastrService
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.initializeCommentForm();
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
   }
 
-  initializeCommentForm() {
+  initializeCommentForm(): void {
     this.commentForm = this.fb.group({
       description: ['', [Validators.required, Validators.maxLength(50)]]
     });
   }
 
-  submitCommentForm() {
-    this.subscription = this.actRouter.paramMap.subscribe(res => {
-      const ID = res['params']['id'];
-      const DESCRIPTION = this.commentForm.value['description'];
-      const AUTHOR = localStorage.getItem('username');
+  submitCommentForm(): void {
+    this.subscription = this.actRouter.paramMap.subscribe((res: ParamMap) => {
+      const ID: string = res['params']['id'];
+      const DESCRIPTION: string = this.commentForm.value['description'];
+      const AUTHOR: string = localStorage.getItem('username');
 
       this.commentModel = new CommentGameInputModel(ID, DESCRIPTION, AUTHOR);
       this.commentService.createComment(this.commentModel).subscribe(() => {
@@ -55,7 +60,7 @@ export class CreateCommentGameComponent implements OnInit, OnDestroy {
     });
   }
 
-  get description() {
+  get description(): AbstractControl {
     return this.commentForm.get('description');
   }
 }

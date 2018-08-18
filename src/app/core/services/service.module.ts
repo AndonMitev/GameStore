@@ -8,6 +8,7 @@ import { COMMENT_SERVICES } from './comment-services';
 import { ORDER_SERVICES } from './order.services';
 //import { SUBSCRIPTION_SERVICES } from './subscription.services.ts';
 import { MESSAGE_SERVICES } from './message-services';
+import { PROFILE_SERVICES } from './profile-services';
 
 @NgModule({
   providers: [
@@ -16,7 +17,8 @@ import { MESSAGE_SERVICES } from './message-services';
     ...COMMENT_SERVICES,
     ...ORDER_SERVICES,
     // ...SUBSCRIPTION_SERVICES
-    ...MESSAGE_SERVICES
+    ...MESSAGE_SERVICES,
+    ...PROFILE_SERVICES
   ],
   imports: [CommonModule]
 })

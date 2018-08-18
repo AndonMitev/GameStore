@@ -2,13 +2,9 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
-import { Store } from '@ngrx/store';
 
 //Service
 import { UserLogoutService } from '../../../core/services/authentication/logout.service';
-
-import { AppState } from '../../../store/app.state';
-
 
 @Component({
   selector: 'logout',
@@ -22,8 +18,7 @@ export class LogoutComponent implements OnInit, OnDestroy {
   constructor(
     private user: UserLogoutService,
     private router: Router,
-    private toast: ToastrService,
-    private store: Store<AppState>
+    private toast: ToastrService
   ) {
     this.showSpinner = true;
   }

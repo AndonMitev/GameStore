@@ -1,10 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-
-import { HttpServices } from '../http.services';
-import { AppState } from '../../../store/app.state';
-import { CreateMessageInputModel } from '../../models/input-models/message-model';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+
+//Service
+import { HttpServices } from '../http.services';
+//State
+import { AppState } from '../../../store/app.state';
+//Model
+import { CreateMessageInputModel } from '../../models/input-models/message-model';
+//Action
 import { CreateMessage } from '../../../store/actions/message.actions';
 
 @Injectable({
@@ -13,9 +18,9 @@ import { CreateMessage } from '../../../store/actions/message.actions';
 export class CreateMessageService {
   constructor(private http: HttpServices, private store: Store<AppState>) {}
 
-  createNewMessage(message: CreateMessageInputModel) {
+  createNewMessage(message: CreateMessageInputModel): Observable<void> {
     return this.http
-      .post(message, 'messages', 'appdata')
+      .post<CreateMessageInputModel>(message, 'messages', 'appdata')
       .pipe(map(() => this.store.dispatch(new CreateMessage(message))));
   }
 }

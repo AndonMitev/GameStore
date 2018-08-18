@@ -19,14 +19,14 @@ export class SubscribeButtonComponent {
     private toast: ToastrService
   ) {}
 
-  subscribeToGame() {
+  subscribeToGame(): void {
     const USER = localStorage.getItem('userId');
     this.subscribeModel = new SubscribeToGameModel(
       USER,
       this.detailsGame['title'],
       this.detailsGame['image']
     );
-  /*  this.subscribeUserService
+    /*  this.subscribeUserService
       .subscribeUser(this.subscribeModel)
       .subscribe(() =>
         this.toast.success(

@@ -11,22 +11,30 @@ const initialState: MessageState = {
 function getSentMessages(state, messages) {
   return {
     ...state,
-    sentMessages: [...messages]
+    sentMessages: messages
   };
 }
 
 function getReceivedMessages(state, messages) {
   return {
     ...state,
-    recievedMessages: [...messages]
+    recievedMessages: messages
   };
 }
 
 function createMessage(state, message) {
-  return {
-    ...state,
-    all: [...state.all]
-  };
+  if (localStorage.getItem('userId') === 'recepientId') {
+    return {
+      ...state,
+      sentMessages: [...state.sentMessages, message], // Might be removed !?
+      recievedMessages: [...state.recievedMessages, message]
+    };
+  } else {
+    return {
+      ...state,
+      sentMessages: [...state.sentMessages, message]
+    };
+  }
 }
 
 function getMessageDetails(state, message) {

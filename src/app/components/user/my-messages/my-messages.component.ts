@@ -1,11 +1,14 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { GetAllUserMessagesService } from '../../../core/services/message-services/get-sent-messages.service';
-import { Store, select } from '@ngrx/store';
-import { AppState } from '../../../store/app.state';
-import { CreateMessageInputModel } from '../../../core/models/input-models/message-model';
 import { Observable, Subscription } from 'rxjs';
-import { UserVerificationService } from '../../../core/services/authentication/verification.service';
+import { Store, select } from '@ngrx/store';
+
+//Service
+import { GetAllUserMessagesService } from '../../../core/services/message-services/get-sent-messages.service';
+//State
+import { AppState } from '../../../store/app.state';
+//Model
+import { CreateMessageInputModel } from '../../../core/models/input-models/message-model';
 
 @Component({
   selector: 'my-messages',
@@ -19,25 +22,24 @@ export class MyMessagesComponent implements OnInit, OnDestroy {
   constructor(
     private messageService: GetAllUserMessagesService,
     private actRoute: ActivatedRoute,
-    private store: Store<AppState>,
-    private verification: UserVerificationService
+    private store: Store<AppState>
   ) {}
 
   ngOnInit(): void {
-    //const USER_ID: string = localStorage.getItem('username');
-    this.actRoute.paramMap.subscribe(res => {
-      const USER_ID = res['params']['id'];
+    this.actRoute.paramMap.subscribe((res: ParamMap) => {
+      const USER_ID: string = res['params']['id'];
+
       this.subscription = this.messageService
         .getSentMessages(USER_ID)
         .subscribe(() => {
           this.sentMessages$ = this.store.pipe(
-            select(state => state.messages.sentMessages)
+            select((state: AppState) => state.messages.sentMessages)
           );
         });
     });
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }

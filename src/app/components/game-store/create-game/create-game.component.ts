@@ -20,10 +20,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./create-game.component.css']
 })
 export class CreateGameComponent implements OnInit, OnDestroy {
-  private gameForm: FormGroup;
-  private subscription: Subscription;
-  private createGameData: CreateGameInputModel;
-  private platforms: string[] = [
+  public gameForm: FormGroup;
+  public platforms: string[] = [
     'PS4',
     'PS3',
     'PC',
@@ -31,7 +29,9 @@ export class CreateGameComponent implements OnInit, OnDestroy {
     'XboxOne',
     'UpComming'
   ];
-  private modes: string[] = ['Single-player', 'Multiplayer'];
+  public modes: string[] = ['Single-player', 'Multiplayer'];
+  private subscription: Subscription;
+  private createGameData: CreateGameInputModel;
 
   constructor(
     private fb: FormBuilder,
@@ -51,26 +51,27 @@ export class CreateGameComponent implements OnInit, OnDestroy {
   }
 
   submitGameForm(): void {
-    const gameData = this.gameForm.value;
-    gameData['selectedPlatform'] = gameData['selectedPlatform'].toLowerCase();
+    const GAME_DATA = this.gameForm.value;
+    GAME_DATA['selectedPlatform'] = GAME_DATA['selectedPlatform'].toLowerCase();
+
     this.createGameData = new CreateGameInputModel(
-      gameData['title'],
-      gameData['image'],
-      gameData['publisher'],
-      gameData['developer'],
-      gameData['series'],
-      gameData['selectedPlatform'],
-      gameData['release'],
-      gameData['genre'],
-      gameData['description'],
-      gameData['mode'],
-      Number(gameData['price'])
+      GAME_DATA['title'],
+      GAME_DATA['image'],
+      GAME_DATA['publisher'],
+      GAME_DATA['developer'],
+      GAME_DATA['series'],
+      GAME_DATA['selectedPlatform'],
+      GAME_DATA['release'],
+      GAME_DATA['genre'],
+      GAME_DATA['description'],
+      GAME_DATA['mode'],
+      Number(GAME_DATA['price'])
     );
 
     this.subscription = this.createGameService
       .createGame(this.createGameData)
-      .subscribe(res => {
-        this.toast.success(`${gameData['title']} successfully created!`);
+      .subscribe(() => {
+        this.toast.success(`${GAME_DATA['title']} successfully created!`);
         this.router.navigate(['/game/all']);
       });
   }

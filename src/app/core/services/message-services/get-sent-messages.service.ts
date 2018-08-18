@@ -1,10 +1,16 @@
 import { Injectable } from '@angular/core';
-import { HttpServices } from '../http.services';
 import { Store } from '@ngrx/store';
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+
+//Service
+import { HttpServices } from '../http.services';
+//State
 import { AppState } from '../../../store/app.state';
-import { map, tap } from 'rxjs/operators';
-import { GetSentMessages } from '../../../store/actions/message.actions';
+//Model
 import { CreateMessageInputModel } from '../../models/input-models/message-model';
+//Action
+import { GetSentMessages } from '../../../store/actions/message.actions';
 
 @Injectable({
   providedIn: 'root'
@@ -12,9 +18,9 @@ import { CreateMessageInputModel } from '../../models/input-models/message-model
 export class GetAllUserMessagesService {
   constructor(private http: HttpServices, private store: Store<AppState>) {}
 
-  getSentMessages(userId: string) {
+  getSentMessages(userId: string): Observable<void> {
     return this.http
-      .get(
+      .get<CreateMessageInputModel[]>(
         `messages?query={"_acl.creator":"${userId}"}&sort={"_kmd.ect": -1}`,
         'appdata'
       )

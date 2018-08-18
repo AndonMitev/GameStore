@@ -11,7 +11,7 @@ import { DeleteCommentService } from '../../../core/services/comment-services/de
 })
 export class DeleteCommentComponent implements OnDestroy {
   @Input()
-  commentId;
+  commentId: string;
   private subscription: Subscription;
 
   constructor(
