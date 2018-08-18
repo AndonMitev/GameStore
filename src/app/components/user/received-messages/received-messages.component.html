@@ -1,5 +1,5 @@
-<div *ngIf="receivedMessages$" class="mt-4">
-  <div class="mr-3 list-group-item list-group-item-action" *ngFor="let message of receivedMessages$ | async">
+<div *ngIf="receivedMessages$ | async as receivedMessages" class="mt-4">
+  <div class="mr-3 list-group-item list-group-item-action" *ngFor="let message of receivedMessages">
     <a routerLink="/user/message/details/{{message._id}}">
       <h4 class="text-justify">{{message.title}}</h4>
     </a>
@@ -7,5 +7,8 @@
     <a routerLink="/user/profile/{{message._acl.creator}}">
       <p>Posted by: {{message._acl.creator}} at: {{message._kmd.ect | date}}</p>
     </a>
+  </div>
+  <div class="text-center" *ngIf="receivedMessages.length === 0">
+    <h5>There are no new messages!</h5>
   </div>
 </div>

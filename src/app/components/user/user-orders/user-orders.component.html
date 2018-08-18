@@ -4,10 +4,14 @@
 <div *ngIf="orders">
   <div class="col-md-12">
     <h2 class="text-center">Previous orders</h2>
+    <hr>
     <div *ngFor="let data of orders" class="list-group-item list-group-item-action">
       <button (click)="getFullOrderView(data._id)" class="btn btn-link offset-2 clear">
         <p class="h4 text-center">Number: {{data._id}}, Ordered at: {{data._kmd.ect | date}}</p>
       </button>
     </div>
+  </div>
+  <div class="text-center" *ngIf="orders.length === 0">
+    <h2>You haven't completed any orders yet!</h2>
   </div>
 </div>

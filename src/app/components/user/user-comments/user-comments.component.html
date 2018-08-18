@@ -1,13 +1,18 @@
 <div *ngIf="showSpinner">
   <loading-spinner></loading-spinner>
 </div>
-<div *ngIf="userComments$">
-  <div *ngFor="let comment of userComments$ | async" class="list-group-item list-group-item-action">
+<h2 class="text-center">Written comments</h2>
+<hr>
+<div *ngIf="userComments$ | async as userComments">
+  <div *ngFor="let comment of userComments" class="list-group-item list-group-item-action">
     <p class="text-justify">{{comment.description}}</p>
     <span class="text-justify ">
       <small> Posted by:
         <em>{{comment.creator}}</em> at: {{comment._kmd.ect | date}}</small>
       <delete-comment [commentId]="comment._id"></delete-comment>
     </span>
+  </div>
+  <div class="text-center" *ngIf="userComments.length === 0">
+    <h2>You haven't written any comments yet!</h2>
   </div>
 </div>
