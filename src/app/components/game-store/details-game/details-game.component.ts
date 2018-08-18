@@ -9,6 +9,7 @@ import { GetDetailsGameService } from '../../../core/services/game-store-service
 import { DetailsGameModel } from '../../../core/models/view-models/details-game.model';
 //State
 import { AppState } from '../../../store/app.state';
+import { map } from '../../../../../node_modules/rxjs/operators';
 
 @Component({
   selector: 'details-game',
@@ -16,8 +17,9 @@ import { AppState } from '../../../store/app.state';
   styleUrls: ['./details-game.component.css']
 })
 export class DetailsGameComponent implements OnInit, OnDestroy {
-  public detailsGame$: Observable<DetailsGameModel>;
+  public detailsGame: DetailsGameModel;
   public showSpinner: boolean;
+  public userExists: boolean;
   private subscription: Subscription;
 
   constructor(
@@ -26,17 +28,27 @@ export class DetailsGameComponent implements OnInit, OnDestroy {
     private router: ActivatedRoute
   ) {
     this.showSpinner = true;
+    this.userExists = false;
   }
 
   ngOnInit(): void {
-    this.subscription = this.router.paramMap.subscribe((res: ParamMap) => {
+    this.router.paramMap.subscribe((res: ParamMap) => {
       const GAME_ID: string = res['params']['id'];
-
       this.gameService.getGameById(GAME_ID).subscribe(() => {
-        this.detailsGame$ = this.store.pipe(
-          select((state: AppState) => state.games.details)
-        );
-        this.showSpinner = false;
+        this.subscription = this.store
+          .pipe(select(state => state.games.details))
+          .subscribe(res => {
+            const SUBSCRIPTIONS = res['subscriptions'];
+            const USER_ID = localStorage.getItem('userId');
+            if (
+              SUBSCRIPTIONS.length !== 0 &&
+              SUBSCRIPTIONS.indexOf(USER_ID) !== -1
+            ) {
+              this.userExists = true;
+            }
+            this.detailsGame = res;
+            this.showSpinner = false;
+          });
       });
     });
   }

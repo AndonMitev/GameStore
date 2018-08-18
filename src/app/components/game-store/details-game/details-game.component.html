@@ -1,14 +1,20 @@
 <div *ngIf="showSpinner">
   <loading-spinner></loading-spinner>
 </div>
-<div *ngIf="detailsGame$ | async as detailsGame">
+<div *ngIf="detailsGame">
   <div class="container border rounded shadow-lg mt-3 bg-white">
     <div class="row mb-2">
       <div class="col-md-3">
         <img class="img-fluid rounded mt-5" [src]=detailsGame.image [alt]=detailsGame.title />
         <h4 class="text-center">Price {{detailsGame.price | currency}}</h4>
-        <add-to-cart class="btn-primary" [game]=detailsGame></add-to-cart>
-        <subscribe-button [detailsGame]=detailsGame></subscribe-button>
+        <div *ngIf="!userExists">
+          <subscribe-to-game></subscribe-to-game>
+          <add-to-cart class="btn-primary" [game]=detailsGame></add-to-cart>
+        </div>
+        <div *ngIf="userExists">
+          <button class="btn btn-danger">Unsubscribe</button>
+          <add-to-cart class="btn-primary" [game]=detailsGame></add-to-cart>
+        </div>
       </div>
       <div class="col-md-4">
         <h2 class="text-center">Game details</h2>

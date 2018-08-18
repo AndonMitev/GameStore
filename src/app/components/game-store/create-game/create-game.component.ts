@@ -65,7 +65,8 @@ export class CreateGameComponent implements OnInit, OnDestroy {
       GAME_DATA['genre'],
       GAME_DATA['description'],
       GAME_DATA['mode'],
-      Number(GAME_DATA['price'])
+      Number(GAME_DATA['price']),
+      []
     );
 
     this.subscription = this.createGameService

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SubscribeButtonComponent } from './subscribe-button.component';
+import { SubscribeToGameComponent } from './subscribe-to-game.component';
 
-describe('SubscribeButtonComponent', () => {
-  let component: SubscribeButtonComponent;
-  let fixture: ComponentFixture<SubscribeButtonComponent>;
+describe('SubscribeToGameComponent', () => {
+  let component: SubscribeToGameComponent;
+  let fixture: ComponentFixture<SubscribeToGameComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SubscribeButtonComponent ]
+      declarations: [ SubscribeToGameComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SubscribeButtonComponent);
+    fixture = TestBed.createComponent(SubscribeToGameComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

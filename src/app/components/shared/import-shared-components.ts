@@ -5,8 +5,8 @@ import { CompareValidatorDirective } from './directives/compare-validator.direct
 import { UniqueUsernameValidatorDirective } from './directives/username.directive';
 import { FooterComponent } from './footer/footer.component';
 import { NavbarComponent } from './navbar/navbar.component';
-import { SubscribeButtonComponent } from './subscribe-button/subscribe-button.component';
 import { SpinnerComponent } from './loading-spinner/loading-spinner.component';
+import { SubscribeToGameComponent } from './subscribe-to-game/subscribe-to-game.component';
 
 export const sharedComponentsImp = [
   AddToCartComponent,
@@ -16,6 +16,6 @@ export const sharedComponentsImp = [
   UniqueUsernameValidatorDirective,
   FooterComponent,
   NavbarComponent,
-  SubscribeButtonComponent,
-  SpinnerComponent
+  SpinnerComponent,
+  SubscribeToGameComponent
 ];

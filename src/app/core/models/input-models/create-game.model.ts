@@ -10,6 +10,7 @@ export class CreateGameInputModel {
     public genre: string,
     public description: string,
     public mode: string,
-    public price: number
+    public price: number,
+    public subscriptions: string[]
   ) {}
 }

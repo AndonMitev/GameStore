@@ -2,7 +2,7 @@ import { GameState } from './state/game.state';
 import { CommentsState } from './state/comments.state';
 import { OrderState } from './state/order.state';
 import { UserState } from './state/user.state';
-import { SubscriptionState } from './state/subscription.state';
+
 import { MessageState } from './state/message.state';
 
 export interface AppState {
@@ -10,6 +10,5 @@ export interface AppState {
   comments: CommentsState;
   orders: OrderState;
   users: UserState;
-  subscriptions: SubscriptionState;
   messages: MessageState
 }
