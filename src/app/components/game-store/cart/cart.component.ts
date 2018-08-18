@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 //Services
 import { OrderGameService } from '../../../core/services/order.services/order-game.service';
@@ -15,37 +17,50 @@ import { CompleteOrderModel } from '../../../core/models/view-models/complete-or
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.css']
 })
-export class CartComponent implements OnInit {
-  private order$;
-  private orderModel: CompleteOrderModel;
+export class CartComponent implements OnInit, OnDestroy {
+  public order: CompleteOrderModel[];
+  private subscription: Subscription;
 
   constructor(
     private cartService: OrderGameService,
     private store: Store<AppState>,
     private toast: ToastrService,
-    private completeService: CompleteOrderService
+    private completeService: CompleteOrderService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
     this.cartService.viewOrder();
     this.store
-      .pipe(select((state: AppState) => (this.order$ = state.orders.all)))
+      .pipe(select((state: AppState) => (this.order = state.orders.all)))
       .subscribe();
   }
 
-  removeItem(gameId) {
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
+
+  removeItem(gameId: string): void {
     this.cartService.deleteGame(gameId);
     this.toast.success(`Game was successfully deleted from your cart!`);
   }
 
-  completeOrder() {
-    /* this.localStorage.getItem('order').subscribe(res => {
-      const USER_ID = localStorage.getItem('userId');
-      const ORDER = JSON.stringify(res);
-      this.orderModel = new CompleteOrderModel(USER_ID, ORDER);
-      this.completeService.finishOrder(this.orderModel).subscribe(() => {
-        this.toast.success('Order were successfully created!');
+  completeOrder(): void {
+    this.subscription = this.store
+      .pipe(select(state => state.orders.all))
+      .subscribe(res => {
+        const FINAL_ORDER = {
+          userId: localStorage.getItem('userId'),
+          order: res
+        };
+
+        this.completeService.finishOrder(FINAL_ORDER).subscribe(() => {
+          sessionStorage.clear();
+          this.toast.success('Order was successfully created!');
+          this.router.navigate([`/user/profile/${FINAL_ORDER.userId}`]);
+        });
       });
-    }); */
   }
 }

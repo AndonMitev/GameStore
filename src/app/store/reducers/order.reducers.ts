@@ -8,7 +8,6 @@ const INITIAL_STATE: OrderState = {
 };
 
 function addGameToOrder(state, game) {
-  console.log(game);
   return {
     ...state,
     all: [...state.all, game]
@@ -23,6 +22,7 @@ function deleteGameFromOrder(state, gameId) {
 }
 
 function viewAllAddedGamesToOrder(state, games) {
+  console.log(games);
   return {
     ...state,
     all: games
@@ -30,6 +30,7 @@ function viewAllAddedGamesToOrder(state, games) {
 }
 
 function completeOrder(state, order) {
+  console.log(order);
   return {
     ...state,
     completedOrders: [...state.completedOrders, order]
@@ -44,9 +45,10 @@ function getCompletedOrder(state, orders) {
 }
 
 function getCompletedOrderDetails(state, orderData) {
+  console.log(orderData);
   return {
     ...state,
-    details: JSON.parse(orderData.order)
+    details: orderData.order
   };
 }
 

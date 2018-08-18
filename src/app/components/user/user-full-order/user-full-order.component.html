@@ -10,7 +10,7 @@
         <div class="row">
           <div *ngFor="let game of fullOrder$ | async" class="col-lg-3 align-items-stretch mt-3">
             <div class="card shadow-lg">
-              <a routerLink="/game/details/{{game._id}}">
+              <a [routerLink]="['/game/details/', game.gameId]">
                 <img class="card-img-top img-fluid  fix-img-size" [src]=game.image [alt]=game.title />
               </a>
               <div class="card-body bg-secondary text-center h-25 edit-color">
