@@ -1,10 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { GetAllUserMessagesService } from '../../../core/services/message-services/get-user-messages.service';
-import { Store, select } from '../../../../../node_modules/@ngrx/store';
+import { GetAllUserMessagesService } from '../../../core/services/message-services/get-sent-messages.service';
+import { Store, select } from '@ngrx/store';
 import { AppState } from '../../../store/app.state';
 import { CreateMessageInputModel } from '../../../core/models/input-models/message-model';
-import { Observable, Subscription } from '../../../../../node_modules/rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { UserVerificationService } from '../../../core/services/authentication/verification.service';
 
 @Component({
@@ -13,7 +13,7 @@ import { UserVerificationService } from '../../../core/services/authentication/v
   styleUrls: ['./my-messages.component.css']
 })
 export class MyMessagesComponent implements OnInit, OnDestroy {
-  public userMessages$: Observable<CreateMessageInputModel[]>;
+  public sentMessages$: Observable<CreateMessageInputModel[]>;
   private subscription: Subscription;
 
   constructor(
@@ -24,16 +24,17 @@ export class MyMessagesComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    const USER_ID: string = localStorage.getItem('username');
-
-    this.subscription = this.messageService
-      .getAllUserMessages(USER_ID)
-      .subscribe(
-        () =>
-          (this.userMessages$ = this.store.pipe(
-            select(state => state.messages.all)
-          ))
-      );
+    //const USER_ID: string = localStorage.getItem('username');
+    this.actRoute.paramMap.subscribe(res => {
+      const USER_ID = res['params']['id'];
+      this.subscription = this.messageService
+        .getSentMessages(USER_ID)
+        .subscribe(() => {
+          this.sentMessages$ = this.store.pipe(
+            select(state => state.messages.sentMessages)
+          );
+        });
+    });
   }
 
   ngOnDestroy() {

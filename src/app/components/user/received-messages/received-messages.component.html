@@ -1,0 +1,11 @@
+<div *ngIf="receivedMessages$" class="mt-4">
+  <div class="mr-3 list-group-item list-group-item-action" *ngFor="let message of receivedMessages$ | async">
+    <a routerLink="/user/message/details/{{message._id}}">
+      <h4 class="text-justify">{{message.title}}</h4>
+    </a>
+    <p>{{message.content}}</p>
+    <a routerLink="/user/profile/{{message._acl.creator}}">
+      <p>Posted by: {{message._acl.creator}} at: {{message._kmd.ect | date}}</p>
+    </a>
+  </div>
+</div>

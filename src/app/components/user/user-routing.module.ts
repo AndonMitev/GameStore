@@ -4,6 +4,7 @@ import { AuthGuard } from '../../core/guards/auth.guard';
 
 import { ProfileComponent } from './profile/profile.component';
 import { UserFullOrderComponent } from './user-full-order/user-full-order.component';
+import { MessageDetailsComponent } from './message-details/message-details.component';
 
 const routes: Routes = [
   {
@@ -15,6 +16,11 @@ const routes: Routes = [
     path: 'completed/:id',
     canActivate: [AuthGuard],
     component: UserFullOrderComponent
+  },
+  {
+    path: 'message/details/:id',
+    canActivate: [AuthGuard],
+    component: MessageDetailsComponent
   }
 ];
 

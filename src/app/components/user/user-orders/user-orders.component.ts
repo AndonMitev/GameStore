@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Store, select } from '@ngrx/store';
 import { AppState } from '../../../store/app.state';
 import { GetCompletedOrdersService } from '../../../core/services/order.services/get-user-orders.service';
@@ -23,19 +23,22 @@ export class UserOrdersComponent implements OnInit {
     private store: Store<AppState>,
     private orderService: GetCompletedOrdersService,
     private router: Router,
+    private actRoute: ActivatedRoute
   ) {
     this.showSpinner = true;
   }
 
   ngOnInit(): void {
-    const userId = localStorage.getItem('userId');
-    this.orderService.getCompletedOrders(userId).subscribe(res => {
-      this.subscription = this.store
-        .pipe(select(state => state.orders.completedOrders))
-        .subscribe(res => {
-          this.orders = res
-          this.showSpinner = false;
-        });
+    this.subscription = this.actRoute.paramMap.subscribe(res => {
+      const USER_ID = res['params']['id'];
+      this.orderService.getCompletedOrders(USER_ID).subscribe(() => {
+        this.store
+          .pipe(select(state => state.orders.completedOrders))
+          .subscribe(res => {
+            this.orders = res;
+            this.showSpinner = false;
+          });
+      });
     });
   }
 

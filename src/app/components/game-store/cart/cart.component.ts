@@ -8,7 +8,7 @@ import { AppState } from '../../../store/app.state';
 import { CompleteOrderService } from '../../../core/services/order.services/complete-order.service';
 import { CompleteOrderModel } from '../../../core/models/view-models/complete-order.model';
 import { LocalStorage } from '@ngx-pwa/local-storage';
-import { tap, map } from '../../../../../node_modules/rxjs/operators';
+import { tap, map } from 'rxjs/operators';
 
 @Component({
   selector: 'cart',

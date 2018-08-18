@@ -1,19 +1,20 @@
 <div class="row">
-  <div class="col-md-12">
-    <h2 class="text-center">My messages</h2>
-    <div *ngIf="userMessages$" class="mt-4">
-      <div class="mr-3 list-group-item list-group-item-action" *ngFor="let message of userMessages$ | async">
-        <a routerLink="/message/{{message._id}}">
+  <div class="col-md-6">
+    <h2 class="text-center">Sent messages</h2>
+    <div *ngIf="sentMessages$" class="mt-4">
+      <div class="mr-3 list-group-item list-group-item-action" *ngFor="let message of sentMessages$ | async">
+        <a routerLink="/user/message/details/{{message._id}}">
           <h4 class="text-justify">{{message.title}}</h4>
         </a>
         <p>{{message.content}}</p>
-
+        <a routerLink="/user/profile/{{message._acl.creator}}">
+          <p>Posted by: {{message._acl.creator}} at: {{message._kmd.ect | date}}</p>
+        </a>
       </div>
     </div>
   </div>
+  <div class="col-md-6">
+    <h2 class="text-center">Received messages</h2>
+    <received-messages></received-messages>
+  </div>
 </div>
-
-<!--  <span class="text-justify">
-          <small> Sended by:
-            <em>{{message._acl.creator}}</em> at: {{message._kmd.ect | date}}</small>
-        </span>-->

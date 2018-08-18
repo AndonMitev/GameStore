@@ -2,13 +2,23 @@ import * as MessageActions from '../actions/message.actions';
 import { MessageState } from '../state/message.state';
 
 const initialState: MessageState = {
-  all: []
+  all: [],
+  sentMessages: [],
+  recievedMessages: [],
+  details: null
 };
 
-function getAllMessages(state, messages) {
+function getSentMessages(state, messages) {
   return {
     ...state,
-    all: [...messages]
+    sentMessages: [...messages]
+  };
+}
+
+function getReceivedMessages(state, messages) {
+  return {
+    ...state,
+    recievedMessages: [...messages]
   };
 }
 
@@ -19,15 +29,26 @@ function createMessage(state, message) {
   };
 }
 
+function getMessageDetails(state, message) {
+  return {
+    ...state,
+    details: message
+  };
+}
+
 export function messageReducer(
   state: MessageState = initialState,
   action: MessageActions.Types
 ) {
   switch (action.type) {
-    case MessageActions.GET_ALL_MESSAGES:
-      return getAllMessages(state, action.payload);
+    case MessageActions.GET_SENT_MESSAGES:
+      return getSentMessages(state, action.payload);
+    case MessageActions.GET_RECEIVED_MESSAGES:
+      return getReceivedMessages(state, action.payload);
     case MessageActions.CREATE_MESSAGE:
       return createMessage(state, action.payload);
+    case MessageActions.GET_MESSAGE_DETAILS:
+      return getMessageDetails(state, action.payload);
     default:
       return state;
   }

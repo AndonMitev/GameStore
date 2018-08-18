@@ -5,10 +5,17 @@ const initialState: UserState = {
   user: null
 };
 
-function getUser(state, userData) {
+function getUserById(state, userData) {
   return {
     ...state,
     user: userData
+  };
+}
+
+function getUserByUsername(state, user) {
+  return {
+    ...state,
+    user: user.slice(0, 1)
   };
 }
 
@@ -17,8 +24,10 @@ export function userReducer(
   action: UserActions.Types
 ) {
   switch (action.type) {
-    case UserActions.GET_USER:
-      return getUser(state, action.payload);
+    case UserActions.GET_USER_BY_ID:
+      return getUserById(state, action.payload);
+    case UserActions.GET_USER_BY_USERNAME:
+      return getUserByUsername(state, action.payload);
     default:
       return state;
   }

@@ -5,6 +5,8 @@ import { UserCommentsComponent } from './user-comments/user-comments.component';
 import { UserFullOrderComponent } from './user-full-order/user-full-order.component';
 import { CreateMessageComponent } from './create-message/create-message.component';
 import { MyMessagesComponent } from './my-messages/my-messages.component';
+import { MessageDetailsComponent } from './message-details/message-details.component';
+import { RecievedMessagesComponent } from './received-messages/received-messages.component';
 
 export const userComponentsImp = [
   ProfileComponent,
@@ -13,5 +15,7 @@ export const userComponentsImp = [
   UserCommentsComponent,
   UserFullOrderComponent,
   CreateMessageComponent,
-  MyMessagesComponent
+  MyMessagesComponent,
+  MessageDetailsComponent,
+  RecievedMessagesComponent
 ];

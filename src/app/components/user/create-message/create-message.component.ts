@@ -6,12 +6,16 @@ import {
   AbstractControl
 } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 //Services
 import { UserVerificationService } from '../../../core/services/authentication/verification.service';
 import { CreateMessageService } from '../../../core/services/message-services/create-message.service';
 //Model
 import { CreateMessageInputModel } from '../../../core/models/input-models/message-model';
+import { GetUserIdByUsernameService } from '../../../core/services/profile-services/get-user-id-by-username.service';
+import { Store, select } from '../../../../../node_modules/@ngrx/store';
+import { AppState } from '../../../store/app.state';
 
 @Component({
   selector: 'create-message',
@@ -26,7 +30,10 @@ export class CreateMessageComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private verification: UserVerificationService,
-    private createMessageService: CreateMessageService
+    private createMessageService: CreateMessageService,
+    private actRouter: ActivatedRoute,
+    private getUserId: GetUserIdByUsernameService,
+    private store: Store<AppState>
   ) {}
 
   ngOnInit(): void {
@@ -58,16 +65,28 @@ export class CreateMessageComponent implements OnInit, OnDestroy {
   }
 
   submitMessageForm() {
-    const RECIPIENT =
-      this.messageForm.value['recipient'] || 'Admin'
+    const RECIPIENT = this.messageForm.value['recipient'] || 'Admin';
+    const FROM = localStorage.getItem('username');
     const TITLE = this.messageForm.value['title'];
     const CONTENT = this.messageForm.value['content'];
 
-    this.messageModel = new CreateMessageInputModel(RECIPIENT, TITLE, CONTENT);
+    this.subscription = this.getUserId
+      .getUserIdByUsername(RECIPIENT)
+      .subscribe(res => {
+        console.log(res);
+        const RECIPIENT_ID = res[0]['_id'];
+        this.messageModel = new CreateMessageInputModel(
+          FROM,
+          RECIPIENT,
+          TITLE,
+          CONTENT,
+          RECIPIENT_ID
+        );
 
-    this.subscription = this.createMessageService
-      .createNewMessage(this.messageModel)
-      .subscribe();
+        this.createMessageService
+          .createNewMessage(this.messageModel)
+          .subscribe();
+      });
   }
 
   get title(): AbstractControl {

@@ -2,4 +2,7 @@ import { CreateMessageInputModel } from '../../core/models/input-models/message-
 
 export interface MessageState {
   all: CreateMessageInputModel[];
+  sentMessages: CreateMessageInputModel[];
+  recievedMessages: CreateMessageInputModel[];
+  details: CreateMessageInputModel
 }

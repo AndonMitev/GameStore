@@ -10,7 +10,6 @@ import { DetailsGameModel } from '../../../core/models/view-models/details-game.
 //State
 import { AppState } from '../../../store/app.state';
 
-
 @Component({
   selector: 'details-game',
   templateUrl: './details-game.component.html',
@@ -23,25 +22,21 @@ export class DetailsGameComponent implements OnInit {
   constructor(
     private gameService: GetDetailsGameService,
     private store: Store<AppState>,
-    private router: ActivatedRoute,
-    //private subscribeService: GetUserSubscriptionsService
+    private router: ActivatedRoute //private subscribeService: GetUserSubscriptionsService
   ) {
     this.showSpinner = true;
   }
 
   ngOnInit(): void {
     this.router.paramMap.subscribe(res => {
-      const USER_ID = localStorage.getItem('userId');
-    /*  this.subscribeService.getUserSubscriptions(USER_ID).subscribe(() => {
-        const id: string = res['params']['id'];
-        this.gameService.getGameById(id).subscribe(() => {
-          this.detailsGame$ = this.store.pipe(
-            select(state => state.games.details)
-          );
-          this.showSpinner = false;
-        });
-      });*/
-    }); 
+      const GAME_ID = res['params']['id'];
+      this.gameService.getGameById(GAME_ID).subscribe(() => {
+        this.detailsGame$ = this.store.pipe(
+          select(state => state.games.details)
+        );
+        this.showSpinner = false;
+      });
+    });
   }
 
   showOrHideSubscribeButton() {}

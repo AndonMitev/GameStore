@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { GetProfileService } from '../../../core/services/profile-services/get-profile.service';
 import { Store, select } from '@ngrx/store';
 import { AppState } from '../../../store/app.state';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'profile',
@@ -18,20 +19,23 @@ export class ProfileComponent implements OnInit {
 
   constructor(
     private profileService: GetProfileService,
-    private store: Store<AppState>
+    private store: Store<AppState>,
+    private actRoute: ActivatedRoute
   ) {
     this.showOrders = false;
     this.showSubscriptions = false;
     this.showComments = false;
-    this.showMessages = true;
+    this.showMessages = false;
     this.showSpinner = true;
   }
 
   ngOnInit() {
-    const USER_ID = localStorage.getItem('userId');
-    this.profileService.getProfile(USER_ID).subscribe(res => {
-      this.userData$ = this.store.pipe(select(state => state.users.user));
-      this.showSpinner = false;
+    this.actRoute.paramMap.subscribe(res => {
+      const USER_ID = res['params']['id'];
+      this.profileService.getProfile(USER_ID).subscribe(res => {
+        this.userData$ = this.store.pipe(select(state => state.users.user));
+        this.showSpinner = false;
+      });
     });
   }
 
