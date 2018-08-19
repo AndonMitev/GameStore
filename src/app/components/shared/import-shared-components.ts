@@ -7,6 +7,7 @@ import { FooterComponent } from './footer/footer.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { SpinnerComponent } from './loading-spinner/loading-spinner.component';
 import { SubscribeToGameComponent } from './subscribe-to-game/subscribe-to-game.component';
+import { UnsubscribeFromGameComponent } from './unsubscribe-from-game/unsubscribe-from-game.component';
 
 export const sharedComponentsImp = [
   AddToCartComponent,
@@ -17,5 +18,6 @@ export const sharedComponentsImp = [
   FooterComponent,
   NavbarComponent,
   SpinnerComponent,
-  SubscribeToGameComponent
+  SubscribeToGameComponent,
+  UnsubscribeFromGameComponent
 ];

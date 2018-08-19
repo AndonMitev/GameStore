@@ -8,11 +8,11 @@
         <img class="img-fluid rounded mt-5" [src]=detailsGame.image [alt]=detailsGame.title />
         <h4 class="text-center">Price {{detailsGame.price | currency}}</h4>
         <div *ngIf="!userExists">
-          <subscribe-to-game></subscribe-to-game>
+          <subscribe-to-game [game]=detailsGame></subscribe-to-game>
           <add-to-cart class="btn-primary" [game]=detailsGame></add-to-cart>
         </div>
         <div *ngIf="userExists">
-          <button class="btn btn-danger">Unsubscribe</button>
+          <unsubscribe-from-game [game]=detailsGame></unsubscribe-from-game>
           <add-to-cart class="btn-primary" [game]=detailsGame></add-to-cart>
         </div>
       </div>

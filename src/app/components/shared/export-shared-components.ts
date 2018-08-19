@@ -7,6 +7,7 @@ import { CompareValidatorDirective } from './directives/compare-validator.direct
 import { UniqueUsernameValidatorDirective } from './directives/username.directive';
 import { SpinnerComponent } from './loading-spinner/loading-spinner.component';
 import { SubscribeToGameComponent } from './subscribe-to-game/subscribe-to-game.component';
+import { UnsubscribeFromGameComponent } from './unsubscribe-from-game/unsubscribe-from-game.component';
 
 export const sharedComponentsEx = [
   DeleteCommentComponent,
@@ -17,5 +18,6 @@ export const sharedComponentsEx = [
   CompareValidatorDirective,
   UniqueUsernameValidatorDirective,
   SpinnerComponent,
-  SubscribeToGameComponent
+  SubscribeToGameComponent,
+  UnsubscribeFromGameComponent
 ];

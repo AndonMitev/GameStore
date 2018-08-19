@@ -6,7 +6,7 @@ import { DetailsGameModel } from '../../core/models/view-models/details-game.mod
 
 export const GET_ALL_GAMES = '[GAMES] All';
 export const GET_DETAILS_GAME = '[GAMES] Details';
-export const GET_COMMENTS_GAME = '[GAMES] Comments';
+export const EDIT_GAME = '[GAMES] Edit';
 
 export class GetAllGames implements Action {
   readonly type: string = GET_ALL_GAMES;
@@ -18,4 +18,9 @@ export class GetDetailsGame implements Action {
   constructor(public payload: DetailsGameModel) {}
 }
 
-export type Types = GetAllGames | GetDetailsGame;
+export class EditGame implements Action {
+  readonly type: string = EDIT_GAME;
+  constructor(public payload: DetailsGameModel) {}
+}
+
+export type Types = GetAllGames | GetDetailsGame | EditGame;

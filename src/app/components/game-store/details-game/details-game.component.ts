@@ -25,26 +25,28 @@ export class DetailsGameComponent implements OnInit, OnDestroy {
   constructor(
     private gameService: GetDetailsGameService,
     private store: Store<AppState>,
-    private router: ActivatedRoute
+    private actRoute: ActivatedRoute
   ) {
     this.showSpinner = true;
-    this.userExists = false;
   }
 
   ngOnInit(): void {
-    this.router.paramMap.subscribe((res: ParamMap) => {
+    this.actRoute.paramMap.subscribe((res: ParamMap) => {
       const GAME_ID: string = res['params']['id'];
       this.gameService.getGameById(GAME_ID).subscribe(() => {
         this.subscription = this.store
-          .pipe(select(state => state.games.details))
-          .subscribe(res => {
-            const SUBSCRIPTIONS = res['subscriptions'];
-            const USER_ID = localStorage.getItem('userId');
+          .pipe(select((state: AppState) => state.games.details))
+          .subscribe((res: DetailsGameModel) => {
+            const SUBSCRIPTIONS: string[] = res['subscriptions'];
+            const USER_ID: string = localStorage.getItem('userId');
+
             if (
               SUBSCRIPTIONS.length !== 0 &&
               SUBSCRIPTIONS.indexOf(USER_ID) !== -1
             ) {
               this.userExists = true;
+            } else {
+              this.userExists = false;
             }
             this.detailsGame = res;
             this.showSpinner = false;

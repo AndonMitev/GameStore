@@ -22,7 +22,7 @@ export class CachingInterceptor implements HttpInterceptor {
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    if (req.method === 'POST') {
+    if (req.method !== 'GET') {
       this.cache.cache.clear();
       return next.handle(req);
     }
