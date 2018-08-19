@@ -1,7 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Store, select } from '@ngrx/store';
+import { Observable, Subscription } from 'rxjs';
 
 //Serivces
 import { GetAllGamesService } from '../../../core/services/game-store-services/get-all-games.service';
@@ -18,12 +19,14 @@ import { AllGamesModel } from '../../../core/models/view-models/all-games.model'
 export class AllGamesComponent implements OnInit, OnDestroy {
   public allGames$: Observable<AllGamesModel[]>;
   public showSpinner: boolean;
+  public searchForm: FormGroup;
   private subscription: Subscription;
 
   constructor(
     private gameService: GetAllGamesService,
     private store: Store<AppState>,
-    private router: ActivatedRoute
+    private router: ActivatedRoute,
+    private fb: FormBuilder
   ) {
     this.showSpinner = true;
   }
@@ -38,6 +41,10 @@ export class AllGamesComponent implements OnInit, OnDestroy {
         this.showSpinner = false;
       });
     });
+
+    this.searchForm = this.fb.group({
+      name: ''
+    })
   }
 
   ngOnDestroy(): void {

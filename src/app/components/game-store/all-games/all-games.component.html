@@ -5,14 +5,19 @@
   <div class="container border rounded shadow-lg mt-3 bg-white">
     <h1 class="display-3 text-center">Game Store</h1>
     <hr>
+    <form class="form-group col-md-6 offset-3" [formGroup]=searchForm>
+      <label class="h4">Search for a name of game</label>
+      <input type="text" class="form-control" formControlName="name" placeholder="Search..." #searchedGames />
+    </form>
     <div class="row">
+
       <div class="col-md-3">
         <categories></categories>
       </div>
       <div class="col-md-9">
         <h3 class="text-center">Games</h3>
         <div class="row">
-          <div *ngFor="let game of allGames; let i = index" class="col-lg-4 align-items-stretch mt-3">
+          <div *ngFor="let game of allGames | filter:searchedGames.value; let i = index" class="col-lg-4 align-items-stretch mt-3">
             <div class="card shadow-lg">
               <a routerLink="/game/details/{{game._id}}">
                 <img class="card-img-top fix-img-size" [src]=game.image [alt]=game.title />
@@ -38,8 +43,3 @@
     </div>
   </div>
 </div>
-
-
-<!--
-             
--->
