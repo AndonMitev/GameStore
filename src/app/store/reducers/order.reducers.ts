@@ -22,7 +22,6 @@ function deleteGameFromOrder(state, gameId) {
 }
 
 function viewAllAddedGamesToOrder(state, games) {
-  console.log(games);
   return {
     ...state,
     all: games

@@ -81,7 +81,10 @@ export class CreateMessageComponent implements OnInit, OnDestroy {
 
         this.createMessageService
           .createNewMessage(this.messageModel)
-          .subscribe(() => this.toast.success(`Message successfully send!`));
+          .subscribe(() => {
+            this.toast.success(`Message successfully send!`);
+            this.initializeMessageForm();
+          });
       });
   }
 

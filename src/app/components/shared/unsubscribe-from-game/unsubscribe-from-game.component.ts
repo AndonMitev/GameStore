@@ -20,7 +20,8 @@ export class UnsubscribeFromGameComponent implements OnDestroy {
   unsubscribeUser() {
     const GAME_ID = this.game['_id'];
     const USER_ID = localStorage.getItem('userId');
-
+    console.log(this.game);
+    console.log(USER_ID);
     this.game['subscriptions'] = this.game['subscriptions'].filter(
       id => id !== USER_ID
     );

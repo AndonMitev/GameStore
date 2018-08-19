@@ -56,6 +56,7 @@ export class CreateCommentGameComponent implements OnInit, OnDestroy {
       this.commentModel = new CommentGameInputModel(ID, DESCRIPTION, AUTHOR);
       this.commentService.createComment(this.commentModel).subscribe(() => {
         this.toast.success(`Comment successfully created!`);
+        this.initializeCommentForm();
       });
     });
   }

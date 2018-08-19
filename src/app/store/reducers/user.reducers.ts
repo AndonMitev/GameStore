@@ -2,7 +2,8 @@ import * as UserActions from '../actions/user.actions';
 import { UserState } from '../state/user.state';
 
 const initialState: UserState = {
-  user: null
+  user: null,
+  subscriptions: []
 };
 
 function getUserById(state, userData) {
@@ -19,6 +20,13 @@ function getUserByUsername(state, user) {
   };
 }
 
+function getUserSubscriptions(state, userSubscriptions) {
+  return {
+    ...state,
+    subscriptions: userSubscriptions
+  };
+}
+
 export function userReducer(
   state: UserState = initialState,
   action: UserActions.Types
@@ -28,6 +36,8 @@ export function userReducer(
       return getUserById(state, action.payload);
     case UserActions.GET_USER_BY_USERNAME:
       return getUserByUsername(state, action.payload);
+    case UserActions.GET_USER_SUBSCRIPTIONS:
+      return getUserSubscriptions(state, action.payload);
     default:
       return state;
   }

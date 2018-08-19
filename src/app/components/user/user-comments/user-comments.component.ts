@@ -3,7 +3,7 @@ import { Store, select } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 
-//Services
+//Service
 import { GetUserCommentsService } from '../../../core/services/comment-services/get-user-comments.service';
 //State
 import { AppState } from '../../../store/app.state';

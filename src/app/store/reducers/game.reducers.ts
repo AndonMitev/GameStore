@@ -21,7 +21,6 @@ function getDetailsGame(state, game) {
 }
 
 function editGame(state, game) {
-  console.log(game);
   return {
     ...state,
     details: game
