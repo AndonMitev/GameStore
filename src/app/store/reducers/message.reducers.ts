@@ -23,11 +23,9 @@ function getReceivedMessages(state, messages) {
 }
 
 function createMessage(state, message) {
-  console.log(state);
-  if (localStorage.getItem('userId') === 'recepientId') {
+  if (localStorage.getItem('userId') === message['recepientId']) {
     return {
       ...state,
-      sentMessages: [...state.sentMessages, message], // Might be removed !?
       recievedMessages: [...state.recievedMessages, message]
     };
   } else {

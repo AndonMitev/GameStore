@@ -16,6 +16,7 @@ import { CreateMessageService } from '../../../core/services/message-services/cr
 import { CreateMessageInputModel } from '../../../core/models/input-models/message-model';
 import { ActivatedRoute } from '../../../../../node_modules/@angular/router';
 import { GetAllUserMessagesService } from '../../../core/services/message-services/get-sent-messages.service';
+import { GetReceivedMessagesService } from '../../../core/services/message-services/get-received-messages.service';
 
 @Component({
   selector: 'create-message',
@@ -28,13 +29,14 @@ export class CreateMessageComponent implements OnInit, OnDestroy {
   private messageModel: CreateMessageInputModel;
 
   constructor(
+    public verification: UserVerificationService,
     private fb: FormBuilder,
-    private verification: UserVerificationService,
     private createMessageService: CreateMessageService,
     private getUserId: GetUserIdByUsernameService,
     private toast: ToastrService,
     private actRoute: ActivatedRoute,
-    private getSentMsg: GetAllUserMessagesService
+    private getSentMsg: GetAllUserMessagesService,
+    private getReceivedMsg: GetReceivedMessagesService
   ) {}
 
   ngOnInit(): void {
@@ -90,10 +92,10 @@ export class CreateMessageComponent implements OnInit, OnDestroy {
           this.createMessageService
             .createNewMessage(this.messageModel)
             .subscribe(() => {
-              this.getSentMsg.getSentMessages(FROM_ID).subscribe(() => {
-                this.toast.success(`Message successfully send!`);
-                this.initializeMessageForm();
-              });
+              this.toast.success(`Message successfully send!`);
+              this.initializeMessageForm();
+              this.getSentMsg.getSentMessages(FROM_ID).subscribe();
+              this.getReceivedMsg.getReceivedMessages(FROM_ID).subscribe();
             });
         });
       });

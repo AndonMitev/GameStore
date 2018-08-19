@@ -10,7 +10,8 @@ import { UserVerificationService } from '../../../core/services/authentication/v
 })
 export class NavbarComponent {
   public userId: string;
-  constructor(private userVerification: UserVerificationService) {}
+  public userVerification: UserVerificationService;
+  constructor() {}
 
   getUserId(): string {
     return localStorage.getItem('userId');
