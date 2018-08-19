@@ -14,6 +14,8 @@ import { GetUserIdByUsernameService } from '../../../core/services/profile-servi
 import { CreateMessageService } from '../../../core/services/message-services/create-message.service';
 //Model
 import { CreateMessageInputModel } from '../../../core/models/input-models/message-model';
+import { ActivatedRoute } from '../../../../../node_modules/@angular/router';
+import { GetAllUserMessagesService } from '../../../core/services/message-services/get-sent-messages.service';
 
 @Component({
   selector: 'create-message',
@@ -30,7 +32,9 @@ export class CreateMessageComponent implements OnInit, OnDestroy {
     private verification: UserVerificationService,
     private createMessageService: CreateMessageService,
     private getUserId: GetUserIdByUsernameService,
-    private toast: ToastrService
+    private toast: ToastrService,
+    private actRoute: ActivatedRoute,
+    private getSentMsg: GetAllUserMessagesService
   ) {}
 
   ngOnInit(): void {
@@ -71,20 +75,27 @@ export class CreateMessageComponent implements OnInit, OnDestroy {
       .getUserIdByUsername(RECIPIENT)
       .subscribe(res => {
         const RECIPIENT_ID: string = res[0]['_id'];
-        this.messageModel = new CreateMessageInputModel(
-          FROM,
-          RECIPIENT,
-          TITLE,
-          CONTENT,
-          RECIPIENT_ID
-        );
+        this.actRoute.paramMap.subscribe(res => {
+          const FROM_ID = res['params']['id'];
 
-        this.createMessageService
-          .createNewMessage(this.messageModel)
-          .subscribe(() => {
-            this.toast.success(`Message successfully send!`);
-            this.initializeMessageForm();
-          });
+          this.messageModel = new CreateMessageInputModel(
+            FROM,
+            RECIPIENT,
+            TITLE,
+            CONTENT,
+            RECIPIENT_ID,
+            FROM_ID
+          );
+
+          this.createMessageService
+            .createNewMessage(this.messageModel)
+            .subscribe(() => {
+              this.getSentMsg.getSentMessages(FROM_ID).subscribe(() => {
+                this.toast.success(`Message successfully send!`);
+                this.initializeMessageForm();
+              });
+            });
+        });
       });
   }
 

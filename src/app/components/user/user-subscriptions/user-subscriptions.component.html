@@ -4,15 +4,15 @@
 <h2 class="text-center">Subscribed games</h2>
 <hr>
 <div *ngIf="userSubscriptions$ as userSubscriptions">
-  <div *ngFor="let subscrption of userSubscriptions; let i = index;" class="list-group-item list-group-item-action mt-2 mr-3">
+  <div *ngFor="let subscrptionGame of userSubscriptions; let i = index;" class="list-group-item list-group-item-action mt-2 mr-3">
     <span class="text-justify">
-      <a routerLink="/game/details/{{subscrption._id}}">
-        <img class="img-fluid" [src]=subscrption.image [alt]=subscrption.title />
+      <a routerLink="/game/details/{{subscrptionGame._id}}">
+        <img class="img-fluid" [src]=subscrptionGame.image [alt]=subscrptionGame.title />
         <small class="h4 ml-4">
-          <em>{{subscrption.title}}</em>
+          <em>{{subscrptionGame.title}}</em>
         </small>
       </a>
-      <unsubscribe-from-game class="float-right" [game]=subscrption></unsubscribe-from-game>
+      <unsubscribe-from-game class="float-right" [game]=subscrptionGame></unsubscribe-from-game>
     </span>
   </div>
   <div class="text-center" *ngIf="userSubscriptions.length === 0">

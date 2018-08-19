@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -10,7 +10,10 @@ import { AppState } from '../../../store/app.state';
 //Model
 import { CreateMessageInputModel } from '../../models/input-models/message-model';
 //Action
-import { CreateMessage } from '../../../store/actions/message.actions';
+import {
+  CreateMessage,
+  GetSentMessages
+} from '../../../store/actions/message.actions';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +24,12 @@ export class CreateMessageService {
   createNewMessage(message: CreateMessageInputModel): Observable<void> {
     return this.http
       .post<CreateMessageInputModel>(message, 'messages', 'appdata')
-      .pipe(map(() => this.store.dispatch(new CreateMessage(message))));
+      .pipe(
+        map((res) => {
+          console.log(res);
+          this.store.dispatch(new CreateMessage(message));
+          //this.store.dispatch(new GetSentMessages(message[]));
+        })
+      );
   }
 }

@@ -27,6 +27,13 @@ function getUserSubscriptions(state, userSubscriptions) {
   };
 }
 
+function unsubscribeUser(state, userId) {
+  return {
+    ...state,
+    subscriptions: [...state.subscriptions.filter(e => e._id !== userId)]
+  };
+}
+
 export function userReducer(
   state: UserState = initialState,
   action: UserActions.Types
@@ -38,6 +45,8 @@ export function userReducer(
       return getUserByUsername(state, action.payload);
     case UserActions.GET_USER_SUBSCRIPTIONS:
       return getUserSubscriptions(state, action.payload);
+    case UserActions.UNSUBSCRIBE_USER:
+      return unsubscribeUser(state, action.payload);
     default:
       return state;
   }

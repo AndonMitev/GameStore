@@ -11,6 +11,7 @@ import { AppState } from '../../../store/app.state';
 import { CreateGameInputModel } from '../../models/input-models/create-game.model';
 //Action
 import { EditGame } from '../../../store/actions/game.actions';
+import { UnsubscribeUser } from '../../../store/actions/user.actions';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +23,7 @@ export class EditGameService {
     return this.http.put(game, `gamestore/${id}`, 'appdata').pipe(
       map((res: CreateGameInputModel) => {
         this.store.dispatch(new EditGame(res));
+        this.store.dispatch(new UnsubscribeUser(id));
       })
     );
   }

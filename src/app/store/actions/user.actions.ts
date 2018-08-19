@@ -5,6 +5,7 @@ import { CompleteOrderModel } from '../../core/models/view-models/complete-order
 export const GET_USER_BY_ID = '[USER] Id';
 export const GET_USER_BY_USERNAME = '[USER] Username';
 export const GET_USER_SUBSCRIPTIONS = '[USER] Subscriptions';
+export const UNSUBSCRIBE_USER = '[USER] Unsubscribe';
 
 export class GetUserById implements Action {
   readonly type: string = GET_USER_BY_ID;
@@ -21,4 +22,13 @@ export class GetUserSubscriptions implements Action {
   constructor(public payload: CompleteOrderModel[]) {}
 }
 
-export type Types = GetUserById | GetUserByUsername | GetUserSubscriptions;
+export class UnsubscribeUser implements Action {
+  readonly type: string = UNSUBSCRIBE_USER;
+  constructor(public payload: string) {}
+}
+
+export type Types =
+  | GetUserById
+  | GetUserByUsername
+  | GetUserSubscriptions
+  | UnsubscribeUser;

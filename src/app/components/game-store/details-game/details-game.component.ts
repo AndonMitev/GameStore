@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Store, select } from '@ngrx/store';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 //Service
 import { GetDetailsGameService } from '../../../core/services/game-store-services/get-details-game.service';
@@ -9,7 +9,6 @@ import { GetDetailsGameService } from '../../../core/services/game-store-service
 import { DetailsGameModel } from '../../../core/models/view-models/details-game.model';
 //State
 import { AppState } from '../../../store/app.state';
-import { map } from '../../../../../node_modules/rxjs/operators';
 
 @Component({
   selector: 'details-game',
@@ -60,6 +59,4 @@ export class DetailsGameComponent implements OnInit, OnDestroy {
       this.subscription.unsubscribe();
     }
   }
-
-  showOrHideSubscribeButton() {}
 }

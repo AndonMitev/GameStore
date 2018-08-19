@@ -23,6 +23,7 @@ function getReceivedMessages(state, messages) {
 }
 
 function createMessage(state, message) {
+  console.log(state);
   if (localStorage.getItem('userId') === 'recepientId') {
     return {
       ...state,

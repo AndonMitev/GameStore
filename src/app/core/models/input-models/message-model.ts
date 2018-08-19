@@ -4,6 +4,7 @@ export class CreateMessageInputModel {
     public recipient: string,
     public title: string,
     public content: string,
-    public recepientId: string
+    public recepientId: string,
+    public fromId: string,
   ) {}
 }
