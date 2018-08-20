@@ -18,6 +18,8 @@ import { AllCommentsGameModel } from '../../../core/models/view-models/all-comme
 export class UserCommentsComponent implements OnInit, OnDestroy {
   public userComments$: Observable<AllCommentsGameModel[]>;
   public showSpinner: boolean;
+  public currPage: number;
+  public pageSize: number;
   private subscription: Subscription;
 
   constructor(
@@ -45,5 +47,9 @@ export class UserCommentsComponent implements OnInit, OnDestroy {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
+  }
+
+  pageChanged(newPage: number): void {
+    this.currPage = newPage;
   }
 }

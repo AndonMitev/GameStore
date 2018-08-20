@@ -5,6 +5,7 @@ import { Store, select } from '@ngrx/store';
 import { AppState } from '../../../store/app.state';
 import { Observable, Subscription } from 'rxjs';
 import { CreateMessageInputModel } from '../../../core/models/input-models/message-model';
+import { UserVerificationService } from '../../../core/services/authentication/verification.service';
 
 @Component({
   selector: 'message-details',
@@ -16,6 +17,7 @@ export class MessageDetailsComponent implements OnInit {
   private subscription: Subscription;
 
   constructor(
+    public verification: UserVerificationService,
     private actRoute: ActivatedRoute,
     private store: Store<AppState>,
     private messageDetailsService: GetMessageDetailsService

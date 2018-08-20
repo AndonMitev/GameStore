@@ -5,11 +5,15 @@
   <div class="col-md-12">
     <h2 class="text-center">Previous orders</h2>
     <hr>
-    <div *ngFor="let data of orders" class="list-group-item list-group-item-action">
+    <div *ngFor="let data of orders | paginate: { id: 'my-orders' , itemsPerPage: pageSize, currentPage: currPage }" class="list-group-item list-group-item-action">
       <button (click)="getFullOrderView(data._id)" class="btn btn-link offset-2 clear">
         <p class="h4 text-center">Number: {{data._id}}, Ordered at: {{data._kmd.ect | date}}</p>
       </button>
     </div>
+    <pagination-controls id="my-orders" (pageChange)="pageChanged($event)" maxSize="9" directionLinks="true" autoHide="true"
+    responsive="true" previousLabel="Previous" nextLabel="Next" screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page"
+    screenReaderCurrentLabel="You're on page">
+  </pagination-controls>
   </div>
   <div class="text-center" *ngIf="orders.length === 0">
     <h2>You haven't completed any orders yet!</h2>

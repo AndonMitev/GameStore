@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 //Modules
 import { GameStoreRoutingModule } from './game-store.routing.module';
@@ -17,7 +18,8 @@ import { gameStoreComponentsExp } from './export-game-store-components';
     ReactiveFormsModule,
     GameStoreRoutingModule,
     HttpClientModule,
-    SharedModule
+    SharedModule,
+    NgxPaginationModule
   ],
   declarations: [...gameStoreComponentsImp],
   exports: [...gameStoreComponentsExp]

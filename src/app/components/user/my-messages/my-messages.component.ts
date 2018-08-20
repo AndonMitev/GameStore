@@ -17,13 +17,18 @@ import { CreateMessageInputModel } from '../../../core/models/input-models/messa
 })
 export class MyMessagesComponent implements OnInit, OnDestroy {
   public sentMessages$: Observable<CreateMessageInputModel[]>;
+  public currPage: number;
+  public pageSize: number;
   private subscription: Subscription;
 
   constructor(
     private messageService: GetAllUserMessagesService,
     private actRoute: ActivatedRoute,
     private store: Store<AppState>
-  ) {}
+  ) {
+    this.currPage = 1;
+    this.pageSize = 3;
+  }
 
   ngOnInit(): void {
     this.actRoute.paramMap.subscribe((res: ParamMap) => {
@@ -43,5 +48,9 @@ export class MyMessagesComponent implements OnInit, OnDestroy {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
+  }
+
+  pageChanged(newPage: number): void {
+    this.currPage = newPage;
   }
 }

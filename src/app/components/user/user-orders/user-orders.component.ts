@@ -18,6 +18,8 @@ import { CompleteOrderModel } from '../../../core/models/view-models/complete-or
 export class UserOrdersComponent implements OnInit {
   public orders: CompleteOrderModel[];
   public showSpinner: boolean;
+  public currPage: number;
+  public pageSize: number;
   private subscription: Subscription;
 
   constructor(
@@ -26,6 +28,8 @@ export class UserOrdersComponent implements OnInit {
     private router: Router,
     private actRoute: ActivatedRoute
   ) {
+    this.currPage = 1;
+    this.pageSize = 6;
     this.showSpinner = true;
   }
 
@@ -49,5 +53,9 @@ export class UserOrdersComponent implements OnInit {
       this.subscription.unsubscribe();
       this.router.navigate([`/user/completed/${orderId}`]);
     }
+  }
+
+  pageChanged(newPage: number): void {
+    this.currPage = newPage;
   }
 }

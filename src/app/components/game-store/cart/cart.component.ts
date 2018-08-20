@@ -19,6 +19,8 @@ import { CompleteOrderModel } from '../../../core/models/view-models/complete-or
 })
 export class CartComponent implements OnInit, OnDestroy {
   public order: CompleteOrderModel[];
+  public currPage: number;
+  public pageSize: number;
   private subscription: Subscription;
 
   constructor(
@@ -27,7 +29,10 @@ export class CartComponent implements OnInit, OnDestroy {
     private toast: ToastrService,
     private completeService: CompleteOrderService,
     private router: Router
-  ) {}
+  ) {
+    this.currPage = 1;
+    this.pageSize = 2;
+  }
 
   ngOnInit(): void {
     this.cartService.viewOrder();
@@ -62,5 +67,9 @@ export class CartComponent implements OnInit, OnDestroy {
           this.router.navigate([`/user/profile/${FINAL_ORDER.userId}`]);
         });
       });
+  }
+
+  pageChanged(newPage: number): void {
+    this.currPage = newPage;
   }
 }

@@ -3,8 +3,8 @@
 </div>
 <h2 class="text-center">Subscribed games</h2>
 <hr>
-<div *ngIf="userSubscriptions$ as userSubscriptions">
-  <div *ngFor="let subscrptionGame of userSubscriptions; let i = index;" class="list-group-item list-group-item-action mt-2 mr-3">
+<div *ngIf="userSubscriptions">
+  <div *ngFor="let subscrptionGame of userSubscriptions | paginate: { id: 'my-subs' , itemsPerPage: pageSize, currentPage: currPage }; let i = index;" class="list-group-item list-group-item-action mt-2 mr-3">
     <span class="text-justify">
       <a routerLink="/game/details/{{subscrptionGame._id}}">
         <img class="img-fluid" [src]=subscrptionGame.image [alt]=subscrptionGame.title />
@@ -15,6 +15,10 @@
       <unsubscribe-from-game class="float-right" [game]=subscrptionGame></unsubscribe-from-game>
     </span>
   </div>
+  <pagination-controls id="my-subs" (pageChange)="pageChanged($event)" maxSize="9" directionLinks="true" autoHide="true"
+    responsive="true" previousLabel="Previous" nextLabel="Next" screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page"
+    screenReaderCurrentLabel="You're on page">
+  </pagination-controls>
   <div class="text-center" *ngIf="userSubscriptions.length === 0">
     <h2>You aren't subscribed to any games yet!</h2>
   </div>

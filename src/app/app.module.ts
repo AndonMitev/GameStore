@@ -5,6 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StoreModule } from '@ngrx/store';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 //Custom Modules
 import { SharedModule } from './components/shared/shared.module';
@@ -42,7 +43,8 @@ import { LogoutComponent } from './components/user/logout/logout.component';
     ToastrModule.forRoot({
       timeOut: 1500
     }),
-    StoreModule.forRoot(appReducers)
+    StoreModule.forRoot(appReducers),
+    NgxPaginationModule
   ],
   providers: [
     {

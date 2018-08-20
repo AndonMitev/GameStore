@@ -6,7 +6,7 @@
       <div *ngIf="messageDetails$ | async as messageDetails">
         <h2 class="text-justify">Title: {{messageDetails.title}}</h2>
         <p class="text-justify">Content: {{messageDetails.content}}</p>
-        <a routerLink="/user/profile/{{messageDetails._acl.creator}}">
+        <a *ngIf="verification.isAdmin()" routerLink="/user/profile/{{messageDetails._acl.creator}}">
           <p class="text-justify">From: {{messageDetails.from}}</p>
         </a>
       </div>

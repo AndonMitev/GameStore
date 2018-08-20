@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Store, select } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
@@ -17,6 +17,8 @@ import { AllGamesModel } from '../../../core/models/view-models/all-games.model'
   styleUrls: ['./all-games.component.css']
 })
 export class AllGamesComponent implements OnInit, OnDestroy {
+  public currPage: number;
+  public pageSize: number;
   public allGames$: Observable<AllGamesModel[]>;
   public showSpinner: boolean;
   public searchForm: FormGroup;
@@ -28,10 +30,13 @@ export class AllGamesComponent implements OnInit, OnDestroy {
     private router: ActivatedRoute,
     private fb: FormBuilder
   ) {
+    this.currPage = 1;
+    this.pageSize = 9;
     this.showSpinner = true;
   }
 
   ngOnInit(): void {
+    this.initializeSearchForm();
     this.subscription = this.router.queryParamMap.subscribe((res: ParamMap) => {
       const CATEGORY: string = res['params']['category'];
       this.gameService.getAllGames(CATEGORY).subscribe(() => {
@@ -41,15 +46,21 @@ export class AllGamesComponent implements OnInit, OnDestroy {
         this.showSpinner = false;
       });
     });
+  }
 
+  initializeSearchForm() {
     this.searchForm = this.fb.group({
       name: ''
-    })
+    });
   }
 
   ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
+  }
+
+  pageChanged(newPage: number): void {
+    this.currPage = newPage;
   }
 }

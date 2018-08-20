@@ -18,6 +18,8 @@ import { AppState } from '../../../store/app.state';
 export class AllCommentsGameComponent implements OnInit, OnDestroy {
   public allComments$: Observable<AllCommentsGameModel[]>;
   public showSpinner: boolean;
+  public currPage: number;
+  public pageSize: number;
   private subscription: Subscription;
 
   constructor(
@@ -25,6 +27,8 @@ export class AllCommentsGameComponent implements OnInit, OnDestroy {
     private store: Store<AppState>,
     private getCommentsService: GetAllCommentsService
   ) {
+    this.currPage = 1;
+    this.pageSize = 6;
     this.showSpinner = true;
   }
 
@@ -44,5 +48,9 @@ export class AllCommentsGameComponent implements OnInit, OnDestroy {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
+  }
+
+  pageChanged(newPage: number): void {
+    this.currPage = newPage;
   }
 }
