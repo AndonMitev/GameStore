@@ -11,7 +11,7 @@ const initialState: MessageState = {
 function getSentMessages(state, messages) {
   return {
     ...state,
-    sentMessages: messages
+    sentMessages: messages.sort((a, b) => b._kmd.ect > a._kmd.ect)
   };
 }
 
@@ -23,6 +23,7 @@ function getReceivedMessages(state, messages) {
 }
 
 function createMessage(state, message) {
+  console.log(message);
   if (localStorage.getItem('username') === message['recipient']) {
     return {
       ...state,
@@ -32,7 +33,9 @@ function createMessage(state, message) {
   } else {
     return {
       ...state,
-      sentMessages: [...state.sentMessages, message]
+      sentMessages: state.sentMessages
+        .concat(message)
+        .sort((a, b) => b._kmd.ect > a._kmd.ect)
     };
   }
 }

@@ -25,8 +25,8 @@ export class CreateMessageService {
     return this.http
       .post<CreateMessageInputModel>(message, 'messages', 'appdata')
       .pipe(
-        map(() => {
-          this.store.dispatch(new CreateMessage(message));
+        map((res: CreateMessageInputModel) => {
+          this.store.dispatch(new CreateMessage(res));
         })
       );
   }

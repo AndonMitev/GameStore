@@ -6,16 +6,17 @@ const initialState: CommentsState = {
 };
 
 function getAllComments(state, allComments) {
+  console.log(allComments);
   return {
     ...state,
-    all: allComments
+    all: allComments.sort((a, b) => b._kmd.ect > a._kmd.ect)
   };
 }
 
 function addComment(state, comment) {
   return {
     ...state,
-    all: [...state.all, comment]
+    all: state.all.concat(comment).sort((a, b) => b._kmd.ect > a._kmd.ect)
   };
 }
 
