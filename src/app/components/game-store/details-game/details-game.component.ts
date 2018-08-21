@@ -29,7 +29,7 @@ export class DetailsGameComponent implements OnInit, OnDestroy {
     this.showSpinner = true;
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.actRoute.paramMap.subscribe((res: ParamMap) => {
       const GAME_ID: string = res['params']['id'];
       this.gameService.getGameById(GAME_ID).subscribe(() => {
@@ -54,7 +54,7 @@ export class DetailsGameComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy() {
+  public ngOnDestroy() {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }

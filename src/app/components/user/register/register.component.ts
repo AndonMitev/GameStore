@@ -48,7 +48,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     }
   }
 
-  initializeRegisterForm(): void {
+  public initializeRegisterForm(): void {
     this.registerForm = this.fb.group({
       username: [
         'asd',
@@ -68,7 +68,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     });
   }
 
-  initializeCountryData(): FormGroup {
+  public initializeCountryData(): FormGroup {
     return this.fb.group({
       country: ['asd', Validators.required],
       city: ['asd', Validators.required],
@@ -77,7 +77,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     });
   }
 
-  initializeStreetAddress(): FormGroup {
+  public initializeStreetAddress(): FormGroup {
     return this.fb.group({
       street: ['asd', Validators.required],
       apartament: ['asd', Validators.required],
@@ -85,7 +85,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     });
   }
 
-  submitRegisterForm(): void {
+  public submitRegisterForm(): void {
     this.showSpinner = true;
     const USER_DATA = this.registerForm.value;
     delete USER_DATA['confirmPassword'];
@@ -110,68 +110,68 @@ export class RegisterComponent implements OnInit, OnDestroy {
       });
   }
 
-  addStreetAddress(): void {
+  public addStreetAddress(): void {
     const streetAddress = this.initializeStreetAddress();
     this.streetAddress.push(streetAddress);
   }
 
-  deleteStreetAddress(i: number): void {
+  public deleteStreetAddress(i: number): void {
     this.streetAddress.removeAt(i);
   }
 
-  get streetAddress(): FormArray {
+  public get streetAddress(): FormArray {
     return this.registerForm.get('streetAddress') as FormArray;
   }
 
-  get username(): AbstractControl {
+  public get username(): AbstractControl {
     return this.registerForm.get('username');
   }
 
-  get email(): AbstractControl {
+  public get email(): AbstractControl {
     return this.registerForm.get('email');
   }
 
-  get confirmEmail(): AbstractControl {
+  public get confirmEmail(): AbstractControl {
     return this.registerForm.get('confirmEmail');
   }
 
-  get password(): AbstractControl {
+  public get password(): AbstractControl {
     return this.registerForm.get('password');
   }
 
-  get confirmPassword(): AbstractControl {
+  public get confirmPassword(): AbstractControl {
     return this.registerForm.get('confirmPassword');
   }
 
-  get age(): AbstractControl {
+  public get age(): AbstractControl {
     return this.registerForm.get('age');
   }
 
-  get country(): AbstractControl {
+  public get country(): AbstractControl {
     return this.registerForm.get('countryData').get('country');
   }
 
-  get city(): AbstractControl {
+  public get city(): AbstractControl {
     return this.registerForm.get('countryData').get('city');
   }
 
-  get state(): AbstractControl {
+  public get state(): AbstractControl {
     return this.registerForm.get('countryData').get('state');
   }
 
-  get zipcode(): AbstractControl {
+  public get zipcode(): AbstractControl {
     return this.registerForm.get('countryData').get('zipcode');
   }
 
-  get street(): AbstractControl {
+  public get street(): AbstractControl {
     return this.registerForm.get('streetAddress');
   }
 
-  get apartament(): AbstractControl {
+  public get apartament(): AbstractControl {
     return this.registerForm.get('streetAddress');
   }
 
-  get phoneNumber(): AbstractControl {
+  public get phoneNumber(): AbstractControl {
     return this.registerForm.get('streetAddress');
   }
 }

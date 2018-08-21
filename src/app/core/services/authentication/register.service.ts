@@ -14,15 +14,15 @@ export class UserRegisterService {
     private observeToken: UserVerificationService
   ) {}
 
-  registerUser(userData: RegisterInputModel): Observable<Object> {
+  public registerUser(userData: RegisterInputModel): Observable<Object> {
     return this.http.post<RegisterInputModel>(userData, '', 'user');
   }
 
-  checkIfUsernameExists(userData: Object): Observable<Object> {
+  public checkIfUsernameExists(userData: Object): Observable<Object> {
     return this.http.post<Object>(userData, 'check-username-exists', 'rpc');
   }
 
-  saveData(userData): void {
+  public saveData(userData): void {
     this.observeToken.saveUserData(userData);
   }
 }

@@ -34,25 +34,25 @@ export class CartComponent implements OnInit, OnDestroy {
     this.pageSize = 2;
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.cartService.viewOrder();
     this.store
       .pipe(select((state: AppState) => (this.order = state.orders.all)))
       .subscribe();
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
   }
 
-  removeItem(gameId: string): void {
+  public removeItem(gameId: string): void {
     this.cartService.deleteGame(gameId);
     this.toast.success(`Game was successfully deleted from your cart!`);
   }
 
-  completeOrder(): void {
+  public completeOrder(): void {
     this.subscription = this.store
       .pipe(select(state => state.orders.all))
       .subscribe(res => {
@@ -69,7 +69,7 @@ export class CartComponent implements OnInit, OnDestroy {
       });
   }
 
-  pageChanged(newPage: number): void {
+  public pageChanged(newPage: number): void {
     this.currPage = newPage;
   }
 }

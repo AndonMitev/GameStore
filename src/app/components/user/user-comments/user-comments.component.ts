@@ -27,10 +27,12 @@ export class UserCommentsComponent implements OnInit, OnDestroy {
     private store: Store<AppState>,
     private actRoute: ActivatedRoute
   ) {
+    this.currPage = 1;
+    this.pageSize = 6;
     this.showSpinner = true;
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.subscription = this.actRoute.paramMap.subscribe((res: ParamMap) => {
       const USER_ID: string = res['params']['id'];
 
@@ -43,13 +45,13 @@ export class UserCommentsComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
   }
 
-  pageChanged(newPage: number): void {
+  public pageChanged(newPage: number): void {
     this.currPage = newPage;
   }
 }

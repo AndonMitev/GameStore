@@ -36,7 +36,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.showSpinner = true;
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.subscription = this.actRoute.paramMap.subscribe((res: ParamMap) => {
       const USER_ID: string = res['params']['id'];
 
@@ -49,13 +49,13 @@ export class ProfileComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
   }
 
-  showComponent(param: string): void {
+  public showComponent(param: string): void {
     switch (param) {
       case 'orders':
         this.showOrders = true;

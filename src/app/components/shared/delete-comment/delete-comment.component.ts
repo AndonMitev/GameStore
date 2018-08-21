@@ -11,7 +11,7 @@ import { DeleteCommentService } from '../../../core/services/comment-services/de
 })
 export class DeleteCommentComponent implements OnDestroy {
   @Input()
-  commentId: string;
+  public commentId: string;
   private subscription: Subscription;
 
   constructor(
@@ -19,13 +19,13 @@ export class DeleteCommentComponent implements OnDestroy {
     private toast: ToastrService
   ) {}
 
-  deleteSelectedComment(): void {
+  public deleteSelectedComment(): void {
     this.subscription = this.deleteCommentService
       .deleteComment(this.commentId)
       .subscribe(() => this.toast.success('Comment deleted!'));
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }

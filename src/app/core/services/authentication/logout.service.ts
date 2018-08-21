@@ -10,7 +10,7 @@ import { HttpServices } from '../http.services';
 export class UserLogoutService {
   constructor(private http: HttpServices) {}
 
-  logoutUser(): Observable<Object> {
+  public logoutUser(): Observable<Object> {
     return this.http.post(undefined, '_logout', 'user');
   }
 }

@@ -18,7 +18,7 @@ import { GetDetailsGame } from '../../../store/actions/game.actions';
 export class GetDetailsGameService {
   constructor(private http: HttpServices, private store: Store<AppState>) {}
 
-  getGameById(id: string): Observable<void> {
+  public getGameById(id: string): Observable<void> {
     return this.http.get<DetailsGameModel>(`gamestore/${id}`, 'appdata').pipe(
       map((res: DetailsGameModel) => {
         this.store.dispatch(new GetDetailsGame(res));

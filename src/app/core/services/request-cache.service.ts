@@ -8,7 +8,7 @@ const MAX_AGE = 30000;
 export class RequestCache {
   cache = new Map();
 
-  get(req: HttpRequest<any>): HttpResponse<any> | undefined {
+  public get(req: HttpRequest<any>): HttpResponse<any> | undefined {
     const URL = req.urlWithParams;
     const CACHED = this.cache.get(URL);
 
@@ -21,7 +21,7 @@ export class RequestCache {
     return CACHED.response;
   }
 
-  put(req: HttpRequest<any>, response: HttpResponse<any>): void {
+  public put(req: HttpRequest<any>, response: HttpResponse<any>): void {
     const url = req.url;
     const entry = { url, response, lastRead: Date.now() };
 

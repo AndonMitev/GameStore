@@ -18,7 +18,7 @@ import { GetMessageDetails } from '../../../store/actions/message.actions';
 export class GetMessageDetailsService {
   constructor(private http: HttpServices, private store: Store<AppState>) {}
 
-  getMessageDetails(id: string): Observable<void> {
+  public getMessageDetails(id: string): Observable<void> {
     return this.http
       .get<CreateMessageInputModel>(`messages/${id}`, 'appdata')
       .pipe(

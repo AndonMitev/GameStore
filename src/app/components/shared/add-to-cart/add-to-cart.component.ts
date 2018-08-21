@@ -11,16 +11,16 @@ import { OrderGameService } from '../../../core/services/order.services/order-ga
 })
 export class AddToCartComponent {
   @Input('game')
-  game;
+  public game;
   @Input('id')
-  id: string;
+  public id: string;
 
   constructor(
     private orderService: OrderGameService,
     private toast: ToastrService
   ) {}
 
-  orderSelectedGame(): void {
+  public orderSelectedGame(): void {
     this.orderService.orderGame(
       this.id,
       this.game._id,

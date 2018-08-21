@@ -12,7 +12,7 @@ import { CreateGameInputModel } from '../../models/input-models/create-game.mode
 export class CreateGameService {
   constructor(private http: HttpServices) {}
 
-  createGame(gameData: CreateGameInputModel): Observable<Object> {
+  public createGame(gameData: CreateGameInputModel): Observable<Object> {
     return this.http.post<CreateGameInputModel>(
       gameData,
       'gamestore',

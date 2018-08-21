@@ -12,7 +12,7 @@ import { EditGameService } from '../../../core/services/game-store-services/edit
 })
 export class SubscribeToGameComponent implements OnDestroy {
   @Input('game')
-  game;
+  public game: any;
   private subscription: Subscription;
 
   constructor(
@@ -20,7 +20,7 @@ export class SubscribeToGameComponent implements OnDestroy {
     private toast: ToastrService
   ) {}
 
-  subscribeToGame(): void {
+  public subscribeToGame(): void {
     const GAME_ID: string = this.game['_id'];
     const USER_ID: string = localStorage.getItem('userId');
 
@@ -32,7 +32,7 @@ export class SubscribeToGameComponent implements OnDestroy {
       });
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }

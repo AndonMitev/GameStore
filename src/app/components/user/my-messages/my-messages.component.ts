@@ -30,7 +30,7 @@ export class MyMessagesComponent implements OnInit, OnDestroy {
     this.pageSize = 3;
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.actRoute.paramMap.subscribe((res: ParamMap) => {
       const USER_ID: string = res['params']['id'];
 
@@ -44,13 +44,13 @@ export class MyMessagesComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
   }
 
-  pageChanged(newPage: number): void {
+  public pageChanged(newPage: number): void {
     this.currPage = newPage;
   }
 }

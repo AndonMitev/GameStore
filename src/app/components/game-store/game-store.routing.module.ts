@@ -12,6 +12,7 @@ import { AdminGuard } from '../../core/guards/admin.guard';
 import { AuthGuard } from '../../core/guards/auth.guard';
 
 const routes: Routes = [
+  
   {
     path: 'create',
     canActivate: [AuthGuard, AdminGuard],

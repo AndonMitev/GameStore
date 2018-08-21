@@ -33,7 +33,7 @@ export class UserOrdersComponent implements OnInit {
     this.showSpinner = true;
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.subscription = this.actRoute.paramMap.subscribe((res: ParamMap) => {
       const USER_ID: string = res['params']['id'];
 
@@ -48,14 +48,14 @@ export class UserOrdersComponent implements OnInit {
     });
   }
 
-  getFullOrderView(orderId): void {
+  public getFullOrderView(orderId: string): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
       this.router.navigate([`/user/completed/${orderId}`]);
     }
   }
 
-  pageChanged(newPage: number): void {
+  public pageChanged(newPage: number): void {
     this.currPage = newPage;
   }
 }

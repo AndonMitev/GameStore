@@ -18,7 +18,7 @@ import { CompleteOrder } from '../../../store/actions/order.actions';
 export class CompleteOrderService {
   constructor(private http: HttpServices, private store: Store<AppState>) {}
 
-  finishOrder(order): Observable<void> {
+  public finishOrder(order): Observable<void> {
     console.log(order);
 
     return this.http.post(order, 'orders', 'appdata').pipe(

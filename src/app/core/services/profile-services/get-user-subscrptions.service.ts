@@ -14,7 +14,7 @@ import { CompleteOrderModel } from '../../models/view-models/complete-order.mode
 export class GetUserSubscriptionsService {
   constructor(private http: HttpServices, private store: Store<AppState>) {}
 
-  getUserSubscriptions(userId: string): Observable<void> {
+  public getUserSubscriptions(userId: string): Observable<void> {
     return this.http
       .get<CompleteOrderModel[]>(
         `gamestore?query={"subscriptions":"${userId}"}`,

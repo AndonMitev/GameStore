@@ -18,7 +18,7 @@ import { GetUserById } from '../../../store/actions/user.actions';
 export class GetProfileService {
   constructor(private http: HttpServices, private store: Store<AppState>) {}
 
-  getProfile(userId: string): Observable<void> {
+  public getProfile(userId: string): Observable<void> {
     return this.http.get<RegisterInputModel>(userId, 'user').pipe(
       map((res: RegisterInputModel) => {
         this.store.dispatch(new GetUserById(res));

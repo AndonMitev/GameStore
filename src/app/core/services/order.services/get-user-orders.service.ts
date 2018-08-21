@@ -18,7 +18,7 @@ import { GetCompletedOrders } from '../../../store/actions/order.actions';
 export class GetCompletedOrdersService {
   constructor(private http: HttpServices, private store: Store<AppState>) {}
 
-  getCompletedOrders(id: string): Observable<void> {
+  public getCompletedOrders(id: string): Observable<void> {
     return this.http
       .get<CompleteOrderModel[]>(`orders?query={"userId":"${id}"}&sort={"_kmd.ect": -1}`, 'appdata')
       .pipe(

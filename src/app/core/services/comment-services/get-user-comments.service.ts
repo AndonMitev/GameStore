@@ -18,7 +18,7 @@ import { GetUserComments } from '../../../store/actions/comment.actions';
 export class GetUserCommentsService {
   constructor(private http: HttpServices, private store: Store<AppState>) {}
 
-  getUserComments(userId: string): Observable<void> {
+  public getUserComments(userId: string): Observable<void> {
     return this.http
       .get<AllCommentsGameModel[]>(
         `comments?query={"_acl.creator":"${userId}"}&sort={"_kmd.ect": -1}`,

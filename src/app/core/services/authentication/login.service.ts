@@ -16,11 +16,11 @@ export class UserLoginService {
     private observeToken: UserVerificationService
   ) {}
 
-  loginUser(userData: LoginInputModel): Observable<Object> {
+  public loginUser(userData: LoginInputModel): Observable<Object> {
     return this.http.post<LoginInputModel>(userData, 'login', 'user');
   }
 
-  saveData(userData): void {
+  public saveData(userData): void {
     this.observeToken.saveUserData(userData);
   }
 }

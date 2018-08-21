@@ -1,7 +1,7 @@
 <div>
   <ul class="nav nav-pills">
-    <li class="nav-item mr-3">
-      <a class="nav-link" routerLink="/home">Home</a>
+    <li class="nav-item mr-3" *ngIf="userVerification.hasUser()">
+      <a class="nav-link" routerLink="/game/all">Home</a>
     </li>
     <li class="nav-item mr-3" *ngIf="!userVerification.hasUser()">
       <a class="nav-link" routerLink="/register">Register</a>
@@ -13,18 +13,13 @@
       <a class="nav-link" routerLink="/game/create">Create game</a>
     </li>
     <li class="nav-item mr-3" *ngIf="userVerification.hasUser()">
-      <a class="nav-link" routerLink="/game/all">All games</a>
+      <a class="nav-link" routerLink="/game/cart">My Cart</a>
+    </li>
+    <li class="nav-item mr-3" *ngIf="userVerification.hasUser()">
+      <a class="nav-link" [routerLink]="['/user/profile/', getUserId()]">Profile</a>
     </li>
     <li class="nav-item mr-3" *ngIf="userVerification.hasUser()">
       <a class="nav-link" routerLink="/logout">Logout</a>
     </li>
-    <div class="ml-auto row">
-      <li class="nav-item mr-3" *ngIf="userVerification.hasUser()">
-        <a class="nav-link" routerLink="/game/cart">My Cart</a>
-      </li>
-      <li class="nav-item mr-3" *ngIf="userVerification.hasUser()">
-        <a class="nav-link" [routerLink]="['/user/profile/', getUserId()]">Profile</a>
-      </li>
-    </div>
   </ul>
 </div>

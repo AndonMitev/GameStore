@@ -40,17 +40,17 @@ export class CreateGameComponent implements OnInit, OnDestroy {
     private toast: ToastrService
   ) {}
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.initializeForm();
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
   }
 
-  submitGameForm(): void {
+  public submitGameForm(): void {
     const GAME_DATA = this.gameForm.value;
     GAME_DATA['selectedPlatform'] = GAME_DATA['selectedPlatform'].toLowerCase();
 
@@ -77,7 +77,7 @@ export class CreateGameComponent implements OnInit, OnDestroy {
       });
   }
 
-  initializeForm(): void {
+  public initializeForm(): void {
     this.gameForm = this.fb.group({
       title: ['Call of Duty', Validators.required],
       image: [
@@ -99,47 +99,47 @@ export class CreateGameComponent implements OnInit, OnDestroy {
     });
   }
 
-  get title(): AbstractControl {
+  public get title(): AbstractControl {
     return this.gameForm.get('title');
   }
 
-  get image(): AbstractControl {
+  public get image(): AbstractControl {
     return this.gameForm.get('image');
   }
 
-  get publisher(): AbstractControl {
+  public get publisher(): AbstractControl {
     return this.gameForm.get('publisher');
   }
 
-  get developer(): AbstractControl {
+  public get developer(): AbstractControl {
     return this.gameForm.get('developer');
   }
 
-  get series(): AbstractControl {
+  public get series(): AbstractControl {
     return this.gameForm.get('series');
   }
 
-  get selectedPlatform(): AbstractControl {
+  public get selectedPlatform(): AbstractControl {
     return this.gameForm.get('selectedPlatform');
   }
 
-  get release(): AbstractControl {
+  public get release(): AbstractControl {
     return this.gameForm.get('release');
   }
 
-  get genre(): AbstractControl {
+  public get genre(): AbstractControl {
     return this.gameForm.get('genre');
   }
 
-  get description(): AbstractControl {
+  public get description(): AbstractControl {
     return this.gameForm.get('description');
   }
 
-  get mode(): AbstractControl {
+  public get mode(): AbstractControl {
     return this.gameForm.get('mode');
   }
 
-  get price(): AbstractControl {
+  public get price(): AbstractControl {
     return this.gameForm.get('price');
   }
 }

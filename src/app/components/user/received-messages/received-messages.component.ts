@@ -32,7 +32,7 @@ export class RecievedMessagesComponent implements OnInit, OnDestroy {
     this.pageSize = 3;
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.subscription = this.actRoute.paramMap.subscribe((res: ParamMap) => {
       const SENDER_ID: string = res['params']['id'];
 
@@ -47,13 +47,13 @@ export class RecievedMessagesComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
   }
 
-  pageChanged(newPage: number): void {
+  public pageChanged(newPage: number): void {
     this.currPage = newPage;
   }
 }

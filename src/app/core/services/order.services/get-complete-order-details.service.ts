@@ -18,7 +18,7 @@ import { GetCompletedOrderDetails } from '../../../store/actions/order.actions';
 export class GetCompletedOrderDetailsService {
   constructor(private http: HttpServices, private store: Store<AppState>) {}
 
-  getCompletedOrderDetails(id: string): Observable<void> {
+  public getCompletedOrderDetails(id: string): Observable<void> {
     return this.http.get<CompleteOrderModel>(`orders/${id}`, 'appdata').pipe(
       map((res: CompleteOrderModel) => {
         this.store.dispatch(new GetCompletedOrderDetails(res));

@@ -39,17 +39,17 @@ export class CreateMessageComponent implements OnInit, OnDestroy {
     private getReceivedMsg: GetReceivedMessagesService
   ) {}
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.initializeMessageForm();
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
   }
 
-  initializeMessageForm(): void {
+  public initializeMessageForm(): void {
     this.messageForm = this.fb.group({
       recipient: [''],
       title: [
@@ -67,7 +67,7 @@ export class CreateMessageComponent implements OnInit, OnDestroy {
     });
   }
 
-  submitMessageForm(): void {
+  public submitMessageForm(): void {
     const RECIPIENT: string = this.messageForm.value['recipient'] || 'Admin';
     const FROM: string = localStorage.getItem('username');
     const TITLE: string = this.messageForm.value['title'];
@@ -101,15 +101,15 @@ export class CreateMessageComponent implements OnInit, OnDestroy {
       });
   }
 
-  get title(): AbstractControl {
+  public get title(): AbstractControl {
     return this.messageForm.get('title');
   }
 
-  get recipient(): AbstractControl {
+  public get recipient(): AbstractControl {
     return this.messageForm.get('recipient');
   }
 
-  get content(): AbstractControl {
+  public get content(): AbstractControl {
     return this.messageForm.get('content');
   }
 }

@@ -33,7 +33,7 @@ export class UserSubscriptionsComponent implements OnInit, OnDestroy {
     this.showSpinner = true;
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.actRoute.paramMap.subscribe((res: ParamMap) => {
       this.userId = res['params']['id'];
 
@@ -46,13 +46,13 @@ export class UserSubscriptionsComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
   }
 
-  pageChanged(newPage: number): void {
+  public pageChanged(newPage: number): void {
     this.currPage = newPage;
   }
 }

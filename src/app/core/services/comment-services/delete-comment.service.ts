@@ -16,7 +16,7 @@ import { DeleteComment } from '../../../store/actions/comment.actions';
 export class DeleteCommentService {
   constructor(private http: HttpServices, private store: Store<AppState>) {}
 
-  deleteComment(id: string): Observable<void> {
+  public deleteComment(id: string): Observable<void> {
     return this.http
       .delete<string>(`comments/${id}`, 'appdata')
       .pipe(map(() => this.store.dispatch(new DeleteComment(id))));

@@ -31,23 +31,23 @@ export class CreateCommentGameComponent implements OnInit, OnDestroy {
     private toast: ToastrService
   ) {}
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.initializeCommentForm();
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
   }
 
-  initializeCommentForm(): void {
+  public initializeCommentForm(): void {
     this.commentForm = this.fb.group({
       description: ['', [Validators.required, Validators.maxLength(50)]]
     });
   }
 
-  submitCommentForm(): void {
+  public submitCommentForm(): void {
     this.subscription = this.actRouter.paramMap.subscribe((res: ParamMap) => {
       const ID: string = res['params']['id'];
       const DESCRIPTION: string = this.commentForm.value['description'];
@@ -61,7 +61,7 @@ export class CreateCommentGameComponent implements OnInit, OnDestroy {
     });
   }
 
-  get description(): AbstractControl {
+  public get description(): AbstractControl {
     return this.commentForm.get('description');
   }
 }

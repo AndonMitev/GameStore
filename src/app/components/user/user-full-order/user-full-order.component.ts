@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
@@ -24,12 +24,13 @@ export class UserFullOrderComponent implements OnInit {
     this.showSpinner = true;
   }
 
-  ngOnInit(): void {
-    this.router.paramMap.subscribe(res => {
+  public ngOnInit(): void {
+    this.router.paramMap.subscribe((res: ParamMap) => {
       const ORDER_ID = res['params']['id'];
+      
       this.orderService.getCompletedOrderDetails(ORDER_ID).subscribe(res => {
         this.fullOrder$ = this.store.pipe(
-          select(state => state.orders.details)
+          select((state: AppState) => state.orders.details)
         );
         this.showSpinner = false;
       });

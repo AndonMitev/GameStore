@@ -19,7 +19,7 @@ import { UnsubscribeUser } from '../../../store/actions/user.actions';
 export class EditGameService {
   constructor(private http: HttpServices, private store: Store<AppState>) {}
 
-  editGame(game: CreateGameInputModel, id: string): Observable<void> {
+  public editGame(game: CreateGameInputModel, id: string): Observable<void> {
     return this.http.put(game, `gamestore/${id}`, 'appdata').pipe(
       map((res: CreateGameInputModel) => {
         this.store.dispatch(new EditGame(res));

@@ -10,7 +10,7 @@ import { UserVerificationService } from '../services/authentication/verification
 @Injectable({
   providedIn: 'root'
 })
-export class PreventLoggedInAccess implements CanActivate {
+export class UnAuthGuard implements CanActivate {
   constructor(
     private authService: UserVerificationService,
     private router: Router
@@ -27,6 +27,6 @@ export class PreventLoggedInAccess implements CanActivate {
     if (!this.authService.hasUser()) {
       return true;
     }
-    this.router.navigate(['game/all']);
+    this.router.navigate(['/game/all']);
   }
 }

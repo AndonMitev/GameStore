@@ -32,24 +32,24 @@ export class LoginComponent implements OnInit, OnDestroy {
     private toast: ToastrService
   ) {}
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.initializeLoginForm();
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     if (this.subscription$) {
       this.subscription$.unsubscribe();
     }
   }
 
-  initializeLoginForm(): void {
+  public initializeLoginForm(): void {
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
       password: ['', Validators.required]
     });
   }
 
-  submitLoginForm(): void {
+  public submitLoginForm(): void {
     this.showSpinner = false;
     const USER_DATA = this.loginForm.value;
 
@@ -69,11 +69,11 @@ export class LoginComponent implements OnInit, OnDestroy {
       });
   }
 
-  get username(): AbstractControl {
+  public get username(): AbstractControl {
     return this.loginForm.get('username');
   }
 
-  get password(): AbstractControl {
+  public get password(): AbstractControl {
     return this.loginForm.get('password');
   }
 }

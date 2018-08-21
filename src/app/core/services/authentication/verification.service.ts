@@ -7,25 +7,25 @@ const ADMIN_ROLE_ID: string = '404cf295-d9ee-41fd-a8db-00e8a5a27527';
   providedIn: 'root'
 })
 export class UserVerificationService {
-  hasUser(): boolean {
+  public hasUser(): boolean {
     if (localStorage.getItem('authtoken')) {
       return true;
     }
     return false;
   }
 
-  isAdmin(): boolean {
+  public isAdmin(): boolean {
     if (localStorage.getItem('roleId')) {
       return true;
     }
     return false;
   }
 
-  getAdminId(): string {
+  public getAdminId(): string {
     return ADMIN_ID;
   }
 
-  saveUserData(res): void {
+  public saveUserData(res): void {
     localStorage.setItem('authtoken', res._kmd.authtoken);
     localStorage.setItem('username', res.username);
     localStorage.setItem('userId', res._id);

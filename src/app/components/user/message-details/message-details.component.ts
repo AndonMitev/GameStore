@@ -23,7 +23,7 @@ export class MessageDetailsComponent implements OnInit {
     private messageDetailsService: GetMessageDetailsService
   ) {}
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.subscription = this.actRoute.paramMap.subscribe((res: ParamMap) => {
       const MESSAGE_ID: string = res['params']['id'];
 
@@ -38,7 +38,7 @@ export class MessageDetailsComponent implements OnInit {
     });
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }

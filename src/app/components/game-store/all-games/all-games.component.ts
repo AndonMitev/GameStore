@@ -35,7 +35,7 @@ export class AllGamesComponent implements OnInit, OnDestroy {
     this.showSpinner = true;
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.initializeSearchForm();
     this.subscription = this.router.queryParamMap.subscribe((res: ParamMap) => {
       const CATEGORY: string = res['params']['category'];
@@ -48,19 +48,19 @@ export class AllGamesComponent implements OnInit, OnDestroy {
     });
   }
 
-  initializeSearchForm() {
-    this.searchForm = this.fb.group({
-      name: ''
-    });
-  }
-
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
   }
 
-  pageChanged(newPage: number): void {
+  public initializeSearchForm() {
+    this.searchForm = this.fb.group({
+      name: ''
+    });
+  }
+
+  public pageChanged(newPage: number): void {
     this.currPage = newPage;
   }
 }

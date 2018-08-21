@@ -54,7 +54,7 @@ export class AllCommentsGameComponent implements OnInit, OnDestroy {
     }
   }
 
-  pageChanged(newPage: number): void {
+  public pageChanged(newPage: number): void {
     this.currPage = newPage;
   }
 }

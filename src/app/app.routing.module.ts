@@ -5,9 +5,10 @@ import { RouterModule, Routes } from '@angular/router';
 import { RegisterComponent } from './components/user/register/register.component';
 import { LoginComponent } from './components/user/login/login.component';
 import { LogoutComponent } from './components/user/logout/logout.component';
-import { AuthGuard } from './core/guards/auth.guard';
-import { PreventLoggedInAccess } from './core/guards/un-auth.guard';
 import { NotFoundComponent } from './components/shared/not-found/not-found.component';
+//Guards
+import { AuthGuard } from './core/guards/auth.guard';
+import { UnAuthGuard } from './core/guards/un-auth.guard';
 
 export const routes: Routes = [
   {
@@ -17,12 +18,12 @@ export const routes: Routes = [
   },
   {
     path: 'register',
-    component: RegisterComponent,
-    canActivate: [PreventLoggedInAccess]
+    canActivate: [UnAuthGuard],
+    component: RegisterComponent
   },
   {
     path: 'login',
-    canActivate: [PreventLoggedInAccess],
+    canActivate: [UnAuthGuard],
     component: LoginComponent
   },
   { path: 'logout', canActivate: [AuthGuard], component: LogoutComponent },

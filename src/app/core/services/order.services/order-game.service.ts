@@ -20,7 +20,7 @@ export class OrderGameService {
 
   constructor(private store: Store<AppState>) {}
 
-  orderGame(
+  public orderGame(
     index,
     gameId: string,
     title: string,

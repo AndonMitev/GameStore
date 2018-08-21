@@ -18,7 +18,7 @@ import { GetAllGames } from '../../../store/actions/game.actions';
 export class GetAllGamesService {
   constructor(private http: HttpServices, private store: Store<AppState>) {}
 
-  getAllGames(selectedPlatform: string): Observable<void> {
+  public getAllGames(selectedPlatform: string): Observable<void> {
     let correctQuery: string = 'gamestore';
 
     if (selectedPlatform) {

@@ -21,7 +21,7 @@ import {
 export class CreateMessageService {
   constructor(private http: HttpServices, private store: Store<AppState>) {}
 
-  createNewMessage(message: CreateMessageInputModel): Observable<void> {
+  public createNewMessage(message: CreateMessageInputModel): Observable<void> {
     return this.http
       .post<CreateMessageInputModel>(message, 'messages', 'appdata')
       .pipe(

@@ -23,7 +23,7 @@ export class LogoutComponent implements OnInit, OnDestroy {
     this.showSpinner = true;
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.subscription$ = this.user.logoutUser().subscribe(() => {
       localStorage.clear();
       sessionStorage.clear();
@@ -33,7 +33,7 @@ export class LogoutComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     if (this.subscription$) {
       this.subscription$.unsubscribe();
     }

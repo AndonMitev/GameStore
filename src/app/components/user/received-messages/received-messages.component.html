@@ -5,7 +5,7 @@
     </a>
     <p>{{message.content}}</p>
     <a *ngIf="verification.isAdmin()" routerLink="/user/profile/{{message._acl.creator}}">
-      <span>Posted by: {{message.from}} </span>
+      <span>Sended by: {{message.from}} </span>
     </a>
     <span>at: {{message._kmd.ect | date}}</span>
   </div>
