@@ -9,7 +9,7 @@ import {
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { UserRegisterService } from '../../../core/services/authentication/register.service';
+import { UserRegisterService } from '../../../core/services/authentication-services/register.service';
 
 export function uniqueUsernameValidator(
   userService: UserRegisterService
