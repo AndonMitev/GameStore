@@ -5,14 +5,14 @@
   </div>
 
   <hr>
-
+  
   <form class="form-group" [formGroup]="loginForm" (ngSubmit)="submitLoginForm()">
 
     <div class="form-group">
       <label>
         <strong>Username</strong>
       </label>
-      <input type="text" class="form-control" formControlName="username" />
+      <input type="text" class="form-control" formControlName="username" placeholder="John" />
       <div class="alert alert-danger" *ngIf="username.invalid && (username.dirty || username.touched)">
         Username is required.
       </div>
@@ -22,7 +22,7 @@
       <label>
         <strong>Password</strong>
       </label>
-      <input type="password" class="form-control" formControlName="password" />
+      <input type="password" class="form-control" formControlName="password" placeholder="s3cr37" />
       <div class="alert alert-danger" *ngIf="password.invalid && (password.dirty || password.touched)">
         Password is required.
       </div>

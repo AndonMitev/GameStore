@@ -16,7 +16,7 @@ import { uniqueUsernameValidator } from '../../shared/directives/username.direct
 //Model
 import { RegisterInputModel } from '../../../core/models/input-models/register.model';
 //Service
-import { UserRegisterService } from '../../../core/services/authentication/register.service';
+import { UserRegisterService } from '../../../core/services/authentication-services/register.service';
 
 @Component({
   selector: 'register',
@@ -50,19 +50,40 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   public initializeRegisterForm(): void {
     this.registerForm = this.fb.group({
-      username: [
-        'asd',
-        [Validators.required, Validators.minLength(3)],
-        uniqueUsernameValidator(this.userService)
-      ],
-      email: ['asd', [Validators.required, Validators.minLength(3)]],
-      confirmEmail: ['asd', [Validators.required, compareValidator('email')]],
-      password: ['asd', [Validators.required, Validators.minLength(3)]],
-      confirmPassword: [
-        'asd',
-        [Validators.required, compareValidator('password')]
-      ],
-      age: [13, [Validators.required, Validators.min(12)]],
+      username: 
+        [
+          '',
+          [Validators.required, Validators.minLength(3)],
+          uniqueUsernameValidator(this.userService)
+        ],
+      email: 
+        [
+          '',
+          [
+            Validators.required, 
+            Validators.pattern(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)
+          ]
+        ],
+      confirmEmail: 
+        [
+          '',
+          [Validators.required, compareValidator('email')]
+        ],
+      password: 
+        [
+          '',
+          [Validators.required, Validators.minLength(3)]
+        ],
+      confirmPassword:
+        [
+          '',
+          [Validators.required, compareValidator('password')]
+        ],
+      age: 
+        [
+          12,
+          [Validators.required, Validators.min(12)]
+        ],
       countryData: this.initializeCountryData(),
       streetAddress: this.fb.array([this.initializeStreetAddress()])
     });
@@ -70,18 +91,46 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   public initializeCountryData(): FormGroup {
     return this.fb.group({
-      country: ['asd', Validators.required],
-      city: ['asd', Validators.required],
-      state: ['asd', Validators.required],
-      zipcode: ['asd', Validators.required]
+      country: 
+        [
+          '',
+          Validators.required
+        ],
+      city: 
+        [
+          '',
+          Validators.required
+        ],
+      state: 
+        [
+          '',
+          Validators.required
+        ],
+      zipcode: 
+        [
+          '',
+          Validators.required
+        ]
     });
   }
 
   public initializeStreetAddress(): FormGroup {
     return this.fb.group({
-      street: ['asd', Validators.required],
-      apartament: ['asd', Validators.required],
-      phoneNumber: ['asd', Validators.required]
+      street: 
+        [ 
+          '',
+          Validators.required
+        ],
+      apartament: 
+        [ 
+          '',
+          Validators.required
+        ],
+      phoneNumber:
+        [
+          '',
+          Validators.required
+        ]
     });
   }
 
@@ -102,7 +151,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
     this.subscription = this.userService
       .registerUser(this.userModel)
-      .subscribe(data => {
+      .subscribe((data: object) => {
         this.userService.saveData(data);
         this.router.navigate(['/game/all']);
         this.showSpinner = false;

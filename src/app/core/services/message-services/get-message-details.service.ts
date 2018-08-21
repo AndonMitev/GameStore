@@ -3,8 +3,8 @@ import { map } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
-//Services
-import { HttpServices } from '../http.services';
+//CRUD Method
+import { GetMethod } from '../crud-methods/get-method.service';
 //State
 import { AppState } from '../../../store/app.state';
 //Model
@@ -16,7 +16,7 @@ import { GetMessageDetailsAction } from '../../../store/actions/message.actions'
   providedIn: 'root'
 })
 export class GetMessageDetailsService {
-  constructor(private http: HttpServices, private store: Store<AppState>) {}
+  constructor(private http: GetMethod, private store: Store<AppState>) {}
 
   public getMessageDetails(id: string): Observable<void> {
     return this.http

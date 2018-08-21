@@ -5,7 +5,7 @@ import { Store, select } from '@ngrx/store';
 import { AppState } from '../../../store/app.state';
 import { Observable, Subscription } from 'rxjs';
 import { CreateMessageInputModel } from '../../../core/models/input-models/message-model';
-import { UserVerificationService } from '../../../core/services/authentication/verification.service';
+import { UserVerificationService } from '../../../core/services/authentication-services/verification.service';
 
 @Component({
   selector: 'my-message-details',

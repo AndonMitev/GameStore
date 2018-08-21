@@ -40,7 +40,7 @@ export class MyProfileComponent implements OnInit, OnDestroy {
     this.subscription = this.actRoute.paramMap.subscribe((res: ParamMap) => {
       const USER_ID: string = res['params']['id'];
 
-      this.profileService.getProfile(USER_ID).subscribe(res => {
+      this.profileService.getProfile(USER_ID).subscribe(() => {
         this.userData$ = this.store.pipe(
           select((state: AppState) => state.users.user)
         );

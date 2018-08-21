@@ -3,8 +3,8 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-//Servuce
-import { HttpServices } from '../http.services';
+//CRUD Method
+import { PutMethod } from '../crud-methods/put-method.service';
 //State
 import { AppState } from '../../../store/app.state';
 //Model
@@ -17,7 +17,7 @@ import { UnsubscribeUserAction } from '../../../store/actions/user.actions';
   providedIn: 'root'
 })
 export class SubscriptionService {
-  constructor(private http: HttpServices, private store: Store<AppState>) {}
+  constructor(private http: PutMethod, private store: Store<AppState>) {}
 
   public subscriptionGame(game: CreateGameInputModel, id: string): Observable<void> {
     return this.http.put(game, `gamestore/${id}`, 'appdata').pipe(

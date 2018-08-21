@@ -10,7 +10,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 
 //Services
-import { UserVerificationService } from '../../../core/services/authentication/verification.service';
+import { UserVerificationService } from '../../../core/services/authentication-services/verification.service';
 import { GetUserIdByUsernameService } from '../../../core/services/profile-services/get-user-id-by-username.service';
 import { CreateMessageService } from '../../../core/services/message-services/create-message.service';
 import { GetAllUserMessagesService } from '../../../core/services/message-services/get-sent-messages.service';

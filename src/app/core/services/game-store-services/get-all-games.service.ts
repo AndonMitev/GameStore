@@ -3,8 +3,8 @@ import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { map } from 'rxjs/operators';
 
-//Service
-import { HttpServices } from '../http.services';
+//CRUD Method
+import { GetMethod } from '../crud-methods/get-method.service';
 //State
 import { AppState } from '../../../store/app.state';
 //Model
@@ -16,7 +16,7 @@ import { GetAllGamesAction } from '../../../store/actions/game.actions';
   providedIn: 'root'
 })
 export class GetAllGamesService {
-  constructor(private http: HttpServices, private store: Store<AppState>) {}
+  constructor(private http: GetMethod, private store: Store<AppState>) {}
 
   public getAllGames(selectedPlatform: string): Observable<void> {
     let correctQuery: string = 'gamestore';

@@ -3,8 +3,8 @@ import { Store } from '@ngrx/store';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
-//Service
-import { HttpServices } from '../http.services';
+//CRUD Method
+import { GetMethod } from '../crud-methods/get-method.service';
 //State
 import { AppState } from '../../../store/app.state';
 //Model
@@ -16,7 +16,7 @@ import { GetCompletedOrderDetailsAction } from '../../../store/actions/order.act
   providedIn: 'root'
 })
 export class GetCompletedOrderDetailsService {
-  constructor(private http: HttpServices, private store: Store<AppState>) {}
+  constructor(private http: GetMethod, private store: Store<AppState>) {}
 
   public getCompletedOrderDetails(id: string): Observable<void> {
     return this.http.get<CompleteOrderModel>(`orders/${id}`, 'appdata').pipe(

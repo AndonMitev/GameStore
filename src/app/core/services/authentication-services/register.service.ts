@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { HttpServices } from '../http.services';
+//CRUD Method
+import { PostMethod } from '../crud-methods/post-method.service';
+//Model
 import { RegisterInputModel } from '../../models/input-models/register.model';
 import { UserVerificationService } from './verification.service';
 
@@ -10,7 +12,7 @@ import { UserVerificationService } from './verification.service';
 })
 export class UserRegisterService {
   constructor(
-    private http: HttpServices,
+    private http: PostMethod,
     private observeToken: UserVerificationService
   ) {}
 

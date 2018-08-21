@@ -43,7 +43,11 @@ export class CreateCommentGameComponent implements OnInit, OnDestroy {
 
   public initializeCommentForm(): void {
     this.commentForm = this.fb.group({
-      description: ['', [Validators.required, Validators.maxLength(50)]]
+      description: 
+        [
+          '', 
+          [Validators.required, Validators.maxLength(50)]
+        ]
     });
   }
 

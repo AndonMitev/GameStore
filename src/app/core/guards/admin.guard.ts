@@ -7,7 +7,7 @@ import {
 import { Router } from '@angular/router';
 
 //Service
-import { UserVerificationService } from '../services/authentication/verification.service';
+import { UserVerificationService } from '../services/authentication-services/verification.service';
 
 @Injectable({
   providedIn: 'root'

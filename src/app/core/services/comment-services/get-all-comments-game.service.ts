@@ -3,8 +3,8 @@ import { Store } from '@ngrx/store';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
-//Services
-import { HttpServices } from '../http.services';
+//CRUD Method
+import { GetMethod } from '../crud-methods/get-method.service';
 //State
 import { AppState } from '../../../store/app.state';
 //Model
@@ -16,7 +16,7 @@ import { GetAllCommentsAction } from '../../../store/actions/comment.actions';
   providedIn: 'root'
 })
 export class GetAllCommentsService {
-  constructor(private http: HttpServices, private store: Store<AppState>) {}
+  constructor(private http: GetMethod, private store: Store<AppState>) {}
 
   public getAllComments(gameId: string): Observable<void> {
     return this.http

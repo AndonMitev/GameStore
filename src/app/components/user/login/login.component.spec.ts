@@ -4,7 +4,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 
 import { LoginComponent } from './login.component';
-import { UserLoginService } from '../../../core/services/authentication/login.service';
+import { UserLoginService } from '../../../core/services/authentication-services/login.service';
 import { SharedModule } from '../../shared/shared.module';
 
 fdescribe('LoginComponent', () => {

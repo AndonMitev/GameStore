@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-//Service
-import { HttpServices } from '../http.services';
+//CRUD Method
+import { PostMethod } from '../crud-methods/post-method.service';
 //Model
 import { CreateGameInputModel } from '../../models/input-models/create-game.model';
 
@@ -10,7 +10,7 @@ import { CreateGameInputModel } from '../../models/input-models/create-game.mode
   providedIn: 'root'
 })
 export class CreateGameService {
-  constructor(private http: HttpServices) {}
+  constructor(private http: PostMethod) {}
 
   public createGame(gameData: CreateGameInputModel): Observable<Object> {
     return this.http.post<CreateGameInputModel>(

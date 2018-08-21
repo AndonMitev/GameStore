@@ -3,8 +3,8 @@ import { Store } from '@ngrx/store';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
-//Services
-import { HttpServices } from '../http.services';
+//CRUD Method
+import { PostMethod } from '../crud-methods/post-method.service';
 //State
 import { AppState } from '../../../store/app.state';
 //Model
@@ -16,7 +16,7 @@ import { CompleteOrderAction } from '../../../store/actions/order.actions';
   providedIn: 'root'
 })
 export class CompleteOrderService {
-  constructor(private http: HttpServices, private store: Store<AppState>) {}
+  constructor(private http: PostMethod, private store: Store<AppState>) {}
 
   public finishOrder(order): Observable<void> {
     console.log(order);

@@ -5,7 +5,7 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 
 //Services
 import { GetReceivedMessagesService } from '../../../core/services/message-services/get-received-messages.service';
-import { UserVerificationService } from '../../../core/services/authentication/verification.service';
+import { UserVerificationService } from '../../../core/services/authentication-services/verification.service';
 //State
 import { AppState } from '../../../store/app.state';
 //Model

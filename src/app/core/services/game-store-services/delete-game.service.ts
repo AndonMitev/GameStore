@@ -3,8 +3,8 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-//Service
-import { HttpServices } from '../http.services';
+//CRUD Method
+import { DeleteMethod } from '../crud-methods/delete-method.service';
 //State
 import { AppState } from '../../../store/app.state';
 //Action
@@ -15,7 +15,7 @@ import { DeleteGameAction } from '../../../store/actions/game.actions';
   providedIn: 'root'
 })
 export class DeleteGameService {
-  constructor(private http: HttpServices, private store: Store<AppState>) {}
+  constructor(private http: DeleteMethod, private store: Store<AppState>) {}
 
   public deleteGame(id: string): Observable<void> {
     return this.http

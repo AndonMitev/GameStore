@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-//Service
-import { HttpServices } from '../http.services';
+//CRUD Method
+import { GetMethod } from '../crud-methods/get-method.service';
 //Model
 import { RegisterInputModel } from '../../models/input-models/register.model';
 
@@ -10,7 +10,7 @@ import { RegisterInputModel } from '../../models/input-models/register.model';
   providedIn: 'root'
 })
 export class GetUserIdByUsernameService {
-  constructor(private http: HttpServices) {}
+  constructor(private http: GetMethod) {}
 
   public getUserIdByUsername(username: string): Observable<Object> {
     return this.http.get<RegisterInputModel>(

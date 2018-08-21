@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 
 //Service
-import { UserLogoutService } from '../../../core/services/authentication/logout.service';
+import { UserLogoutService } from '../../../core/services/authentication-services/logout.service';
 
 @Component({
   selector: 'logout',

@@ -1,18 +1,23 @@
 import { Injectable } from '@angular/core';
-import { HttpServices } from '../http.services';
-import { map } from '../../../../../node_modules/rxjs/operators';
-import { DetailsGameModel } from '../../models/view-models/details-game.model';
-import { Store } from '../../../../../node_modules/@ngrx/store';
+import { map } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+
+//CRUD Method
+import { GetMethod } from '../crud-methods/get-method.service';
+//State
 import { AppState } from '../../../store/app.state';
-import { GetUserSubscriptionsAction } from '../../../store/actions/user.actions';
-import { Observable } from '../../../../../node_modules/rxjs';
+//Model
 import { CompleteOrderModel } from '../../models/view-models/complete-order.model';
+//Action
+import { GetUserSubscriptionsAction } from '../../../store/actions/user.actions';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class GetUserSubscriptionsService {
-  constructor(private http: HttpServices, private store: Store<AppState>) {}
+  constructor(private http: GetMethod, private store: Store<AppState>) {}
 
   public getUserSubscriptions(userId: string): Observable<void> {
     return this.http

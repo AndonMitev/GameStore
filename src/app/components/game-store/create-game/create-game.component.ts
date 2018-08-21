@@ -5,14 +5,15 @@ import {
   Validators,
   AbstractControl
 } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { Subscription } from 'rxjs';
 
 //Model
 import { CreateGameInputModel } from '../../../core/models/input-models/create-game.model';
 //Service
 import { CreateGameService } from '../../../core/services/game-store-services/create-game.service';
-import { Subscription } from 'rxjs';
-import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'create-game',
@@ -41,7 +42,7 @@ export class CreateGameComponent implements OnInit, OnDestroy {
   ) {}
 
   public ngOnInit(): void {
-    this.initializeForm();
+    this.initializeGameForm();
   }
 
   public ngOnDestroy(): void {
@@ -77,25 +78,63 @@ export class CreateGameComponent implements OnInit, OnDestroy {
       });
   }
 
-  public initializeForm(): void {
+  public initializeGameForm(): void {
     this.gameForm = this.fb.group({
-      title: ['Call of Duty', Validators.required],
-      image: [
-        'https://i.ytimg.com/vi/PCGydpJXIOg/maxresdefault.jpg',
-        Validators.required
-      ],
-      publisher: ['Call of Duty', Validators.required],
-      developer: ['Call of Duty', Validators.required],
-      series: ['Call of Duty', Validators.required],
-      selectedPlatform: ['PS4', Validators.required],
-      release: ['2012-03-15', Validators.required],
-      genre: ['Call of Duty', Validators.required],
-      description: [
-        'Call of DutyCall of DutyCall of Duty',
-        Validators.required
-      ],
-      mode: ['Multiplayer', Validators.required],
-      price: [33, [Validators.required, Validators.min(5)]]
+      title: 
+        [
+          '', 
+          [Validators.required, Validators.minLength(2), Validators.maxLength(20)]
+        ],
+      image:
+        [
+          '',
+          [Validators.required]
+        ],
+      publisher: 
+        [
+          '', 
+          [Validators.required, Validators.minLength(2), Validators.maxLength(20)]
+        ],
+      developer: 
+        [
+          '',
+          [Validators.required, Validators.minLength(2), Validators.maxLength(20)]
+        ],
+      series: 
+        [
+          '', 
+          [Validators.required, Validators.minLength(2), Validators.maxLength(20)]
+        ],
+      selectedPlatform: 
+        [
+          '', 
+          [Validators.required]
+        ],
+      release: 
+        [
+          '', 
+          [Validators.required, Validators.pattern(/^\d{2}-\d{2}-\d{4}$/)]
+        ],
+      genre: 
+        [
+          '', 
+          [Validators.required, Validators.minLength(2), Validators.maxLength(20)]
+        ],
+      description:
+        [
+          '',
+          [Validators.required, Validators.minLength(2), Validators.maxLength(500)]
+        ],
+      mode: 
+        [
+          '', 
+          [Validators.required]
+        ],
+      price: 
+        [
+          0, 
+          [Validators.required, Validators.min(5), Validators.pattern(/^\d+$/)]
+        ]
     });
   }
 

@@ -3,8 +3,8 @@ import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-//Service
-import { HttpServices } from '../http.services';
+//CRUD Method
+import { PostMethod } from '../crud-methods/post-method.service';
 //State
 import { AppState } from '../../../store/app.state';
 //Model
@@ -19,7 +19,7 @@ import {
   providedIn: 'root'
 })
 export class CreateMessageService {
-  constructor(private http: HttpServices, private store: Store<AppState>) {}
+  constructor(private http: PostMethod, private store: Store<AppState>) {}
 
    createMessage(message: CreateMessageInputModel): Observable<void> {
     return this.http

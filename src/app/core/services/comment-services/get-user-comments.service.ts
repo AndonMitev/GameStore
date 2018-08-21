@@ -3,8 +3,8 @@ import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 
-//Service
-import { HttpServices } from '../http.services';
+//CRUD Method
+import { GetMethod } from '../crud-methods/get-method.service';
 //State
 import { AppState } from '../../../store/app.state';
 //Model
@@ -16,7 +16,7 @@ import { GetUserCommentsAction } from '../../../store/actions/comment.actions';
   providedIn: 'root'
 })
 export class GetUserCommentsService {
-  constructor(private http: HttpServices, private store: Store<AppState>) {}
+  constructor(private http: GetMethod, private store: Store<AppState>) {}
 
   public getUserComments(userId: string): Observable<void> {
     return this.http

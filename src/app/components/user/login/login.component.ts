@@ -12,7 +12,7 @@ import { ToastrService } from 'ngx-toastr';
 //Model
 import { LoginInputModel } from '../../../core/models/input-models/login.model';
 //Service
-import { UserLoginService } from '../../../core/services/authentication/login.service';
+import { UserLoginService } from '../../../core/services/authentication-services/login.service';
 
 @Component({
   selector: 'login',
@@ -44,8 +44,16 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   public initializeLoginForm(): void {
     this.loginForm = this.fb.group({
-      username: ['', Validators.required],
-      password: ['', Validators.required]
+      username: 
+        [ 
+          '',
+          Validators.required
+        ],
+      password: 
+        [
+          '', 
+          Validators.required
+        ]
     });
   }
 
@@ -62,7 +70,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     this.subscription$ = this.userService
       .loginUser(this.userModel)
-      .subscribe(res => {
+      .subscribe((res: object) => {
         this.userService.saveData(res);
         this.router.navigate(['/game/all']);
         this.toast.success(`Welcome again, ${USER_DATA['username']}!`);

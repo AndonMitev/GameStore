@@ -5,7 +5,7 @@ import { Observable, Subscription } from 'rxjs';
 
 //Service
 import { GetAllCommentsService } from '../../../core/services/comment-services/get-all-comments-game.service';
-import { UserVerificationService } from '../../../core/services/authentication/verification.service';
+import { UserVerificationService } from '../../../core/services/authentication-services/verification.service';
 //Model
 import { AllCommentsGameModel } from '../../../core/models/view-models/all-comments-game.model';
 //State
