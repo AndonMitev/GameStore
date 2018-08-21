@@ -64,7 +64,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       .loginUser(this.userModel)
       .subscribe(res => {
         this.loginService.saveData(res);
-        this.router.navigate(['/home']);
+        this.router.navigate(['/game/all']);
         this.toast.success(`Welcome again, ${USER_DATA['username']}!`);
       });
   }

@@ -32,6 +32,9 @@ export class ErrorInterceptor implements HttpInterceptor {
           case 401:
             this.toast.error(err.error.error);
             break;
+          case 404:
+            this.router.navigate(['**']);
+            break;
         }
         return throwError(err);
       })

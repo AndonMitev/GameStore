@@ -5,6 +5,7 @@ import { Observable, Subscription } from 'rxjs';
 
 //Service
 import { GetAllCommentsService } from '../../../core/services/comment-services/get-all-comments-game.service';
+import { UserVerificationService } from '../../../core/services/authentication/verification.service';
 //Model
 import { AllCommentsGameModel } from '../../../core/models/view-models/all-comments-game.model';
 //State
@@ -20,9 +21,11 @@ export class AllCommentsGameComponent implements OnInit, OnDestroy {
   public showSpinner: boolean;
   public currPage: number;
   public pageSize: number;
+  public currentUserId: string;
   private subscription: Subscription;
 
   constructor(
+    public verification: UserVerificationService,
     private router: ActivatedRoute,
     private store: Store<AppState>,
     private getCommentsService: GetAllCommentsService
@@ -39,6 +42,7 @@ export class AllCommentsGameComponent implements OnInit, OnDestroy {
         this.allComments$ = this.store.pipe(
           select((state: AppState) => state.comments.all)
         );
+        this.currentUserId = localStorage.getItem('userId');
         this.showSpinner = false;
       });
     });

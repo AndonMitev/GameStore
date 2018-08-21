@@ -13,21 +13,19 @@ import { AppRoutingModule } from './app.routing.module';
 import { ServiceModule } from './core/services/service.module';
 //Components
 import { AppComponent } from './app.component';
+import { RegisterComponent } from './components/user/register/register.component';
+import { LoginComponent } from './components/user/login/login.component';
+import { LogoutComponent } from './components/user/logout/logout.component';
 //Interceptors
 import { TokenInterceptor } from './core/interceptors/token.interceptor';
 import { ErrorInterceptor } from './core/interceptors/error.interceptor';
 import { CachingInterceptor } from './core/interceptors/caching.interceptor';
 //Reducers
 import { appReducers } from './store/app.reducers';
-import { HomeComponent } from './components/home/home.component';
-import { RegisterComponent } from './components/user/register/register.component';
-import { LoginComponent } from './components/user/login/login.component';
-import { LogoutComponent } from './components/user/logout/logout.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
     RegisterComponent,
     LoginComponent,
     LogoutComponent
@@ -38,13 +36,14 @@ import { LogoutComponent } from './components/user/logout/logout.component';
     ReactiveFormsModule,
     BrowserAnimationsModule,
     SharedModule,
-    AppRoutingModule,
+
     ServiceModule,
     ToastrModule.forRoot({
       timeOut: 1500
     }),
     StoreModule.forRoot(appReducers),
-    NgxPaginationModule
+    NgxPaginationModule,
+    AppRoutingModule
   ],
   providers: [
     {

@@ -6,6 +6,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { SpinnerComponent } from './loading-spinner/loading-spinner.component';
 import { SubscribeToGameComponent } from './subscribe-to-game/subscribe-to-game.component';
 import { UnsubscribeFromGameComponent } from './unsubscribe-from-game/unsubscribe-from-game.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 //Directives
 import { CompareValidatorDirective } from './directives/compare-validator.directive';
@@ -25,5 +26,6 @@ export const sharedComponentsImp = [
   UnsubscribeFromGameComponent,
   CompareValidatorDirective,
   UniqueUsernameValidatorDirective,
-  FilterPipe
+  FilterPipe,
+  NotFoundComponent
 ];

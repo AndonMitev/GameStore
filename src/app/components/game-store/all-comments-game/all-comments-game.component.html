@@ -9,7 +9,7 @@
       <span class="text-justify ">
         <small> Posted by:
           <em>{{comment.creator}}</em> at: {{comment._kmd.ect | date}}</small>
-        <delete-comment [commentId]="comment._id"></delete-comment>
+        <delete-comment *ngIf="verification.isAdmin() || currentUserId === comment._acl.creator" [commentId]="comment._id"></delete-comment>
       </span>
     </div>
   </div>

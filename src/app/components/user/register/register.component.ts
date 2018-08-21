@@ -104,7 +104,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
       .registerUser(this.userModel)
       .subscribe(data => {
         this.registerService.saveData(data);
-        this.router.navigate(['/home']);
+        this.router.navigate(['/game/all']);
         this.showSpinner = false;
         this.toast.success(`Hello for first time, ${USER_DATA['username']}!`);
       });
