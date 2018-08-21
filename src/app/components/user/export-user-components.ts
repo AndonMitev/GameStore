@@ -1,3 +1,3 @@
-import { ProfileComponent } from './profile/profile.component';
+import { MyProfileComponent } from './my-profile/my-profile.component';
 
-export const userComponentsEx = [ProfileComponent];
+export const userComponentsEx = [MyProfileComponent];

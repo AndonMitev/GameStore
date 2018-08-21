@@ -10,7 +10,7 @@ import { AppState } from '../../../store/app.state';
 //Model
 import { CreateMessageInputModel } from '../../models/input-models/message-model';
 //Action
-import { GetReceivedMessages } from '../../../store/actions/message.actions';
+import { GetReceivedMessagesAction } from '../../../store/actions/message.actions';
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +26,7 @@ export class GetReceivedMessagesService {
       )
       .pipe(
         map((res: CreateMessageInputModel[]) => {
-          this.store.dispatch(new GetReceivedMessages(res));
+          this.store.dispatch(new GetReceivedMessagesAction(res));
         })
       );
   }

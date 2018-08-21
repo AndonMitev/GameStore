@@ -10,7 +10,7 @@ import { AppState } from '../../../store/app.state';
 //Model
 import { CompleteOrderModel } from '../../models/view-models/complete-order.model';
 //Action
-import { GetCompletedOrderDetails } from '../../../store/actions/order.actions';
+import { GetCompletedOrderDetailsAction } from '../../../store/actions/order.actions';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +21,7 @@ export class GetCompletedOrderDetailsService {
   public getCompletedOrderDetails(id: string): Observable<void> {
     return this.http.get<CompleteOrderModel>(`orders/${id}`, 'appdata').pipe(
       map((res: CompleteOrderModel) => {
-        this.store.dispatch(new GetCompletedOrderDetails(res));
+        this.store.dispatch(new GetCompletedOrderDetailsAction(res));
       })
     );
   }

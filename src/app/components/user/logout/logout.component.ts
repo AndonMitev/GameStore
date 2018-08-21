@@ -16,7 +16,7 @@ export class LogoutComponent implements OnInit, OnDestroy {
   private subscription$: Subscription;
 
   constructor(
-    private user: UserLogoutService,
+    private userService: UserLogoutService,
     private router: Router,
     private toast: ToastrService
   ) {
@@ -24,7 +24,7 @@ export class LogoutComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
-    this.subscription$ = this.user.logoutUser().subscribe(() => {
+    this.subscription$ = this.userService.logoutUser().subscribe(() => {
       localStorage.clear();
       sessionStorage.clear();
       this.router.navigate(['/login']);

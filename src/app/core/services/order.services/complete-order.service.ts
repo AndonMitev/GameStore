@@ -10,7 +10,7 @@ import { AppState } from '../../../store/app.state';
 //Model
 import { CompleteOrderModel } from '../../models/view-models/complete-order.model';
 //Action
-import { CompleteOrder } from '../../../store/actions/order.actions';
+import { CompleteOrderAction } from '../../../store/actions/order.actions';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +23,7 @@ export class CompleteOrderService {
 
     return this.http.post(order, 'orders', 'appdata').pipe(
       map((res: CompleteOrderModel) => {
-        this.store.dispatch(new CompleteOrder(order));
+        this.store.dispatch(new CompleteOrderAction(order));
       })
     );
   }

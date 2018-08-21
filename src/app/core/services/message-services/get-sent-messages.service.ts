@@ -10,7 +10,7 @@ import { AppState } from '../../../store/app.state';
 //Model
 import { CreateMessageInputModel } from '../../models/input-models/message-model';
 //Action
-import { GetSentMessages } from '../../../store/actions/message.actions';
+import { GetSentMessagesAction } from '../../../store/actions/message.actions';
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +26,7 @@ export class GetAllUserMessagesService {
       )
       .pipe(
         map((res: CreateMessageInputModel[]) =>
-          this.store.dispatch(new GetSentMessages(res))
+          this.store.dispatch(new GetSentMessagesAction(res))
         )
       );
   }

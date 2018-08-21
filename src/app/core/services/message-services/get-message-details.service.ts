@@ -10,7 +10,7 @@ import { AppState } from '../../../store/app.state';
 //Model
 import { CreateMessageInputModel } from '../../models/input-models/message-model';
 //Action
-import { GetMessageDetails } from '../../../store/actions/message.actions';
+import { GetMessageDetailsAction } from '../../../store/actions/message.actions';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +23,7 @@ export class GetMessageDetailsService {
       .get<CreateMessageInputModel>(`messages/${id}`, 'appdata')
       .pipe(
         map((res: CreateMessageInputModel) =>
-          this.store.dispatch(new GetMessageDetails(res))
+          this.store.dispatch(new GetMessageDetailsAction(res))
         )
       );
   }

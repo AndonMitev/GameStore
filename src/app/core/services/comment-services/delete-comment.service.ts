@@ -8,7 +8,7 @@ import { HttpServices } from '../http.services';
 //State
 import { AppState } from '../../../store/app.state';
 //Action
-import { DeleteComment } from '../../../store/actions/comment.actions';
+import { DeleteCommentAction } from '../../../store/actions/comment.actions';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +19,6 @@ export class DeleteCommentService {
   public deleteComment(id: string): Observable<void> {
     return this.http
       .delete<string>(`comments/${id}`, 'appdata')
-      .pipe(map(() => this.store.dispatch(new DeleteComment(id))));
+      .pipe(map(() => this.store.dispatch(new DeleteCommentAction(id))));
   }
 }

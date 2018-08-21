@@ -4,23 +4,31 @@ import { Action } from '@ngrx/store';
 import { AllGamesModel } from '../../core/models/view-models/all-games.model';
 import { DetailsGameModel } from '../../core/models/view-models/details-game.model';
 
-export const GET_ALL_GAMES = '[GAMES] All';
-export const GET_DETAILS_GAME = '[GAMES] Details';
-export const EDIT_GAME = '[GAMES] Edit';
+export const GET_ALL_GAMES = '[GAMES] Get All Games';
+export const GET_DETAILS_GAME = '[GAMES] Get Details For Game';
 
-export class GetAllGames implements Action {
+//Fix
+export const GET_GAME_TO_EDIT = '[GAMES] Subscribe User To Game';
+export const DELETE_GAME = '[GAMES] Delete Game';
+
+export class GetAllGamesAction implements Action {
   readonly type: string = GET_ALL_GAMES;
   constructor(public payload: AllGamesModel[]) {}
 }
 
-export class GetDetailsGame implements Action {
+export class GetDetailsGameAction implements Action {
   readonly type: string = GET_DETAILS_GAME;
   constructor(public payload: DetailsGameModel) {}
 }
 
-export class EditGame implements Action {
-  readonly type: string = EDIT_GAME;
+export class SubscribeUserAction implements Action {
+  readonly type: string = GET_GAME_TO_EDIT;
   constructor(public payload: DetailsGameModel) {}
 }
 
-export type Types = GetAllGames | GetDetailsGame | EditGame;
+export class DeleteGameAction implements Action {
+  readonly type: string = DELETE_GAME;
+  constructor(public payload: string) {}
+}
+
+export type Types = GetAllGamesAction | GetDetailsGameAction | SubscribeUserAction | DeleteGameAction;

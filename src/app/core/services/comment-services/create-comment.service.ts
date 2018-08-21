@@ -10,7 +10,7 @@ import { AppState } from '../../../store/app.state';
 //Model
 import { CommentGameInputModel } from '../../models/input-models/create-comment-game.model';
 //Action
-import { AddComment } from '../../../store/actions/comment.actions';
+import { AddCommentAction } from '../../../store/actions/comment.actions';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +23,7 @@ export class CreateCommentGameService {
       .post<CommentGameInputModel>(comment, 'comments', 'appdata')
       .pipe(
         map((res: CommentGameInputModel) => {
-          this.store.dispatch(new AddComment(res));
+          this.store.dispatch(new AddCommentAction(res));
         })
       );
   }

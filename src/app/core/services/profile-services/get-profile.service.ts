@@ -10,7 +10,7 @@ import { AppState } from '../../../store/app.state';
 //Model
 import { RegisterInputModel } from '../../models/input-models/register.model';
 //Action
-import { GetUserById } from '../../../store/actions/user.actions';
+import { GetUserByIdAction } from '../../../store/actions/user.actions';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +21,7 @@ export class GetProfileService {
   public getProfile(userId: string): Observable<void> {
     return this.http.get<RegisterInputModel>(userId, 'user').pipe(
       map((res: RegisterInputModel) => {
-        this.store.dispatch(new GetUserById(res));
+        this.store.dispatch(new GetUserByIdAction(res));
       })
     );
   }

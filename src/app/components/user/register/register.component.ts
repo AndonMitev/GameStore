@@ -31,7 +31,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   constructor(
     private fb: FormBuilder,
-    private registerService: UserRegisterService,
+    private userService: UserRegisterService,
     private router: Router,
     private toast: ToastrService
   ) {
@@ -53,7 +53,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
       username: [
         'asd',
         [Validators.required, Validators.minLength(3)],
-        uniqueUsernameValidator(this.registerService)
+        uniqueUsernameValidator(this.userService)
       ],
       email: ['asd', [Validators.required, Validators.minLength(3)]],
       confirmEmail: ['asd', [Validators.required, compareValidator('email')]],
@@ -100,10 +100,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
       USER_DATA['streetAddress']
     );
 
-    this.subscription = this.registerService
+    this.subscription = this.userService
       .registerUser(this.userModel)
       .subscribe(data => {
-        this.registerService.saveData(data);
+        this.userService.saveData(data);
         this.router.navigate(['/game/all']);
         this.showSpinner = false;
         this.toast.success(`Hello for first time, ${USER_DATA['username']}!`);

@@ -10,7 +10,7 @@ import { AppState } from '../../../store/app.state';
 //Model
 import { AllGamesModel } from '../../models/view-models/all-games.model';
 //Action
-import { GetAllGames } from '../../../store/actions/game.actions';
+import { GetAllGamesAction } from '../../../store/actions/game.actions';
 
 @Injectable({
   providedIn: 'root'
@@ -29,7 +29,7 @@ export class GetAllGamesService {
 
     return this.http.get<AllGamesModel[]>(correctQuery, 'appdata').pipe(
       map((res: AllGamesModel[]) => {
-        this.store.dispatch(new GetAllGames(res));
+        this.store.dispatch(new GetAllGamesAction(res));
       })
     );
   }

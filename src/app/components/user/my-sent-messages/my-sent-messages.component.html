@@ -1,0 +1,17 @@
+<div class="mt-4">
+  <div *ngIf="sentMessages$ | async as sentMessages">
+    <div class="mt-2 list-group-item list-group-item-action" *ngFor="let message of sentMessages | paginate: { id: 'sent-msg' , itemsPerPage: pageSize, currentPage: currPage }">
+      <a routerLink="/user/message/details/{{message._id}}">
+        <h5 class="text-justify">{{message.title}}</h5>
+      </a>
+      <p>{{message.content}}</p>
+      <span>at: {{message._kmd.ect | date}}</span>
+    </div>
+    <div class="text-center" *ngIf="sentMessages.length === 0">
+      <h5>There are no sended messages!</h5>
+    </div>
+  </div>
+  <pagination-controls id="sent-msg" (pageChange)="pageChanged($event)" maxSize="9" directionLinks="true" autoHide="true" responsive="true"
+    previousLabel="Previous" nextLabel="Next" screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page" screenReaderCurrentLabel="You're on page">
+  </pagination-controls>
+</div>

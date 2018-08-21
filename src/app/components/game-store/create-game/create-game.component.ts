@@ -35,7 +35,7 @@ export class CreateGameComponent implements OnInit, OnDestroy {
 
   constructor(
     private fb: FormBuilder,
-    private createGameService: CreateGameService,
+    private gameService: CreateGameService,
     private router: Router,
     private toast: ToastrService
   ) {}
@@ -69,7 +69,7 @@ export class CreateGameComponent implements OnInit, OnDestroy {
       []
     );
 
-    this.subscription = this.createGameService
+    this.subscription = this.gameService
       .createGame(this.createGameData)
       .subscribe(() => {
         this.toast.success(`${GAME_DATA['title']} successfully created!`);

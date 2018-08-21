@@ -28,7 +28,7 @@ export class AllCommentsGameComponent implements OnInit, OnDestroy {
     public verification: UserVerificationService,
     private router: ActivatedRoute,
     private store: Store<AppState>,
-    private getCommentsService: GetAllCommentsService
+    private commentService: GetAllCommentsService
   ) {
     this.currPage = 1;
     this.pageSize = 6;
@@ -38,7 +38,8 @@ export class AllCommentsGameComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscription = this.router.paramMap.subscribe((res: ParamMap) => {
       const GAME_ID: string = res['params']['id'];
-      this.getCommentsService.getAllComments(GAME_ID).subscribe(() => {
+
+      this.commentService.getAllComments(GAME_ID).subscribe(() => {
         this.allComments$ = this.store.pipe(
           select((state: AppState) => state.comments.all)
         );

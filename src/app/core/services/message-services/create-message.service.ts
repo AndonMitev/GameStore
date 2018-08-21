@@ -11,8 +11,8 @@ import { AppState } from '../../../store/app.state';
 import { CreateMessageInputModel } from '../../models/input-models/message-model';
 //Action
 import {
-  CreateMessage,
-  GetSentMessages
+  CreateMessageAction,
+  
 } from '../../../store/actions/message.actions';
 
 @Injectable({
@@ -21,12 +21,12 @@ import {
 export class CreateMessageService {
   constructor(private http: HttpServices, private store: Store<AppState>) {}
 
-  public createNewMessage(message: CreateMessageInputModel): Observable<void> {
+   createMessage(message: CreateMessageInputModel): Observable<void> {
     return this.http
       .post<CreateMessageInputModel>(message, 'messages', 'appdata')
       .pipe(
         map((res: CreateMessageInputModel) => {
-          this.store.dispatch(new CreateMessage(res));
+          this.store.dispatch(new CreateMessageAction(res));
         })
       );
   }

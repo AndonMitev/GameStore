@@ -10,7 +10,7 @@ import { AppState } from '../../../store/app.state';
 //Model
 import { AllCommentsGameModel } from '../../models/view-models/all-comments-game.model';
 //Action
-import { GetUserComments } from '../../../store/actions/comment.actions';
+import { GetUserCommentsAction } from '../../../store/actions/comment.actions';
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +26,7 @@ export class GetUserCommentsService {
       )
       .pipe(
         map((res: AllCommentsGameModel[]) =>
-          this.store.dispatch(new GetUserComments(res))
+          this.store.dispatch(new GetUserCommentsAction(res))
         )
       );
   }

@@ -1,0 +1,63 @@
+<div *ngIf="showSpinner">
+  <loading-spinner></loading-spinner>
+</div>
+<div *ngIf="userData$ | async as profile">
+  <div class="container border rounded shadow-lg mt-3 bg-white">
+    <h1 class="display-3 text-center">Profile</h1>
+    <hr>
+    <div class="row">
+      <div class="col-md-3 mb-3">
+        <img class="img-fluid rounded-circle" src="https://www.cryptocompare.com/media/19582/icon-user-default.png" alt="" />
+      </div>
+      <div class="col-md-4">
+        <h2>Username: {{profile.username}}</h2>
+        <h2>Age: {{profile.age}}</h2>
+        <h2>Email: {{profile.email}}</h2>
+      </div>
+      <div class="col-md-4">
+        <h2>Country: {{profile.countryData.country}}</h2>
+        <h2>City: {{profile.countryData.city}}</h2>
+        <h2>State: {{profile.countryData.state}}</h2>
+        <h2>ZipCode: {{profile.countryData.zipcode}}</h2>
+
+      </div>
+    </div>
+
+    <div class="row justify-content-end">
+      <div class="col-md-12 ">
+        <ul>
+          <li class="btn btn-link text-info mr-5" (click)="showComponent('orders')">
+            <strong>Orders</strong>
+          </li>
+          <li class="btn btn-link offset-2 text-info" (click)="showComponent('subscriptions')">
+            <strong>Subscriptions</strong>
+          </li>
+          <li class="btn btn-link offset-2 text-info" (click)="showComponent('comments')">
+            <strong>Comments</strong>
+          </li>
+          <li class="btn btn-link offset-2 text-info" (click)="showComponent('messages')">
+            <strong>Messages</strong>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div *ngIf="this.showOrders">
+        <my-orders></my-orders>
+      </div>
+      <div *ngIf="this.showSubscriptions">
+        <my-subscriptions></my-subscriptions>
+      </div>
+      <div *ngIf="this.showComments">
+        <my-comments></my-comments>
+      </div>
+      <div *ngIf="this.showMessages">
+        <my-messages></my-messages>
+      </div>
+    </div>
+  </div>
+</div>

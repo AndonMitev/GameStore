@@ -32,7 +32,8 @@ export class DetailsGameComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this.actRoute.paramMap.subscribe((res: ParamMap) => {
       const GAME_ID: string = res['params']['id'];
-      this.gameService.getGameById(GAME_ID).subscribe(() => {
+
+      this.gameService.getGameDetails(GAME_ID).subscribe(() => {
         this.subscription = this.store
           .pipe(select((state: AppState) => state.games.details))
           .subscribe((res: DetailsGameModel) => {
@@ -54,7 +55,7 @@ export class DetailsGameComponent implements OnInit, OnDestroy {
     });
   }
 
-  public ngOnDestroy() {
+  public ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }

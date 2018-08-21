@@ -10,7 +10,7 @@ import { AppState } from '../../../store/app.state';
 //Model
 import { CompleteOrderModel } from '../../models/view-models/complete-order.model';
 //Action
-import { GetCompletedOrders } from '../../../store/actions/order.actions';
+import { GetCompletedOrdersAction } from '../../../store/actions/order.actions';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +23,7 @@ export class GetCompletedOrdersService {
       .get<CompleteOrderModel[]>(`orders?query={"userId":"${id}"}&sort={"_kmd.ect": -1}`, 'appdata')
       .pipe(
         map((res: CompleteOrderModel[]) => {
-          this.store.dispatch(new GetCompletedOrders(res));
+          this.store.dispatch(new GetCompletedOrdersAction(res));
         })
       );
   }

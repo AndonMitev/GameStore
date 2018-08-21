@@ -3,7 +3,9 @@ import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 
 //Service
-import { EditGameService } from '../../../core/services/game-store-services/edit-game.service';
+import { SubscriptionService } from '../../../core/services/game-store-services/subscribe-game.service';
+import { AppState } from '../../../store/app.state';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'unsubscribe-from-game',
@@ -16,7 +18,11 @@ export class UnsubscribeFromGameComponent implements OnDestroy {
 
   private subscription: Subscription;
 
-  constructor(private edit: EditGameService, private toast: ToastrService) {}
+  constructor(
+    private unsubscribeService: SubscriptionService,
+    private toast: ToastrService,
+    private store: Store<AppState>
+  ) {}
 
   public unsubscribeUser() {
     const GAME_ID = this.game['_id'];
@@ -25,9 +31,15 @@ export class UnsubscribeFromGameComponent implements OnDestroy {
     this.game['subscriptions'] = this.game['subscriptions'].filter(
       id => id !== USER_ID
     );
-    this.subscription = this.edit.editGame(this.game, GAME_ID).subscribe(() => {
-      this.toast.success('Successfully unsubscribed from game!');
-    });
+    
+    this.unsubscribeService
+      .subscriptionGame(this.game, GAME_ID)
+      .subscribe(() => {
+        this.subscription = this.store
+          .select((state: AppState) => state.games.details)
+          .subscribe();
+        this.toast.success('Successfully unsubscribed from game!');
+      });
   }
 
   public ngOnDestroy() {

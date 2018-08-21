@@ -1,29 +1,29 @@
 import { Action } from '@ngrx/store';
 import { CreateMessageInputModel } from '../../core/models/input-models/message-model';
 
-export const GET_SENT_MESSAGES = '[MESSAGE] Sent';
-export const GET_RECEIVED_MESSAGES = '[MESSAGE] Received';
-export const CREATE_MESSAGE = '[MESSAGE] Create';
-export const GET_MESSAGE_DETAILS = '[MESSAGE] Details';
+export const GET_SENT_MESSAGES = '[MESSAGES] Get User Sent Messages';
+export const GET_RECEIVED_MESSAGES = '[MESSAGES] Get User Received Messages';
+export const CREATE_MESSAGE = '[MESSAGES] Create New Message';
+export const GET_MESSAGE_DETAILS = '[MESSAGES] Get Details For Message';
 
-export class CreateMessage implements Action {
+export class CreateMessageAction implements Action {
   readonly type: string = CREATE_MESSAGE;
   constructor(public payload: CreateMessageInputModel) {}
 }
 
-export class GetSentMessages implements Action {
+export class GetSentMessagesAction implements Action {
   readonly type: string = GET_SENT_MESSAGES;
   constructor(public payload: CreateMessageInputModel[]) {}
 }
 
-export class GetReceivedMessages implements Action {
+export class GetReceivedMessagesAction implements Action {
   readonly type: string = GET_RECEIVED_MESSAGES;
   constructor(public payload: CreateMessageInputModel[]) {}
 }
 
-export class GetMessageDetails implements Action {
+export class GetMessageDetailsAction implements Action {
   readonly type: string = GET_MESSAGE_DETAILS;
   constructor(public payload: CreateMessageInputModel) {}
 }
 
-export type Types = CreateMessage | GetSentMessages | GetReceivedMessages;
+export type Types = CreateMessageAction | GetSentMessagesAction | GetReceivedMessagesAction;

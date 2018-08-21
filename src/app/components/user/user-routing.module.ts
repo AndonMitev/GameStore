@@ -2,25 +2,25 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from '../../core/guards/auth.guard';
 
-import { ProfileComponent } from './profile/profile.component';
-import { UserFullOrderComponent } from './user-full-order/user-full-order.component';
-import { MessageDetailsComponent } from './message-details/message-details.component';
+import { MyProfileComponent } from './my-profile/my-profile.component';
+import { MyFullOrderDetails } from './my-full-order-details/my-full-order-details.component';
+import { MyMessageDetailsComponent } from './my-message-details/my-message-details.component';
 
 const routes: Routes = [
   {
     path: 'profile/:id',
     canActivate: [AuthGuard],
-    component: ProfileComponent
+    component: MyProfileComponent
   },
   {
     path: 'completed/:id',
     canActivate: [AuthGuard],
-    component: UserFullOrderComponent
+    component: MyFullOrderDetails
   },
   {
     path: 'message/details/:id',
     canActivate: [AuthGuard],
-    component: MessageDetailsComponent
+    component: MyMessageDetailsComponent
   }
 ];
 

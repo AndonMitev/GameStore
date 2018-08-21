@@ -5,9 +5,9 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../../../store/app.state';
 //Action
 import {
-  OrderGame,
-  GetAllOrderedGames,
-  DeleteGameFromOrderedList
+  OrderGameAction,
+  GetAllOrderedGamesAction,
+  DeleteGameFromOrderedListAction
 } from '../../../store/actions/order.actions';
 //Model
 import { CompleteOrderModel } from '../../models/view-models/complete-order.model';
@@ -30,7 +30,7 @@ export class OrderGameService {
     this.game = new CompleteOrderModel(gameId, title, price, image);
     gameId = gameId + 'custKey';
     sessionStorage.setItem(gameId, JSON.stringify(this.game));
-    this.store.dispatch(new OrderGame(this.game));
+    this.store.dispatch(new OrderGameAction(this.game));
   }
 
   viewOrder(): void {
@@ -40,11 +40,11 @@ export class OrderGameService {
         ALL_GAMES.push(JSON.parse(sessionStorage[k]));
       }
     }
-    this.store.dispatch(new GetAllOrderedGames(ALL_GAMES));
+    this.store.dispatch(new GetAllOrderedGamesAction(ALL_GAMES));
   }
 
   deleteGame(gameId: string): void {
     sessionStorage.removeItem(gameId + 'custKey');
-    this.store.dispatch(new DeleteGameFromOrderedList(gameId));
+    this.store.dispatch(new DeleteGameFromOrderedListAction(gameId));
   }
 }

@@ -15,12 +15,12 @@ export class DeleteCommentComponent implements OnDestroy {
   private subscription: Subscription;
 
   constructor(
-    private deleteCommentService: DeleteCommentService,
+    private commentService: DeleteCommentService,
     private toast: ToastrService
   ) {}
 
   public deleteSelectedComment(): void {
-    this.subscription = this.deleteCommentService
+    this.subscription = this.commentService
       .deleteComment(this.commentId)
       .subscribe(() => this.toast.success('Comment deleted!'));
   }

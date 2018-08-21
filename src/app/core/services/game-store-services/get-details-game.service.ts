@@ -10,7 +10,7 @@ import { DetailsGameModel } from '../../models/view-models/details-game.model';
 //State
 import { AppState } from '../../../store/app.state';
 //Action
-import { GetDetailsGame } from '../../../store/actions/game.actions';
+import { GetDetailsGameAction } from '../../../store/actions/game.actions';
 
 @Injectable({
   providedIn: 'root'
@@ -18,10 +18,10 @@ import { GetDetailsGame } from '../../../store/actions/game.actions';
 export class GetDetailsGameService {
   constructor(private http: HttpServices, private store: Store<AppState>) {}
 
-  public getGameById(id: string): Observable<void> {
+  public getGameDetails(id: string): Observable<void> {
     return this.http.get<DetailsGameModel>(`gamestore/${id}`, 'appdata').pipe(
       map((res: DetailsGameModel) => {
-        this.store.dispatch(new GetDetailsGame(res));
+        this.store.dispatch(new GetDetailsGameAction(res));
       })
     );
   }

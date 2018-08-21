@@ -28,7 +28,6 @@ function deleteComment(state, id) {
 }
 
 function getUserComments(state, userComments) {
-  console.log(userComments);
   return {
     ...state,
     all: userComments

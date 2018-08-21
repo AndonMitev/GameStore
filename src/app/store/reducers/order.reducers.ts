@@ -7,21 +7,21 @@ const INITIAL_STATE: OrderState = {
   details: null
 };
 
-function addGameToOrder(state, game) {
+function addGameToOrderList(state, game) {
   return {
     ...state,
     all: [...state.all, game]
   };
 }
 
-function deleteGameFromOrder(state, gameId) {
+function deleteGameFromOrderList(state, gameId) {
   return {
     ...state,
     all: [...state.all.filter(game => game.gameId !== gameId)]
   };
 }
 
-function viewAllAddedGamesToOrder(state, games) {
+function viewAllAddedGamesToOrderInList(state, games) {
   return {
     ...state,
     all: games
@@ -56,12 +56,12 @@ export function orderReducer(
   action: OrderActions.Types
 ) {
   switch (action.type) {
-    case OrderActions.ORDER_GAME:
-      return addGameToOrder(state, action.payload);
-    case OrderActions.GET_ALL_ORDERED_GAMES:
-      return viewAllAddedGamesToOrder(state, action.payload);
+    case OrderActions.ADD_GAME_IN_ORDER_LIST:
+      return addGameToOrderList(state, action.payload);
+    case OrderActions.GET_ALL_ORDERED_GAMES_IN_LIST:
+      return viewAllAddedGamesToOrderInList(state, action.payload);
     case OrderActions.DELETE_GAME_FROM_ORDER_LIST:
-      return deleteGameFromOrder(state, action.payload);
+      return deleteGameFromOrderList(state, action.payload);
     case OrderActions.COMPLETE_ORDER:
       return completeOrder(state, action.payload);
     case OrderActions.GET_ALL_COMPLETED_ORDERS:

@@ -39,6 +39,7 @@ export class AllGamesComponent implements OnInit, OnDestroy {
     this.initializeSearchForm();
     this.subscription = this.router.queryParamMap.subscribe((res: ParamMap) => {
       const CATEGORY: string = res['params']['category'];
+
       this.gameService.getAllGames(CATEGORY).subscribe(() => {
         this.allGames$ = this.store.pipe(
           select((state: AppState) => state.games.all)

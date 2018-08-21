@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   constructor(
     private fb: FormBuilder,
-    private loginService: UserLoginService,
+    private userService: UserLoginService,
     private router: Router,
     private toast: ToastrService
   ) {}
@@ -60,10 +60,10 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     this.showSpinner = true;
 
-    this.subscription$ = this.loginService
+    this.subscription$ = this.userService
       .loginUser(this.userModel)
       .subscribe(res => {
-        this.loginService.saveData(res);
+        this.userService.saveData(res);
         this.router.navigate(['/game/all']);
         this.toast.success(`Welcome again, ${USER_DATA['username']}!`);
       });

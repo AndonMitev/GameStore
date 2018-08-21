@@ -4,7 +4,7 @@ import { map } from '../../../../../node_modules/rxjs/operators';
 import { DetailsGameModel } from '../../models/view-models/details-game.model';
 import { Store } from '../../../../../node_modules/@ngrx/store';
 import { AppState } from '../../../store/app.state';
-import { GetUserSubscriptions } from '../../../store/actions/user.actions';
+import { GetUserSubscriptionsAction } from '../../../store/actions/user.actions';
 import { Observable } from '../../../../../node_modules/rxjs';
 import { CompleteOrderModel } from '../../models/view-models/complete-order.model';
 
@@ -22,7 +22,7 @@ export class GetUserSubscriptionsService {
       )
       .pipe(
         map((res: CompleteOrderModel[]) =>
-          this.store.dispatch(new GetUserSubscriptions(res))
+          this.store.dispatch(new GetUserSubscriptionsAction(res))
         )
       );
   }

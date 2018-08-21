@@ -2,47 +2,47 @@ import { Action } from '@ngrx/store';
 
 import { CompleteOrderModel } from '../../core/models/view-models/complete-order.model';
 
-export const GET_ALL_ORDERED_GAMES = '[ORDER] All';
-export const ORDER_GAME = '[ORDER] Add';
-export const DELETE_GAME_FROM_ORDER_LIST = '[ORDER] Delete';
-export const COMPLETE_ORDER = '[ORDER] Complete';
-export const GET_ALL_COMPLETED_ORDERS = '[ORDER] AllCompleted';
-export const GET_COMPLETED_ORDER_DETAILS = '[ORDER] CompletedDetails';
+export const GET_ALL_ORDERED_GAMES_IN_LIST = '[ORDERS] Get List With Ordered Games';
+export const ADD_GAME_IN_ORDER_LIST = '[ORDERS] Add New Game To List';
+export const DELETE_GAME_FROM_ORDER_LIST = '[ORDERS] Delete Game From List';
+export const COMPLETE_ORDER = '[ORDERS] Complete Order';
+export const GET_ALL_COMPLETED_ORDERS = '[ORDERS] Get All Completed Orders';
+export const GET_COMPLETED_ORDER_DETAILS = '[ORDERS] Get Completed Order Details';
 
-export class GetAllOrderedGames implements Action {
-  readonly type: string = GET_ALL_ORDERED_GAMES;
+export class GetAllOrderedGamesAction implements Action {
+  readonly type: string = GET_ALL_ORDERED_GAMES_IN_LIST;
   constructor(public payload: CompleteOrderModel[]) {}
 }
 
-export class OrderGame implements Action {
-  readonly type: string = ORDER_GAME;
+export class OrderGameAction implements Action {
+  readonly type: string = GET_ALL_ORDERED_GAMES_IN_LIST;
   constructor(public payload: CompleteOrderModel) {}
 }
 
-export class DeleteGameFromOrderedList implements Action {
+export class DeleteGameFromOrderedListAction implements Action {
   readonly type: string = DELETE_GAME_FROM_ORDER_LIST;
   constructor(public payload: string) {}
 }
 
-export class CompleteOrder implements Action {
+export class CompleteOrderAction implements Action {
   readonly type: string = COMPLETE_ORDER;
   constructor(public payload: CompleteOrderModel[]) {}
 }
 
-export class GetCompletedOrders implements Action {
+export class GetCompletedOrdersAction implements Action {
   readonly type: string = GET_ALL_COMPLETED_ORDERS;
   constructor(public payload: CompleteOrderModel[]) {}
 }
 
-export class GetCompletedOrderDetails implements Action {
+export class GetCompletedOrderDetailsAction implements Action {
   readonly type: string = GET_COMPLETED_ORDER_DETAILS;
   constructor(public payload: CompleteOrderModel) {}
 }
 
 export type Types =
-  | OrderGame
-  | GetAllOrderedGames
-  | DeleteGameFromOrderedList
-  | CompleteOrder
-  | GetCompletedOrders
-  | GetCompletedOrderDetails;
+  | OrderGameAction
+  | GetAllOrderedGamesAction
+  | DeleteGameFromOrderedListAction
+  | CompleteOrderAction
+  | GetCompletedOrdersAction
+  | GetCompletedOrderDetailsAction;

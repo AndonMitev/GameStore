@@ -1,21 +1,23 @@
-import { ProfileComponent } from './profile/profile.component';
-import { UserOrdersComponent } from './user-orders/user-orders.component';
-import { UserSubscriptionsComponent } from './user-subscriptions/user-subscriptions.component';
-import { UserCommentsComponent } from './user-comments/user-comments.component';
-import { UserFullOrderComponent } from './user-full-order/user-full-order.component';
-import { CreateMessageComponent } from './create-message/create-message.component';
+import { MyProfileComponent } from './my-profile/my-profile.component';
+import { MyOrdersComponent } from './my-orders/my-orders.component';
+import { MySubscriptionsComponent } from './my-subscriptions/my-subscriptions.component';
+import { MyCommentsComponent } from './my-comments/my-comments.component';
+import { MyFullOrderDetails } from './my-full-order-details/my-full-order-details.component';
+import { MyCreateMessageComponent } from './my-create-message/my-create-message.component';
+import { MySentMessages } from './my-sent-messages/my-sent-messages.component';
+import { MyMessageDetailsComponent } from './my-message-details/my-message-details.component';
+import { MyRecievedMessagesComponent } from './my-received-messages/my-received-messages.component';
 import { MyMessagesComponent } from './my-messages/my-messages.component';
-import { MessageDetailsComponent } from './message-details/message-details.component';
-import { RecievedMessagesComponent } from './received-messages/received-messages.component';
 
 export const userComponentsImp = [
-  ProfileComponent,
-  UserOrdersComponent,
-  UserSubscriptionsComponent,
-  UserCommentsComponent,
-  UserFullOrderComponent,
-  CreateMessageComponent,
-  MyMessagesComponent,
-  MessageDetailsComponent,
-  RecievedMessagesComponent
+  MyProfileComponent,
+  MyOrdersComponent,
+  MySubscriptionsComponent,
+  MyCommentsComponent,
+  MyFullOrderDetails,
+  MyCreateMessageComponent,
+  MySentMessages,
+  MyMessageDetailsComponent,
+  MyRecievedMessagesComponent,
+  MyMessagesComponent
 ];
