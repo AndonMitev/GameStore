@@ -1,7 +1,7 @@
 <div *ngIf="showSpinner">
   <loading-spinner></loading-spinner>
 </div>
-<div *ngIf="orders">
+<div *ngIf="orders$ | async as orders">
   <div class="col-md-12">
     <h2 class="text-center">Previous orders</h2>
     <hr>

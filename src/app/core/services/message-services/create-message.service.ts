@@ -10,10 +10,7 @@ import { AppState } from '../../../store/app.state';
 //Model
 import { CreateMessageInputModel } from '../../models/input-models/message-model';
 //Action
-import {
-  CreateMessageAction,
-  
-} from '../../../store/actions/message.actions';
+import { CreateMessageAction } from '../../../store/actions/message.actions';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +18,7 @@ import {
 export class CreateMessageService {
   constructor(private http: PostMethod, private store: Store<AppState>) {}
 
-   createMessage(message: CreateMessageInputModel): Observable<void> {
+  createMessage(message: CreateMessageInputModel): Observable<void> {
     return this.http
       .post<CreateMessageInputModel>(message, 'messages', 'appdata')
       .pipe(

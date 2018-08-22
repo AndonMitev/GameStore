@@ -1,18 +1,22 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { GetMessageDetailsService } from '../../../core/services/message-services/get-message-details.service';
-import { Store, select } from '@ngrx/store';
-import { AppState } from '../../../store/app.state';
 import { Observable, Subscription } from 'rxjs';
-import { CreateMessageInputModel } from '../../../core/models/input-models/message-model';
+import { Store, select } from '@ngrx/store';
+
+//Service
 import { UserVerificationService } from '../../../core/services/authentication-services/verification.service';
+import { GetMessageDetailsService } from '../../../core/services/message-services/get-message-details.service';
+//State
+import { AppState } from '../../../store/app.state';
+//Model
+import { CreateMessageInputModel } from '../../../core/models/input-models/message-model';
 
 @Component({
   selector: 'my-message-details',
   templateUrl: './my-message-details.component.html',
   styleUrls: ['./my-message-details.component.css']
 })
-export class MyMessageDetailsComponent implements OnInit {
+export class MyMessageDetailsComponent implements OnInit, OnDestroy {
   public messageDetails$: Observable<CreateMessageInputModel>;
   private subscription: Subscription;
 

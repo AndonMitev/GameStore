@@ -26,6 +26,8 @@ import { RegisterInputModel } from '../../../core/models/input-models/register.m
 })
 export class MyCreateMessageComponent implements OnInit, OnDestroy {
   public messageForm: FormGroup;
+  public buttonText: string;
+  public isClicked: boolean;
   private subscription: Subscription;
   private messageModel: CreateMessageInputModel;
 
@@ -38,7 +40,10 @@ export class MyCreateMessageComponent implements OnInit, OnDestroy {
     private toast: ToastrService,
     private actRoute: ActivatedRoute,
     private getReceivedMsg: GetReceivedMessagesService
-  ) {}
+  ) {
+    this.buttonText = 'Send';
+    this.isClicked = false;
+  }
 
   public ngOnInit(): void {
     this.initializeMessageForm();
@@ -52,12 +57,17 @@ export class MyCreateMessageComponent implements OnInit, OnDestroy {
 
   public initializeMessageForm(): void {
     this.messageForm = this.fb.group({
-      recipient: [''],
-      title: [
+      recipient: 
+      [
+        '',
+      ],
+      title: 
+      [
         '',
         [Validators.required, Validators.minLength(3), Validators.maxLength(25)]
       ],
-      content: [
+      content: 
+      [
         '',
         [
           Validators.required,
@@ -69,10 +79,13 @@ export class MyCreateMessageComponent implements OnInit, OnDestroy {
   }
 
   public submitMessageForm(): void {
+    this.buttonText = 'Sending...'
+    this.isClicked = true;
     const RECIPIENT: string = this.messageForm.value['recipient'] || 'Admin';
     const FROM: string = localStorage.getItem('username');
     const TITLE: string = this.messageForm.value['title'];
     const CONTENT: string = this.messageForm.value['content'];
+   
 
     this.subscription = this.getUserId
       .getUserIdByUsername(RECIPIENT)
@@ -93,9 +106,13 @@ export class MyCreateMessageComponent implements OnInit, OnDestroy {
           this.createMessageService
             .createMessage(this.messageModel)
             .subscribe(() => {
+              this.buttonText = 'Send'
+              this.isClicked = false;
               this.initializeMessageForm();
               this.toast.success(`Message successfully send!`);
-              this.getSentService.getSentMessages(FROM_ID).subscribe();
+              this.getSentService.getSentMessages(FROM_ID).subscribe(() => {
+                
+              });
               //this.getReceivedMsg.getReceivedMessages(FROM_ID).subscribe(); PIECE OF 5#17777
             });
         });

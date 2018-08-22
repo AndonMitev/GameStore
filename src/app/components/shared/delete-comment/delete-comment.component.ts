@@ -12,17 +12,28 @@ import { DeleteCommentService } from '../../../core/services/comment-services/de
 export class DeleteCommentComponent implements OnDestroy {
   @Input()
   public commentId: string;
+  public buttonText: string;
+  public isClicked: boolean;
   private subscription: Subscription;
 
   constructor(
     private commentService: DeleteCommentService,
     private toast: ToastrService
-  ) {}
+  ) {
+    this.isClicked = false;
+    this.buttonText = 'Delete';
+  }
 
   public deleteSelectedComment(): void {
+    this.isClicked = true;
+    this.buttonText = 'Processing...';
     this.subscription = this.commentService
       .deleteComment(this.commentId)
-      .subscribe(() => this.toast.success('Comment deleted!'));
+      .subscribe(() => {
+        this.isClicked = false;
+        this.buttonText = 'Delete';
+        this.toast.success('Comment deleted!');
+      });
   }
 
   public ngOnDestroy(): void {

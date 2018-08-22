@@ -14,11 +14,14 @@ export class AddToCartComponent {
   public game;
   @Input('id')
   public id: string;
+  public buttonText: string;
 
   constructor(
     private orderService: OrderGameService,
     private toast: ToastrService
-  ) {}
+  ) {
+    this.buttonText = 'Add to cart';
+  }
 
   public orderSelectedGame(): void {
     this.orderService.orderGame(

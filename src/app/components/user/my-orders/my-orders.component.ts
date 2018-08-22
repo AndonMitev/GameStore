@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Store, select } from '@ngrx/store';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 
 //Service
 import { GetCompletedOrdersService } from '../../../core/services/order.services/get-user-orders.service';
@@ -15,8 +15,8 @@ import { CompleteOrderModel } from '../../../core/models/view-models/complete-or
   templateUrl: './my-orders.component.html',
   styleUrls: ['./my-orders.component.css']
 })
-export class MyOrdersComponent implements OnInit {
-  public orders: CompleteOrderModel[];
+export class MyOrdersComponent implements OnInit, OnDestroy {
+  public orders$: Observable<CompleteOrderModel[]>;
   public showSpinner: boolean;
   public currPage: number;
   public pageSize: number;
@@ -38,21 +38,22 @@ export class MyOrdersComponent implements OnInit {
       const USER_ID: string = res['params']['id'];
 
       this.orderService.getCompletedOrders(USER_ID).subscribe(() => {
-        this.store
-          .pipe(select((state: AppState) => state.orders.completedOrders))
-          .subscribe((res: CompleteOrderModel[]) => {
-            this.orders = res;
-            this.showSpinner = false;
-          });
+        this.orders$ = this.store.pipe(
+          select((state: AppState) => state.orders.completedOrders)
+        );
+        this.showSpinner = false;
       });
     });
   }
 
-  public getFullOrderView(orderId: string): void {
+  public ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
-      this.router.navigate([`/user/completed/${orderId}`]);
     }
+  }
+
+  public getFullOrderView(orderId: string): void {
+    this.router.navigate([`/user/profile/orders/details/${orderId}`]);
   }
 
   public pageChanged(newPage: number): void {

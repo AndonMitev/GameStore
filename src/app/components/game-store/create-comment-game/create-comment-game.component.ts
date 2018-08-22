@@ -21,6 +21,8 @@ import { CreateCommentGameService } from '../../../core/services/comment-service
 })
 export class CreateCommentGameComponent implements OnInit, OnDestroy {
   public commentForm: FormGroup;
+  public isClicked: boolean;
+  public buttonText: string;
   private commentModel: CommentGameInputModel;
   private subscription: Subscription;
 
@@ -29,9 +31,13 @@ export class CreateCommentGameComponent implements OnInit, OnDestroy {
     private actRouter: ActivatedRoute,
     private commentService: CreateCommentGameService,
     private toast: ToastrService
-  ) {}
+  ) {
+    //this.isClicked = false;
+    this.buttonText = 'Comment';
+  }
 
   public ngOnInit(): void {
+  
     this.initializeCommentForm();
   }
 
@@ -43,15 +49,14 @@ export class CreateCommentGameComponent implements OnInit, OnDestroy {
 
   public initializeCommentForm(): void {
     this.commentForm = this.fb.group({
-      description: 
-        [
-          '', 
-          [Validators.required, Validators.maxLength(50)]
-        ]
+      description: ['', [Validators.required, Validators.maxLength(50)]]
     });
   }
 
   public submitCommentForm(): void {
+    this.isClicked = true;
+    this.buttonText = 'Processing...';
+
     this.subscription = this.actRouter.paramMap.subscribe((res: ParamMap) => {
       const ID: string = res['params']['id'];
       const DESCRIPTION: string = this.commentForm.value['description'];
@@ -60,6 +65,8 @@ export class CreateCommentGameComponent implements OnInit, OnDestroy {
       this.commentModel = new CommentGameInputModel(ID, DESCRIPTION, AUTHOR);
       this.commentService.createComment(this.commentModel).subscribe(() => {
         this.toast.success(`Comment successfully created!`);
+        this.isClicked = false;
+        this.buttonText = 'Comment';
         this.initializeCommentForm();
       });
     });

@@ -15,29 +15,37 @@ import { Store } from '@ngrx/store';
 export class UnsubscribeFromGameComponent implements OnDestroy {
   @Input('game')
   public game: any;
-
+  public buttonText: string;
+  public isClicked: boolean;
   private subscription: Subscription;
 
   constructor(
     private unsubscribeService: SubscriptionService,
     private toast: ToastrService,
     private store: Store<AppState>
-  ) {}
+  ) {
+    this.buttonText = 'Unsubscribe';
+    this.isClicked = false;
+  }
 
   public unsubscribeUser() {
+    this.buttonText = 'Processing...';
+    this.isClicked = true;
     const GAME_ID = this.game['_id'];
     const USER_ID = localStorage.getItem('userId');
 
     this.game['subscriptions'] = this.game['subscriptions'].filter(
       id => id !== USER_ID
     );
-    
+
     this.unsubscribeService
       .subscriptionGame(this.game, GAME_ID)
       .subscribe(() => {
         this.subscription = this.store
           .select((state: AppState) => state.games.details)
           .subscribe();
+        this.buttonText = 'Unsubscribe';
+        this.isClicked = false;
         this.toast.success('Successfully unsubscribed from game!');
       });
   }

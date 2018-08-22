@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Store, select } from '@ngrx/store';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 
 //Service
 import { GetUserSubscriptionsService } from '../../../core/services/profile-services/get-user-subscrptions.service';
@@ -16,7 +16,7 @@ import { CompleteOrderModel } from '../../../core/models/view-models/complete-or
   styleUrls: ['./my-subscriptions.component.css']
 })
 export class MySubscriptionsComponent implements OnInit, OnDestroy {
-  public userSubscriptions: CompleteOrderModel[];
+  public userSubscriptions$: Observable<CompleteOrderModel[]>;
   public showSpinner: boolean;
   public currPage: number;
   public pageSize: number;
@@ -34,13 +34,14 @@ export class MySubscriptionsComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
-    this.actRoute.paramMap.subscribe((res: ParamMap) => {
+    this.subscription = this.actRoute.paramMap.subscribe((res: ParamMap) => {
       this.userId = res['params']['id'];
 
       this.userSubs.getUserSubscriptions(this.userId).subscribe(() => {
-        this.subscription = this.store
-          .pipe(select((state: AppState) => state.users.subscriptions))
-          .subscribe(res => (this.userSubscriptions = res));
+        this.userSubscriptions$ = this.store.pipe(
+          select((state: AppState) => state.users.subscriptions)
+        );
+
         this.showSpinner = false;
       });
     });

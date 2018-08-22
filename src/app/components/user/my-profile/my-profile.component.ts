@@ -9,6 +9,7 @@ import { GetProfileService } from '../../../core/services/profile-services/get-p
 import { AppState } from '../../../store/app.state';
 //Model
 import { RegisterInputModel } from '../../../core/models/input-models/register.model';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'my-profile',
@@ -20,7 +21,6 @@ export class MyProfileComponent implements OnInit, OnDestroy {
   public showOrders: boolean;
   public showSubscriptions: boolean;
   public showComments: boolean;
-  public showMessages: boolean;
   public showSpinner: boolean;
   private subscription: Subscription;
 
@@ -30,9 +30,8 @@ export class MyProfileComponent implements OnInit, OnDestroy {
     private actRoute: ActivatedRoute
   ) {
     this.showOrders = false;
-    this.showSubscriptions = false;
     this.showComments = false;
-    this.showMessages = false;
+    this.showSubscriptions = false;
     this.showSpinner = true;
   }
 
@@ -44,6 +43,7 @@ export class MyProfileComponent implements OnInit, OnDestroy {
         this.userData$ = this.store.pipe(
           select((state: AppState) => state.users.user)
         );
+
         this.showSpinner = false;
       });
     });
@@ -61,25 +61,16 @@ export class MyProfileComponent implements OnInit, OnDestroy {
         this.showOrders = true;
         this.showSubscriptions = false;
         this.showComments = false;
-        this.showMessages = false;
         break;
       case 'subscriptions':
         this.showOrders = false;
         this.showSubscriptions = true;
         this.showComments = false;
-        this.showMessages = false;
         break;
       case 'comments':
         this.showOrders = false;
         this.showSubscriptions = false;
         this.showComments = true;
-        this.showMessages = false;
-        break;
-      case 'messages':
-        this.showOrders = false;
-        this.showSubscriptions = false;
-        this.showComments = false;
-        this.showMessages = true;
         break;
     }
   }

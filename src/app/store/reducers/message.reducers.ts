@@ -18,24 +18,21 @@ function getSentMessages(state, messages) {
 function getReceivedMessages(state, messages) {
   return {
     ...state,
-    recievedMessages: messages
+    recievedMessages: messages.sort((a, b) => b._kmd.ect > a._kmd.ect)
   };
 }
 
 function createMessage(state, message) {
-  console.log(message);
   if (localStorage.getItem('username') === message['recipient']) {
     return {
       ...state,
-      sentMessages: [...state.sentMessages, message], // Might be removed !?
+      // Might be removed !?
       recievedMessages: [...state.recievedMessages, message]
     };
   } else {
     return {
       ...state,
-      sentMessages: state.sentMessages
-        .concat(message)
-        .sort((a, b) => b._kmd.ect > a._kmd.ect)
+      sentMessages: [...state.sentMessages, message]
     };
   }
 }

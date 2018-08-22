@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Store, select } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 import { AppState } from '../../../store/app.state';
 import { GetCompletedOrderDetailsService } from '../../../core/services/order.services/get-complete-order-details.service';
@@ -12,9 +12,10 @@ import { CompleteOrderModel } from '../../../core/models/view-models/complete-or
   templateUrl: './my-full-order-details.component.html',
   styleUrls: ['./my-full-order-details.component.css']
 })
-export class MyFullOrderDetails implements OnInit {
+export class MyFullOrderDetails implements OnInit, OnDestroy {
   public fullOrder$: Observable<CompleteOrderModel>;
   public showSpinner: boolean;
+  private subscription: Subscription;
 
   constructor(
     private store: Store<AppState>,
@@ -25,9 +26,9 @@ export class MyFullOrderDetails implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.router.paramMap.subscribe((res: ParamMap) => {
+    this.subscription = this.router.paramMap.subscribe((res: ParamMap) => {
       const ORDER_ID = res['params']['id'];
-      
+
       this.orderService.getCompletedOrderDetails(ORDER_ID).subscribe(() => {
         this.fullOrder$ = this.store.pipe(
           select((state: AppState) => state.orders.details)
@@ -35,5 +36,11 @@ export class MyFullOrderDetails implements OnInit {
         this.showSpinner = false;
       });
     });
+  }
+
+  public ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 }

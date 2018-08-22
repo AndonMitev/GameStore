@@ -7,7 +7,7 @@
       </label>
       <input class="form-control" type="text" formControlName="recipient" />
       <div class="alert alert-danger" *ngIf="recipient.invalid && (recipient.touched || recipient.dirty)">
-        <div *ngIf="recipient.errors['required']">Recipient is required</div>
+        Recipient is required
       </div>
     </div>
   </div>
@@ -36,6 +36,7 @@
     </div>
   </div>
 
-  <button [disabled]="messageForm.invalid" type="submit" class="btn btn-primary float-right">Send</button>
+  <p *ngIf="isClicked" class="text-primary"><strong>Processing...</strong></p>
+  <button [disabled]="messageForm.invalid || isClicked " type="submit" class="btn btn-primary float-right">{{buttonText}}</button>
 
 </form>

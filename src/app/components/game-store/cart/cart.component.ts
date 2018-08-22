@@ -21,6 +21,8 @@ export class CartComponent implements OnInit, OnDestroy {
   public order: CompleteOrderModel[];
   public currPage: number;
   public pageSize: number;
+  public buttonText: string;
+  public isClicked: boolean;
   private subscription: Subscription;
 
   constructor(
@@ -30,6 +32,8 @@ export class CartComponent implements OnInit, OnDestroy {
     private completeService: CompleteOrderService,
     private router: Router
   ) {
+    this.buttonText = 'Finish order';
+    this.isClicked = false;
     this.currPage = 1;
     this.pageSize = 2;
   }
@@ -56,6 +60,8 @@ export class CartComponent implements OnInit, OnDestroy {
     this.subscription = this.store
       .pipe(select(state => state.orders.all))
       .subscribe(res => {
+        this.buttonText = 'Processing...'
+        this.isClicked = true;
         const FINAL_ORDER = {
           userId: localStorage.getItem('userId'),
           order: res
@@ -63,6 +69,7 @@ export class CartComponent implements OnInit, OnDestroy {
 
         this.completeService.finishOrder(FINAL_ORDER).subscribe(() => {
           sessionStorage.clear();
+
           this.toast.success('Order was successfully created!');
           this.router.navigate([`/user/profile/${FINAL_ORDER.userId}`]);
         });

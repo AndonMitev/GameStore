@@ -1,3 +1,4 @@
-.btn-link {
+.btn-link,
+li > a {
   text-decoration: none;
 }

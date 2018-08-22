@@ -1,8 +1,9 @@
 <form class="form-group" [formGroup]="commentForm" (ngSubmit)="submitCommentForm()">
 
   <div class="form-group">
-    <label>
-      <strong>Post your comment</strong>
+    <label *ngIf="isClicked; else noClicked">
+      <strong class="text-primary">Processing...</strong>
+      <ng-template></ng-template>
     </label>
     <textarea class="form-control shadow-textarea" formControlName="description" rows="4" placeholder="Write something here..."></textarea>
     <div class="alert alert-danger" *ngIf="description.invalid && (description.dirty || description.touched)">
@@ -11,6 +12,8 @@
     </div>
   </div>
 
-  <button [disabled]="commentForm.invalid" type="submit" class="btn btn-success float-right">Comment</button>
-
+  <button [disabled]="commentForm.invalid || isClicked" type="submit" class="btn btn-success float-right">{{this.buttonText}}</button>
+  <ng-template #noClicked>
+    <strong>Post your comment</strong>
+  </ng-template>
 </form>

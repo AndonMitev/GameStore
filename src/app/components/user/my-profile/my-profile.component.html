@@ -35,8 +35,8 @@
           <li class="btn btn-link offset-2 text-info" (click)="showComponent('comments')">
             <strong>Comments</strong>
           </li>
-          <li class="btn btn-link offset-2 text-info" (click)="showComponent('messages')">
-            <strong>Messages</strong>
+          <li class="btn btn-link offset-2 text-info">
+            <a [routerLink]="['/user/profile/messages/', profile._id]">Messages</a>
           </li>
         </ul>
       </div>
@@ -54,9 +54,6 @@
       </div>
       <div *ngIf="this.showComments">
         <my-comments></my-comments>
-      </div>
-      <div *ngIf="this.showMessages">
-        <my-messages></my-messages>
       </div>
     </div>
   </div>

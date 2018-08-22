@@ -5,6 +5,7 @@ import { Store, select } from '@ngrx/store';
 
 //Service
 import { GetAllUserMessagesService } from '../../../core/services/message-services/get-sent-messages.service';
+import { UserVerificationService } from '../../../core/services/authentication-services/verification.service';
 //State
 import { AppState } from '../../../store/app.state';
 //Model
@@ -19,28 +20,31 @@ export class MySentMessages implements OnInit, OnDestroy {
   public sentMessages$: Observable<CreateMessageInputModel[]>;
   public currPage: number;
   public pageSize: number;
+  public showSpinner: boolean;
   private subscription: Subscription;
 
   constructor(
+    public verification: UserVerificationService,
     private messageService: GetAllUserMessagesService,
     private actRoute: ActivatedRoute,
     private store: Store<AppState>
   ) {
+    this.showSpinner = true;
     this.currPage = 1;
     this.pageSize = 3;
   }
 
   public ngOnInit(): void {
-    this.actRoute.paramMap.subscribe((res: ParamMap) => {
+    this.subscription = this.actRoute.paramMap.subscribe((res: ParamMap) => {
       const USER_ID: string = res['params']['id'];
 
-      this.subscription = this.messageService
-        .getSentMessages(USER_ID)
-        .subscribe(() => {
-          this.sentMessages$ = this.store.pipe(
-            select((state: AppState) => state.messages.sentMessages)
-          );
-        });
+      this.messageService.getSentMessages(USER_ID).subscribe(() => {
+        this.sentMessages$ = this.store.pipe(
+          select((state: AppState) => state.messages.sentMessages)
+        );
+
+        this.showSpinner = false;
+      });
     });
   }
 

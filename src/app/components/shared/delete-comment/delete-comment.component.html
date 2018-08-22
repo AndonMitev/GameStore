@@ -1,1 +1,1 @@
-<button class="btn btn-danger btn-sm float-right" (click)="deleteSelectedComment()">Delete</button>
+<button [disabled]="isClicked" class="btn btn-danger btn-sm float-right" (click)="deleteSelectedComment()">{{buttonText}}</button>

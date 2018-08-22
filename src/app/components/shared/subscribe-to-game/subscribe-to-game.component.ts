@@ -15,15 +15,22 @@ import { AppState } from '../../../store/app.state';
 export class SubscribeToGameComponent implements OnDestroy {
   @Input('game')
   public game: any;
+  public buttonText: string;
+  public isClicked: boolean;
   private subscription: Subscription;
 
   constructor(
     private subscribeService: SubscriptionService,
     private toast: ToastrService,
     private store: Store<AppState>
-  ) {}
+  ) {
+    this.buttonText = 'Subscribe';
+    this.isClicked = false;
+  }
 
   public subscribeToGame(): void {
+    this.buttonText = 'Processing...';
+    this.isClicked = true;
     const GAME_ID: string = this.game['_id'];
     const USER_ID: string = localStorage.getItem('userId');
     this.game['subscriptions'].push(USER_ID);
@@ -32,6 +39,8 @@ export class SubscribeToGameComponent implements OnDestroy {
       this.subscription = this.store
         .select(state => state.games.details)
         .subscribe();
+      this.buttonText = 'Subscribe';
+      this.isClicked = false;
       this.toast.success('Successfully subscribed to game!');
     });
   }

@@ -10,6 +10,7 @@ import { UserVerificationService } from '../../../core/services/authentication-s
 import { AppState } from '../../../store/app.state';
 //Model
 import { CreateMessageInputModel } from '../../../core/models/input-models/message-model';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'my-received-messages',
@@ -20,6 +21,7 @@ export class MyRecievedMessagesComponent implements OnInit, OnDestroy {
   public receivedMessages$: Observable<CreateMessageInputModel[]>;
   public currPage: number;
   public pageSize: number;
+  public showSpinner: boolean;
   private subscription: Subscription;
 
   constructor(
@@ -28,6 +30,7 @@ export class MyRecievedMessagesComponent implements OnInit, OnDestroy {
     private messageService: GetReceivedMessagesService,
     private actRoute: ActivatedRoute
   ) {
+    this.showSpinner = true;
     this.currPage = 1;
     this.pageSize = 3;
   }
@@ -36,14 +39,13 @@ export class MyRecievedMessagesComponent implements OnInit, OnDestroy {
     this.subscription = this.actRoute.paramMap.subscribe((res: ParamMap) => {
       const SENDER_ID: string = res['params']['id'];
 
-      this.messageService
-        .getReceivedMessages(SENDER_ID)
-        .subscribe(
-          () =>
-            (this.receivedMessages$ = this.store.pipe(
-              select((state: AppState) => state.messages.recievedMessages)
-            ))
+      this.messageService.getReceivedMessages(SENDER_ID).subscribe(() => {
+        this.receivedMessages$ = this.store.pipe(
+          select((state: AppState) => state.messages.recievedMessages)
         );
+
+        this.showSpinner = false;
+      });
     });
   }
 
