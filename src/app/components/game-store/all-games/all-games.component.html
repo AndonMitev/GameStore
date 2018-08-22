@@ -5,11 +5,20 @@
   <div class="container border rounded shadow-lg mt-3 bg-white">
     <h1 class="display-3 text-center">Game Store</h1>
     <hr>
-    <form class="form-group col-md-6 offset-3" [formGroup]=searchForm>
-      <label class="h4">Search for a name of game</label>
+    <form class="form-group col-md-12 mb-4" [formGroup]=searchForm>
+      <label class="h4 offset-4 mb-3">Search for a name of game</label>
       <input type="text" class="form-control" formControlName="name" placeholder="Search..." #searchedGames />
+      <label class="h4 offset-5 mt-3 my-3">Sort by:</label>
+      <div class="form-group row justify-content-between">
+        <div class="form-check col-md-2" *ngFor="let criteria of sortBy">
+          <label class="form-check-label">
+            <input type="radio" class="form-check-input" (click)="selectedSortedCriteria(criteria)" formControlName="sortedCriteria"
+              checked [value]=criteria>{{criteria | uppercase}}
+          </label>
+        </div>
+      </div>
     </form>
-
+    <hr>
     <div class="row">
       <div class="col-md-3">
         <categories></categories>
@@ -17,18 +26,18 @@
       <div class="col-md-9">
         <h3 class="text-center">Games</h3>
         <div class="row">
-          <div *ngFor="let game of allGames | paginate: { id: 'all-games' , itemsPerPage: pageSize, currentPage: currPage }  | filter:searchedGames.value ; let i = index"
+          <div *ngFor="let game of allGames  | orderBy: selectedCriteria | paginate: { id: 'all-games' , itemsPerPage: pageSize, currentPage: currPage }  | filter:searchedGames.value ; let i = index"
             class="col-lg-4 align-items-stretch mt-3">
-            <div class="card shadow-lg">
+            <div class="card shadow-lg animated bounceInUp delay-0.5s">
               <a routerLink="/game/details/{{game._id}}">
                 <img class="card-img-top fix-img-size" [src]=game.image [alt]=game.title />
               </a>
               <div class="card-body bg-secondary text-center h-25 edit-color">
-                <h5 class="card-title">{{game.title}}</h5>
+                <h5 class="card-title">{{game.title }}</h5>
               </div>
               <div class="card-footer bg-dark">
                 <p class="card-text mt-2">
-                  <add-to-cart [game]=game [id]=game._id ></add-to-cart>
+                  <add-to-cart [game]=game [id]=game._id></add-to-cart>
                   <span class="mt-5 text-white">
                     <strong>{{game.price | currency}}</strong>
                   </span>
@@ -36,7 +45,6 @@
               </div>
             </div>
           </div>
-
           <div class="offset-2" *ngIf="allGames.length === 0">
             <h2 class="offset-8 m-2">No games available in this category!</h2>
           </div>

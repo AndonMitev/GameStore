@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, AbstractControl } from '@angular/forms';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Store, select } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
@@ -22,6 +22,14 @@ export class AllGamesComponent implements OnInit, OnDestroy {
   public allGames$: Observable<AllGamesModel[]>;
   public showSpinner: boolean;
   public searchForm: FormGroup;
+  public selectedCriteria: string;
+  public sortBy: string[] = [
+    'Asc Alpha',
+    'Asc Price',
+    'Desc Alpha',
+    'Desc Price',
+    'Default'
+  ];
   private subscription: Subscription;
 
   constructor(
@@ -55,13 +63,34 @@ export class AllGamesComponent implements OnInit, OnDestroy {
     }
   }
 
-  public initializeSearchForm() {
+  public initializeSearchForm(): void {
     this.searchForm = this.fb.group({
-      name: ''
+      name: '',
+      sortedCriteria: ''
     });
   }
 
   public pageChanged(newPage: number): void {
     this.currPage = newPage;
+  }
+
+  public selectedSortedCriteria(criteria): void {
+    switch (criteria) {
+      case 'Asc Alpha':
+        this.selectedCriteria = 'title';
+        break;
+      case 'Asc Price':
+        this.selectedCriteria = 'price';
+        break;
+      case 'Desc Alpha':
+        this.selectedCriteria = '-title';
+        break;
+      case 'Desc Price':
+        this.selectedCriteria = '-price';
+        break;
+      default:
+        this.selectedCriteria = '';
+        break;
+    }
   }
 }

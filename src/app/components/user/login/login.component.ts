@@ -21,10 +21,6 @@ import { UserLoginService } from '../../../core/services/authentication-services
 })
 export class LoginComponent implements OnInit, OnDestroy {
   public loginForm: FormGroup;
-  public showSpinner: boolean;
-  public requestSuccess: boolean;
-  public buttonText: string;
-  public isClicked: boolean;
   private userModel: LoginInputModel;
   private subscription$: Subscription;
 
@@ -34,10 +30,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     private router: Router,
     private toast: ToastrService
   ) {
-    this.showSpinner = false;
-    this.requestSuccess = false;
-    this.isClicked = false;
-    this.buttonText = 'Sign In';
   }
 
   public ngOnInit(): void {
@@ -66,8 +58,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   public submitLoginForm(): void {
-    this.isClicked = true;
-    this.buttonText = 'Processing...'
     const USER_DATA = this.loginForm.value;
 
     this.userModel = new LoginInputModel(
@@ -80,7 +70,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.subscription$ = this.userService
       .loginUser(this.userModel)
       .subscribe((res: object) => {
-        this.requestSuccess = true;
         this.userService.saveData(res);
         this.router.navigate(['/game/all']);
         this.toast.success(`Welcome again, ${USER_DATA['username']}!`);
