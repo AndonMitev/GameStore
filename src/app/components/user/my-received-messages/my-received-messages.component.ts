@@ -32,7 +32,7 @@ export class MyRecievedMessagesComponent implements OnInit, OnDestroy {
   ) {
     this.showSpinner = true;
     this.currPage = 1;
-    this.pageSize = 3;
+    this.pageSize = 4;
   }
 
   public ngOnInit(): void {

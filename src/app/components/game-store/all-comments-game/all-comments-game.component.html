@@ -5,7 +5,7 @@
   <div>
     <div *ngFor="let comment of allComments | paginate: { id: 'all-comments' , itemsPerPage: pageSize, currentPage: currPage }"
       class="list-group-item list-group-item-action animated bounceInUp delay-0.5s">
-      <p class="text-justify">{{comment.description}}</p>
+      <p class="text-justify">{{comment.description | truncate: 35: '...' }}</p>
       <span class="text-justify ">
         <small> Posted by:
           <em>{{comment.creator}}</em> at: {{comment._kmd.ect | date}}</small>

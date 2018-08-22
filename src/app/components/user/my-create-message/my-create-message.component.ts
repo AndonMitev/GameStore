@@ -64,7 +64,7 @@ export class MyCreateMessageComponent implements OnInit, OnDestroy {
       title: 
       [
         '',
-        [Validators.required, Validators.minLength(3), Validators.maxLength(25)]
+        [Validators.required, Validators.minLength(3), Validators.maxLength(120)]
       ],
       content: 
       [
@@ -72,7 +72,7 @@ export class MyCreateMessageComponent implements OnInit, OnDestroy {
         [
           Validators.required,
           Validators.minLength(10),
-          Validators.maxLength(100)
+          Validators.maxLength(256)
         ]
       ]
     });
@@ -110,9 +110,7 @@ export class MyCreateMessageComponent implements OnInit, OnDestroy {
               this.isClicked = false;
               this.initializeMessageForm();
               this.toast.success(`Message successfully send!`);
-              this.getSentService.getSentMessages(FROM_ID).subscribe(() => {
-                
-              });
+              this.getSentService.getSentMessages(FROM_ID).subscribe();
               //this.getReceivedMsg.getReceivedMessages(FROM_ID).subscribe(); PIECE OF 5#17777
             });
         });

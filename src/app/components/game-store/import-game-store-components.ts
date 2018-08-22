@@ -5,6 +5,7 @@ import { CreateCommentGameComponent } from './create-comment-game/create-comment
 import { AllCommentsGameComponent } from './all-comments-game/all-comments-game.component';
 import { DeleteGameComponent } from './delete-game/delete-game.component';
 import { CartComponent } from './cart/cart.component';
+import { EditGameComponent } from './edit-game/edit-game.component';
 
 export const gameStoreComponentsImp = [
   CreateGameComponent,
@@ -13,5 +14,6 @@ export const gameStoreComponentsImp = [
   CreateCommentGameComponent,
   AllCommentsGameComponent,
   CartComponent,
-  DeleteGameComponent
+  DeleteGameComponent,
+  EditGameComponent
 ];

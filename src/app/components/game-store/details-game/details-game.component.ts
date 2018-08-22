@@ -9,6 +9,7 @@ import { GetDetailsGameService } from '../../../core/services/game-store-service
 import { DetailsGameModel } from '../../../core/models/view-models/details-game.model';
 //State
 import { AppState } from '../../../store/app.state';
+import { UserVerificationService } from '../../../core/services/authentication-services/verification.service';
 
 @Component({
   selector: 'details-game',
@@ -22,9 +23,10 @@ export class DetailsGameComponent implements OnInit, OnDestroy {
   private subscription: Subscription;
 
   constructor(
+    public verification: UserVerificationService,
     private gameService: GetDetailsGameService,
     private store: Store<AppState>,
-    private actRoute: ActivatedRoute
+    private actRoute: ActivatedRoute,
   ) {
     this.showSpinner = true;
   }

@@ -7,9 +7,14 @@ import { NgArrayPipesModule, NgStringPipesModule } from 'angular-pipes';
 import { sharedComponentsImp } from './import-shared-components';
 import { sharedComponentsEx } from './export-shared-components';
 
-
 @NgModule({
-  imports: [CommonModule, RouterModule, ReactiveFormsModule, NgArrayPipesModule, NgStringPipesModule],
+  imports: [
+    CommonModule,
+    RouterModule,
+    ReactiveFormsModule,
+    NgArrayPipesModule,
+    NgStringPipesModule
+  ],
   declarations: [...sharedComponentsImp],
   exports: [...sharedComponentsEx]
 })

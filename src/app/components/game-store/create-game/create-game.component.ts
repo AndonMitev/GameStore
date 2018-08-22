@@ -113,7 +113,7 @@ export class CreateGameComponent implements OnInit, OnDestroy {
       release: 
         [
           '', 
-          [Validators.required, Validators.pattern(/^\d{2}-\d{2}-\d{4}$/)]
+          [Validators.required]
         ],
       genre: 
         [

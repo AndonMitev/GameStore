@@ -21,7 +21,7 @@ export class GetAllUserMessagesService {
   public getSentMessages(userId: string): Observable<void> {
     return this.http
       .get<CreateMessageInputModel[]>(
-        `messages?query={"fromId":"${userId}"}&sort={"_kmd.ect": -1}`,
+        `messages?query={"fromId":"${userId}"}`,
         'appdata'
       )
       .pipe(

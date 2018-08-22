@@ -5,9 +5,9 @@
   <div *ngIf="sentMessages$ | async as sentMessages">
     <div class="mt-2 list-group-item list-group-item-action" *ngFor="let message of sentMessages | paginate: { id: 'sent-msg' , itemsPerPage: pageSize, currentPage: currPage }">
       <a routerLink="/user/profile/message/details/{{message._id}}">
-        <h5 class="text-justify">{{message.title}}</h5>
+        <h5 class="text-justify">{{message.title | truncate: 15: '...'}}</h5>
       </a>
-      <p>{{message.content}}</p>
+      <p>{{message.content | truncate: 30: '...'}}</p>
       <a *ngIf="verification.isAdmin()" routerLink="/user/profile/{{message.recepientId}}">
         <span>To : {{message.recipient}} </span>
       </a>

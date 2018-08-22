@@ -6,7 +6,7 @@
         <strong>Recipient</strong>
       </label>
       <input class="form-control" type="text" formControlName="recipient" />
-      <div class="alert alert-danger" *ngIf="recipient.invalid && (recipient.touched || recipient.dirty)">
+      <div class="alert alert-danger animated flipInX delay-0.5s" *ngIf="recipient.invalid && (recipient.touched || recipient.dirty)">
         Recipient is required
       </div>
     </div>
@@ -17,10 +17,10 @@
       <strong>Title</strong>
     </label>
     <input class="form-control" type="text" formControlName="title" />
-    <div class="alert alert-danger" *ngIf="title.invalid && (title.touched || title.dirty)">
+    <div class="alert alert-danger animated flipInX delay-0.5s" *ngIf="title.invalid && (title.touched || title.dirty)">
       <div *ngIf="title.errors['required']">Title is required</div>
       <div *ngIf="title.errors['minlength']">Title should be atleast 3 symbols</div>
-      <div *ngIf="title.errors['maxlength']">Title max length is 25 symbols</div>
+      <div *ngIf="title.errors['maxlength']">Title max length is 120 symbols</div>
     </div>
   </div>
 
@@ -29,10 +29,10 @@
       <strong>Content</strong>
     </label>
     <textarea class="form-control mt-2" formControlName="content" cols="30" rows="10"></textarea>
-    <div class="alert alert-danger" *ngIf="content.invalid && (content.touched || content.dirty)">
+    <div class="alert alert-danger animated flipInX delay-0.5s" *ngIf="content.invalid && (content.touched || content.dirty)">
       <div *ngIf="content.errors['required']">Content is required</div>
       <div *ngIf="content.errors['minlength']">Content should be atleast 10 symbols</div>
-      <div *ngIf="content.errors['maxlength']">Content max lenght is 100 symbols</div>
+      <div *ngIf="content.errors['maxlength']">Content max lenght is 256 symbols</div>
     </div>
   </div>
 

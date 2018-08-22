@@ -14,7 +14,7 @@ import { UniqueUsernameValidatorDirective } from './directives/username.directiv
 
 //Pipes
 import { FilterPipe } from './pipes/filter.pipe';
-//import { OrderByPipe } from 'angular-pipes';
+
 
 export const sharedComponentsImp = [
   AddToCartComponent,
@@ -29,5 +29,4 @@ export const sharedComponentsImp = [
   UniqueUsernameValidatorDirective,
   FilterPipe,
   NotFoundComponent,
-  //OrderByPipe
 ];

@@ -32,7 +32,9 @@ function createMessage(state, message) {
   } else {
     return {
       ...state,
-      sentMessages: [...state.sentMessages, message]
+      sentMessages: state.sentMessages
+        .concat(message)
+        .sort((a, b) => b._kmd.ect > a._kmd.ect)
     };
   }
 }

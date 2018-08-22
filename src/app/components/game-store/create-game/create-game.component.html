@@ -10,7 +10,7 @@
         <strong>Title</strong>*
       </label>
       <input type="text" class="form-control" formControlName="title" placeholder="GTA" />
-      <div class="alert alert-danger" *ngIf="title.invalid && (title.dirty || title.touched)">
+      <div class="alert alert-danger animated flipInX delay-0.5s" *ngIf="title.invalid && (title.dirty || title.touched)">
         <div *ngIf="title.errors['required']">Title is required</div>
         <div *ngIf="title.errors['minlength']">Title should be atleast 2 symbols long</div>
         <div *ngIf="title.errors['maxlength']">Title max length is 20 symbols</div>
@@ -23,7 +23,7 @@
       </label>
       <input type="text" class="form-control" formControlName="image" placeholder="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5FoskJgkZvvZdxnmYWam5K6Qj_gq0nje_AZ2xWbF3RLeDe1T74w"
       />
-      <div class="alert alert-danger" *ngIf="image.invalid && (image.dirty || image.touched)">
+      <div class="alert alert-danger animated flipInX delay-0.5s" *ngIf="image.invalid && (image.dirty || image.touched)">
         <div *ngIf="image.errors['required']">Image is required</div>
       </div>
     </div>
@@ -33,7 +33,7 @@
         <strong>Publisher</strong>*
       </label>
       <input type="text" class="form-control" formControlName="publisher" placeholder="Rockstar games" />
-      <div class="alert alert-danger" *ngIf="publisher.invalid && (publisher.dirty || publisher.touched)">
+      <div class="alert alert-danger animated flipInX delay-0.5s" *ngIf="publisher.invalid && (publisher.dirty || publisher.touched)">
         <div *ngIf="publisher.errors['required']">Publisher is required</div>
         <div *ngIf="publisher.errors['minlength']">Publisher should be atleast 2 symbols long</div>
         <div *ngIf="publisher.errors['maxlength']">Publisher max length is 20 symbols</div>
@@ -45,7 +45,7 @@
         <strong>Developer</strong>*
       </label>
       <input type="text" class="form-control" formControlName="developer" placeholder="Rockstar games" />
-      <div class="alert alert-danger" *ngIf="developer.invalid && (developer.dirty || developer.touched)">
+      <div class="alert alert-danger animated flipInX delay-0.5s" *ngIf="developer.invalid && (developer.dirty || developer.touched)">
         <div *ngIf="developer.errors['required']">Developer is required</div>
         <div *ngIf="developer.errors['minlength']">Developer should be atleast 2 symbols long</div>
         <div *ngIf="developer.errors['maxlength']">Developer max length is 20 symbols</div>
@@ -57,7 +57,7 @@
         <strong>Series</strong>*
       </label>
       <input type="text" class="form-control" formControlName="series" placeholder="GTA Series" />
-      <div class="alert alert-danger" *ngIf="series.invalid && (series.dirty || series.touched)">
+      <div class="alert alert-danger animated flipInX delay-0.5s" *ngIf="series.invalid && (series.dirty || series.touched)">
         <div *ngIf="series.errors['required']">Series is required</div>
         <div *ngIf="series.errors['minlength']">Series should be atleast 2 symbols long</div>
         <div *ngIf="series.errors['maxlength']">Series max length is 20 symbols</div>
@@ -78,9 +78,8 @@
         <strong>Release</strong>*
       </label>
       <input type="datetime" class="form-control" formControlName="release" placeholder="20-08-2018" />
-      <div class="alert alert-danger" *ngIf="release.invalid && (release.dirty || release.touched)">
+      <div class="alert alert-danger animated flipInX delay-0.5s" *ngIf="release.invalid && (release.dirty || release.touched)">
         <div *ngIf="release.errors['required']">Date is required</div>
-        <div *ngIf="release.errors['pattern']">Enter valid date</div>
       </div>
     </div>
 
@@ -89,7 +88,7 @@
         <strong>Genre</strong>*
       </label>
       <input type="text" class="form-control" formControlName="genre" placeholder="Action" />
-      <div class="alert alert-danger" *ngIf="genre.invalid && (genre.dirty || genre.touched)">
+      <div class="alert alert-danger animated flipInX delay-0.5s" *ngIf="genre.invalid && (genre.dirty || genre.touched)">
         <div *ngIf="genre.errors['required']">Genre is required</div>
         <div *ngIf="genre.errors['minlength']">Genre should be atleast 2 symbols long</div>
         <div *ngIf="genre.errors['maxlength']">Genre max length is 20 symbols</div>
@@ -101,7 +100,7 @@
         <strong>Game description</strong>*
       </label>
       <textarea class="form-control" rows="3" formControlName="description" placeholder="Awesome game..."></textarea>
-      <div class="alert alert-danger" *ngIf="description.invalid && (description.dirty || description.touched)">
+      <div class="alert alert-danger animated flipInX delay-0.5s" *ngIf="description.invalid && (description.dirty || description.touched)">
         <div *ngIf="description.errors['required']">Description is required</div>
         <div *ngIf="description.errors['minlength']">Description should be atleast 2 symbols long</div>
         <div *ngIf="description.errors['maxlength']">Description max length is 500 symbols</div>
@@ -113,7 +112,7 @@
         <strong>Price</strong>*
       </label>
       <input class="form-control" type="number" step="0.01" formControlName="price"/>
-      <div class="alert alert-danger" *ngIf="price.invalid && (price.dirty || price.touched)">
+      <div class="alert alert-danger animated flipInX delay-0.5s" *ngIf="price.invalid && (price.dirty || price.touched)">
         <div *ngIf="price.errors['required']">Price is required</div>
         <div *ngIf="price.errors['min']">Price should be atleast 5$</div>
         <div *ngIf="price.errors['pattern']">Enter valid price</div>

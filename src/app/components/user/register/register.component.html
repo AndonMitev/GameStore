@@ -12,7 +12,7 @@
         <strong>Username</strong>*
       </label>
       <input class="form-control" type="text" formControlName="username" placeholder="John" />
-      <div class="alert alert-danger" *ngIf="username.invalid && (username.dirty || username.touched)">
+      <div class="alert alert-danger animated flipInX delay-0.5s" *ngIf="username.invalid && (username.dirty || username.touched)">
         <div *ngIf="username.errors['required']">Username is required</div>
         <div *ngIf="username.errors['minlength']">Username should be atleast 3 symbols long</div>
         <div *ngIf="username.errors['uniqueUsername']">Username is already taken</div>
@@ -24,7 +24,7 @@
         <strong>Email</strong>*
       </label>
       <input class="form-control" type="email" formControlName="email" placeholder="john_smith@gmail.com" />
-      <div class="alert alert-danger" *ngIf="email.invalid && (email.dirty || email.touched)">
+      <div class="alert alert-danger animated flipInX delay-0.5s" *ngIf="email.invalid && (email.dirty || email.touched)">
         <div *ngIf="email.errors['required']">Email is required</div>
         <div *ngIf="email.errors['pattern']">Enter valid email</div>
       </div>
@@ -35,7 +35,7 @@
         <strong>Confirm Email</strong>*
       </label>
       <input class="form-control" type="email" formControlName="confirmEmail" placeholder="john_smith@gmail.com" />
-      <div class="alert alert-danger" *ngIf="confirmEmail.invalid && (confirmEmail.dirty || confirmEmail.touched)">
+      <div class="alert alert-danger animated flipInX delay-0.5s" *ngIf="confirmEmail.invalid && (confirmEmail.dirty || confirmEmail.touched)">
         <div *ngIf="confirmEmail.errors['required']">Confirm email is required</div>
         <div *ngIf="confirmEmail.errors['compare']">Confirm email do not match</div>
       </div>
@@ -46,7 +46,7 @@
         <strong>Password</strong>*
       </label>
       <input class="form-control" type="password" formControlName="password" placeholder="s3cr37" />
-      <div class="alert alert-danger" *ngIf="password.invalid && (password.dirty || password.touched)">
+      <div class="alert alert-danger animated flipInX delay-0.5s" *ngIf="password.invalid && (password.dirty || password.touched)">
         <div *ngIf="password.errors['required']">Password is required</div>
         <div *ngIf="password.errors['minlength']">Password should be atleast 3 symbols long</div>
       </div>
@@ -57,7 +57,7 @@
         <strong>Confirm Password</strong>*
       </label>
       <input class="form-control" type="password" formControlName="confirmPassword" placeholder="s3cr37" />
-      <div class="alert alert-danger" *ngIf="confirmPassword.invalid && (confirmPassword.dirty || confirmPassword.touched)">
+      <div class="alert alert-danger animated flipInX delay-0.5s" *ngIf="confirmPassword.invalid && (confirmPassword.dirty || confirmPassword.touched)">
         <div *ngIf="confirmPassword.errors['required']">Confirm password is required</div>
         <div *ngIf="confirmPassword.errors['compare']">Confirm password do not match</div>
       </div>
@@ -68,7 +68,7 @@
         <strong>Age</strong>*
       </label>
       <input class="form-control" type="number" formControlName="age" placeholder="12" />
-      <div class="alert alert-danger" *ngIf="age.invalid && (age.dirty || age.touched)">
+      <div class="alert alert-danger animated flipInX delay-0.5s" *ngIf="age.invalid && (age.dirty || age.touched)">
         <div *ngIf="age.errors['required']">Age is required</div>
         <div *ngIf="age.errors['min']">Age should be over 12</div>
       </div>
@@ -82,7 +82,7 @@
           <strong>Country / Region</strong>*
         </label>
         <input type="text" class="form-control" formControlName="country" placeholder="Bulgaria" />
-        <div class="alert alert-danger" *ngIf="country.invalid && (country.dirty || country.touched)">
+        <div class="alert alert-danger animated flipInX delay-0.5s" *ngIf="country.invalid && (country.dirty || country.touched)">
           Country is required.
         </div>
       </div>
@@ -92,7 +92,7 @@
           <strong>City</strong>*
         </label>
         <input type="text" class="form-control" formControlName="city" placeholder="Sofia" />
-        <div class="alert alert-danger" *ngIf="city.invalid && (city.dirty || city.touched)">
+        <div class="alert alert-danger animated flipInX delay-0.5s" *ngIf="city.invalid && (city.dirty || city.touched)">
           City is required.
         </div>
       </div>
@@ -102,7 +102,7 @@
           <strong>State / Province / Region</strong>*
         </label>
         <input type="text" class="form-control" formControlName="state" placeholder="Sofia" />
-        <div class="alert alert-danger" *ngIf="state.invalid && (state.dirty || state.touched)">
+        <div class="alert alert-danger animated flipInX delay-0.5s" *ngIf="state.invalid && (state.dirty || state.touched)">
           State is required.
         </div>
       </div>
@@ -112,7 +112,7 @@
           <strong>Zip Code</strong>*
         </label>
         <input type="text" class="form-control" formControlName="zipcode" placeholder="1000" />
-        <div class="alert alert-danger" *ngIf="zipcode.invalid && (zipcode.dirty || zipcode.touched)">
+        <div class="alert alert-danger animated flipInX delay-0.5s" *ngIf="zipcode.invalid && (zipcode.dirty || zipcode.touched)">
           Zip Code is required.
         </div>
       </div>
@@ -128,7 +128,7 @@
               <strong>Street</strong>*
             </label>
             <input type="text" class="form-control" formControlName="street" placeholder="Your street" />
-            <div class="alert alert-danger" *ngIf="adress.controls.street.invalid && (adress.controls.street.dirty || adress.controls.street.touched)">
+            <div class="alert alert-danger animated flipInX delay-0.5s" *ngIf="adress.controls.street.invalid && (adress.controls.street.dirty || adress.controls.street.touched)">
               Street is required.
             </div>
           </div>
@@ -138,7 +138,7 @@
               <strong>Apartment N</strong>*
             </label>
             <input type="text" class="form-control" formControlName="apartament" placeholder="Apartament number 22" />
-            <div class="alert alert-danger" *ngIf="adress.controls.apartament.invalid && (adress.controls.apartament.dirty || adress.controls.apartament.touched)">
+            <div class="alert alert-danger animated flipInX delay-0.5s" *ngIf="adress.controls.apartament.invalid && (adress.controls.apartament.dirty || adress.controls.apartament.touched)">
               Apartment is required.
             </div>
           </div>
@@ -148,7 +148,7 @@
               <strong>Phone number</strong>*
             </label>
             <input type="text" class="form-control" formControlName="phoneNumber" placeholder="0888 888 888" />
-            <div class="alert alert-danger" *ngIf="adress.controls.phoneNumber.invalid && (adress.controls.phoneNumber.dirty || adress.controls.phoneNumber.touched)">
+            <div class="alert alert-danger animated flipInX delay-0.5s" *ngIf="adress.controls.phoneNumber.invalid && (adress.controls.phoneNumber.dirty || adress.controls.phoneNumber.touched)">
               Phone number is required.
             </div>
           </div>

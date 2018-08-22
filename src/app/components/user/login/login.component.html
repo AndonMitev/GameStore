@@ -13,7 +13,7 @@
         <strong>Username</strong>
       </label>
       <input type="text" class="form-control" formControlName="username" placeholder="John" />
-      <div class="alert alert-danger" *ngIf="username.invalid && (username.dirty || username.touched)">
+      <div class="alert alert-danger animated flipInX delay-0.5s" *ngIf="username.invalid && (username.dirty || username.touched)">
         Username is required.
       </div>
     </div>
@@ -23,13 +23,13 @@
         <strong>Password</strong>
       </label>
       <input type="password" class="form-control" formControlName="password" placeholder="s3cr37" />
-      <div class="alert alert-danger" *ngIf="password.invalid && (password.dirty || password.touched)">
+      <div class="alert alert-danger animated flipInX delay-0.5s" *ngIf="password.invalid && (password.dirty || password.touched)">
         Password is required.
       </div>
     </div>
 
     <div>
-      <button type="submit" [disabled]="loginForm.invalid || isClicked" class="btn btn-primary">{{buttonText}}</button>
+      <button type="submit" [disabled]="loginForm.invalid || isClicked" class="btn btn-primary">Sign in</button>
       <span class="float-right">You dont have account? Click
         <a routerLink="/register">here</a> and you will be set up in a minute</span>
     </div>

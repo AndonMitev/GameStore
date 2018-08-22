@@ -6,9 +6,9 @@
       <ng-template></ng-template>
     </label>
     <textarea class="form-control shadow-textarea" formControlName="description" rows="4" placeholder="Write something here..."></textarea>
-    <div class="alert alert-danger" *ngIf="description.invalid && (description.dirty || description.touched)">
+    <div class="alert alert-danger animated flipInX delay-0.5s" *ngIf="description.invalid && (description.dirty || description.touched)">
       <div *ngIf="description.errors['required']">Comment cannot be empty</div>
-      <div *ngIf="description.errors['maxlength']">Max symbols allowed 35</div>
+      <div *ngIf="description.errors['maxlength']">Max symbols allowed 256</div>
     </div>
   </div>
 

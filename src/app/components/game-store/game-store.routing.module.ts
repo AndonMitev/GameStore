@@ -6,13 +6,13 @@ import { CreateGameComponent } from './create-game/create-game.component';
 import { AllGamesComponent } from './all-games/all-games.component';
 import { DetailsGameComponent } from './details-game/details-game.component';
 import { CartComponent } from './cart/cart.component';
+import { EditGameComponent } from './edit-game/edit-game.component';
 
 //Guards
 import { AdminGuard } from '../../core/guards/admin.guard';
 import { AuthGuard } from '../../core/guards/auth.guard';
 
 const routes: Routes = [
-  
   {
     path: 'create',
     canActivate: [AuthGuard, AdminGuard],
@@ -27,6 +27,11 @@ const routes: Routes = [
     path: 'details/:id',
     canActivate: [AuthGuard],
     component: DetailsGameComponent
+  },
+  {
+    path: 'edit/:id',
+    canActivate: [AuthGuard, AdminGuard],
+    component: EditGameComponent
   },
   {
     path: 'cart',
