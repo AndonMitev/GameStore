@@ -1,5 +1,5 @@
 <div>
-  <h1 class="display-3 text-center">Sign up</h1>
+  <h1 class="display-3 text-center animated infinite bounce slow">Sign up</h1>
   <div *ngIf="showSpinner">
     <loading-spinner></loading-spinner>
   </div>
@@ -17,14 +17,13 @@
         <div *ngIf="username.errors['minlength']">Username should be atleast 3 symbols long</div>
         <div *ngIf="username.errors['uniqueUsername']">Username is already taken</div>
       </div>
-
     </div>
 
     <div class="form-group">
       <label>
         <strong>Email</strong>*
       </label>
-      <input class="form-control" type="text" formControlName="email" placeholder="john_smith@gmail.com" />
+      <input class="form-control" type="email" formControlName="email" placeholder="john_smith@gmail.com" />
       <div class="alert alert-danger" *ngIf="email.invalid && (email.dirty || email.touched)">
         <div *ngIf="email.errors['required']">Email is required</div>
         <div *ngIf="email.errors['pattern']">Enter valid email</div>
@@ -35,7 +34,7 @@
       <label>
         <strong>Confirm Email</strong>*
       </label>
-      <input class="form-control" type="text" formControlName="confirmEmail" placeholder="john_smith@gmail.com" />
+      <input class="form-control" type="email" formControlName="confirmEmail" placeholder="john_smith@gmail.com" />
       <div class="alert alert-danger" *ngIf="confirmEmail.invalid && (confirmEmail.dirty || confirmEmail.touched)">
         <div *ngIf="confirmEmail.errors['required']">Confirm email is required</div>
         <div *ngIf="confirmEmail.errors['compare']">Confirm email do not match</div>

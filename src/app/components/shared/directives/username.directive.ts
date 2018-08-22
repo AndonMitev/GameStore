@@ -7,7 +7,7 @@ import {
   AsyncValidatorFn
 } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, debounceTime } from 'rxjs/operators';
 
 import { UserRegisterService } from '../../../core/services/authentication-services/register.service';
 
@@ -19,6 +19,7 @@ export function uniqueUsernameValidator(
   ): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> => {
     const username = { username: c.value };
     return userService.checkIfUsernameExists(username).pipe(
+      debounceTime(500),
       map(res => {
         return res['usernameExists'] === true ? { uniqueUsername: true } : null;
       })
