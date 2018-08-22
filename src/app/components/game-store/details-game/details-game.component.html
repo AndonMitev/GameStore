@@ -6,9 +6,12 @@
     <div class="row mb-2 animated fadeInLeft">
       <div class="col-md-3">
         <h2 class="text-center">Game cover</h2>
-        <a *ngIf="verification.isAdmin()" [routerLink]="['/game/edit', detailsGame._id]">
+        <a *ngIf="verification.isAdmin(); else normalImage" [routerLink]="['/game/edit', detailsGame._id]">
           <img class="img-fluid rounded" [src]=detailsGame.image [alt]=detailsGame.title />
         </a>
+        <ng-template #normalImage>
+          <img class="img-fluid rounded" [src]=detailsGame.image [alt]=detailsGame.title />
+        </ng-template>
         <h4 class="text-center">Price {{detailsGame.price | currency}}</h4>
         <div *ngIf="!userExists">
           <subscribe-to-game [game]=detailsGame></subscribe-to-game>

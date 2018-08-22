@@ -1,20 +1,22 @@
-import { Component, OnInit, OnDestroy, Injectable } from '@angular/core';
-import { CreateGameService } from '../../../core/services/game-store-services/create-game.service';
-import { Subscription, Observable } from 'rxjs';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { GetDetailsGameService } from '../../../core/services/game-store-services/get-details-game.service';
-import { Store, select } from '@ngrx/store';
-import { AppState } from '../../../store/app.state';
-import { CreateGameInputModel } from '../../../core/models/input-models/create-game.model';
-import { DetailsGameModel } from '../../../core/models/view-models/details-game.model';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import {
   FormGroup,
   FormBuilder,
   Validators,
   AbstractControl
 } from '@angular/forms';
-import { EditGameService } from '../../../core/services/game-store-services/edit-game.service';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { Store, select } from '@ngrx/store';
+import { Subscription } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
+
+//Service
+import { EditGameService } from '../../../core/services/game-store-services/edit-game.service';
+import { GetDetailsGameService } from '../../../core/services/game-store-services/get-details-game.service';
+//State
+import { AppState } from '../../../store/app.state';
+//Model
+import { CreateGameInputModel } from '../../../core/models/input-models/create-game.model';
 
 @Component({
   selector: 'edit-game',
