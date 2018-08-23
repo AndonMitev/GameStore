@@ -6,6 +6,7 @@ import { takeUntil } from 'rxjs/operators';
 
 //Service
 import { GetCompletedOrdersService } from '../../../core/services/order.services/get-user-orders.service';
+import { UserVerificationService } from '../../../core/services/authentication-services/verification.service';
 //State
 import { AppState } from '../../../store/app.state';
 //Model
@@ -17,13 +18,14 @@ import { CompleteOrderModel } from '../../../core/models/view-models/complete-or
   styleUrls: ['./my-orders.component.css']
 })
 export class MyOrdersComponent implements OnInit, OnDestroy {
-  public orders$: Observable<CompleteOrderModel[]>;
+  public orders: CompleteOrderModel[];
   public showSpinner: boolean;
   public currPage: number;
   public pageSize: number;
   private ngUnsubscribe: Subject<void> = new Subject<void>();
 
   constructor(
+    public verification: UserVerificationService,
     private store: Store<AppState>,
     private orderService: GetCompletedOrdersService,
     private router: Router,
@@ -44,10 +46,12 @@ export class MyOrdersComponent implements OnInit, OnDestroy {
           .getCompletedOrders(USER_ID)
           .pipe(takeUntil(this.ngUnsubscribe))
           .subscribe(() => {
-            this.orders$ = this.store.pipe(
-              select((state: AppState) => state.orders.completedOrders),
-              takeUntil(this.ngUnsubscribe)
-            );
+            this.store
+              .pipe(
+                select((state: AppState) => state.orders.completedOrders),
+                takeUntil(this.ngUnsubscribe)
+              )
+              .subscribe(res => (this.orders = res));
             this.showSpinner = false;
           });
       });

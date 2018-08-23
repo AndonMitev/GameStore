@@ -8,6 +8,7 @@ export const DELETE_GAME_FROM_ORDER_LIST = '[ORDERS] Delete Game From List';
 export const COMPLETE_ORDER = '[ORDERS] Complete Order';
 export const GET_ALL_COMPLETED_ORDERS = '[ORDERS] Get All Completed Orders';
 export const GET_COMPLETED_ORDER_DETAILS = '[ORDERS] Get Completed Order Details';
+export const CANCEL_MY_ORDER = '[ORDERS] Cancel My Completed Order';
 
 export class GetAllOrderedGamesAction implements Action {
   readonly type: string = GET_ALL_ORDERED_GAMES_IN_LIST;
@@ -39,10 +40,16 @@ export class GetCompletedOrderDetailsAction implements Action {
   constructor(public payload: CompleteOrderModel) {}
 }
 
+export class CancelMyCompletedOrderAction implements Action {
+  readonly type: string = CANCEL_MY_ORDER;
+  constructor(public payload: string) {}
+}
+
 export type Types =
   | OrderGameAction
   | GetAllOrderedGamesAction
   | DeleteGameFromOrderedListAction
   | CompleteOrderAction
   | GetCompletedOrdersAction
-  | GetCompletedOrderDetailsAction;
+  | GetCompletedOrderDetailsAction
+  | CancelMyCompletedOrderAction;

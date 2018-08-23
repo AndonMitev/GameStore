@@ -1,7 +1,7 @@
 <div *ngIf="showSpinner">
   <loading-spinner></loading-spinner>
 </div>
-<div *ngIf="orders$ | async as orders">
+<div *ngIf="orders">
   <div class="col-md-12">
     <h2 class="text-center">Previous orders</h2>
     <hr>
@@ -9,11 +9,13 @@
       <button (click)="getFullOrderView(data._id)" class="btn btn-link offset-2 clear">
         <p class="h4 text-center">Number: {{data._id}}, Ordered at: {{data._kmd.ect | date}}</p>
       </button>
+
+      <my-order-cancel *ngIf="verification.isAdmin()" [orderId]=data._id></my-order-cancel>
     </div>
     <pagination-controls id="my-orders" (pageChange)="pageChanged($event)" maxSize="9" directionLinks="true" autoHide="true"
-    responsive="true" previousLabel="Previous" nextLabel="Next" screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page"
-    screenReaderCurrentLabel="You're on page">
-  </pagination-controls>
+      responsive="true" previousLabel="Previous" nextLabel="Next" screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page"
+      screenReaderCurrentLabel="You're on page">
+    </pagination-controls>
   </div>
   <div class="text-center" *ngIf="orders.length === 0">
     <h2>You haven't completed any orders yet!</h2>

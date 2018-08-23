@@ -44,10 +44,16 @@ function getCompletedOrder(state, orders) {
 }
 
 function getCompletedOrderDetails(state, orderData) {
-  console.log(orderData);
   return {
     ...state,
     details: orderData.order
+  };
+}
+
+function cancelMyCompletedOrder(state, id) {
+  return {
+    ...state,
+    completedOrders: [...state.completedOrders.filter(o => o._id !== id)]
   };
 }
 
@@ -68,6 +74,8 @@ export function orderReducer(
       return getCompletedOrder(state, action.payload);
     case OrderActions.GET_COMPLETED_ORDER_DETAILS:
       return getCompletedOrderDetails(state, action.payload);
+    case OrderActions.CANCEL_MY_ORDER:
+      return cancelMyCompletedOrder(state, action.payload);
     default:
       return state;
   }
