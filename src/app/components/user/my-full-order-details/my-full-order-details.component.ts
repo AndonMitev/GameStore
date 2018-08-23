@@ -1,10 +1,14 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Store, select } from '@ngrx/store';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
-import { AppState } from '../../../store/app.state';
+//Service
 import { GetCompletedOrderDetailsService } from '../../../core/services/order.services/get-complete-order-details.service';
+//State
+import { AppState } from '../../../store/app.state';
+//Model
 import { CompleteOrderModel } from '../../../core/models/view-models/complete-order.model';
 
 @Component({
@@ -15,7 +19,7 @@ import { CompleteOrderModel } from '../../../core/models/view-models/complete-or
 export class MyFullOrderDetails implements OnInit, OnDestroy {
   public fullOrder$: Observable<CompleteOrderModel>;
   public showSpinner: boolean;
-  private subscription: Subscription;
+  private ngUnsubscribe: Subject<void> = new Subject<void>();
 
   constructor(
     private store: Store<AppState>,
@@ -26,21 +30,27 @@ export class MyFullOrderDetails implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
-    this.subscription = this.router.paramMap.subscribe((res: ParamMap) => {
-      const ORDER_ID = res['params']['id'];
+    this.router.paramMap
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((res: ParamMap) => {
+        const ORDER_ID = res['params']['id'];
 
-      this.orderService.getCompletedOrderDetails(ORDER_ID).subscribe(() => {
-        this.fullOrder$ = this.store.pipe(
-          select((state: AppState) => state.orders.details)
-        );
-        this.showSpinner = false;
+        this.orderService
+          .getCompletedOrderDetails(ORDER_ID)
+          .pipe(takeUntil(this.ngUnsubscribe))
+          .subscribe(() => {
+
+            this.fullOrder$ = this.store.pipe(
+              select((state: AppState) => state.orders.details),
+              takeUntil(this.ngUnsubscribe)
+            );
+            this.showSpinner = false;
+          });
       });
-    });
   }
 
   public ngOnDestroy(): void {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 }

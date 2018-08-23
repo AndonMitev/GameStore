@@ -2,7 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 //Services
 import { OrderGameService } from '../../../core/services/order.services/order-game.service';
@@ -23,7 +24,7 @@ export class CartComponent implements OnInit, OnDestroy {
   public pageSize: number;
   public buttonText: string;
   public isClicked: boolean;
-  private subscription: Subscription;
+  private ngUnsubscribe: Subject<void> = new Subject<void>();
 
   constructor(
     private cartService: OrderGameService,
@@ -41,14 +42,16 @@ export class CartComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this.cartService.viewOrder();
     this.store
-      .pipe(select((state: AppState) => (this.order = state.orders.all)))
+      .pipe(
+        select((state: AppState) => (this.order = state.orders.all)),
+        takeUntil(this.ngUnsubscribe)
+      )
       .subscribe();
   }
 
   public ngOnDestroy(): void {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 
   public removeItem(gameId: string): void {
@@ -57,22 +60,28 @@ export class CartComponent implements OnInit, OnDestroy {
   }
 
   public completeOrder(): void {
-    this.subscription = this.store
-      .pipe(select(state => state.orders.all))
+    this.store
+      .pipe(
+        select(state => state.orders.all),
+        takeUntil(this.ngUnsubscribe)
+      )
       .subscribe(res => {
-        this.buttonText = 'Processing...'
+        this.buttonText = 'Processing...';
         this.isClicked = true;
         const FINAL_ORDER = {
           userId: localStorage.getItem('userId'),
           order: res
         };
 
-        this.completeService.finishOrder(FINAL_ORDER).subscribe(() => {
-          sessionStorage.clear();
+        this.completeService
+          .finishOrder(FINAL_ORDER)
+          .pipe(takeUntil(this.ngUnsubscribe))
+          .subscribe(() => {
+            sessionStorage.clear();
 
-          this.toast.success('Order was successfully created!');
-          this.router.navigate([`/user/profile/${FINAL_ORDER.userId}`]);
-        });
+            this.toast.success('Order was successfully created!');
+            this.router.navigate([`/user/profile/${FINAL_ORDER.userId}`]);
+          });
       });
   }
 

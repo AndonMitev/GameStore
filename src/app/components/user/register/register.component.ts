@@ -6,7 +6,8 @@ import {
   FormArray,
   AbstractControl
 } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
@@ -27,7 +28,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   public registerForm: FormGroup;
   public showSpinner: boolean;
   private userModel: RegisterInputModel;
-  private subscription: Subscription;
+  private ngUnsubscribe: Subject<void> = new Subject<void>();
 
   constructor(
     private fb: FormBuilder,
@@ -43,9 +44,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 
   public initializeRegisterForm(): void {
@@ -149,8 +149,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
       USER_DATA['streetAddress']
     );
 
-    this.subscription = this.userService
+    this.userService
       .registerUser(this.userModel)
+      .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((data: object) => {
         this.userService.saveData(data);
         this.router.navigate(['/game/all']);

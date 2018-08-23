@@ -1,7 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Store, select } from '@ngrx/store';
-import { Subscription, Observable } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
+import { takeUntil, take } from 'rxjs/operators';
 
 //Service
 import { GetUserSubscriptionsService } from '../../../core/services/profile-services/get-user-subscrptions.service';
@@ -20,7 +21,7 @@ export class MySubscriptionsComponent implements OnInit, OnDestroy {
   public showSpinner: boolean;
   public currPage: number;
   public pageSize: number;
-  private subscription: Subscription;
+  private ngUnsubscribe: Subject<void> = new Subject<void>();
   private userId: string;
 
   constructor(
@@ -34,23 +35,28 @@ export class MySubscriptionsComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
-    this.subscription = this.actRoute.paramMap.subscribe((res: ParamMap) => {
-      this.userId = res['params']['id'];
+    this.actRoute.paramMap
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((res: ParamMap) => {
+        this.userId = res['params']['id'];
 
-      this.userSubs.getUserSubscriptions(this.userId).subscribe(() => {
-        this.userSubscriptions$ = this.store.pipe(
-          select((state: AppState) => state.users.subscriptions)
-        );
+        this.userSubs
+          .getUserSubscriptions(this.userId)
+          .pipe(takeUntil(this.ngUnsubscribe))
+          .subscribe(() => {
+            this.userSubscriptions$ = this.store.pipe(
+              select((state: AppState) => state.users.subscriptions),
+              takeUntil(this.ngUnsubscribe)
+            );
 
-        this.showSpinner = false;
+            this.showSpinner = false;
+          });
       });
-    });
   }
 
   public ngOnDestroy(): void {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 
   public pageChanged(newPage: number): void {

@@ -1,7 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Store, select } from '@ngrx/store';
-import { Subscription } from 'rxjs';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators'
 
 //Service
 import { GetDetailsGameService } from '../../../core/services/game-store-services/get-details-game.service';
@@ -20,7 +21,7 @@ export class DetailsGameComponent implements OnInit, OnDestroy {
   public detailsGame: DetailsGameModel;
   public showSpinner: boolean;
   public userExists: boolean;
-  private subscription: Subscription;
+  private ngUnsubscribe: Subject<void> = new Subject<void>();
 
   constructor(
     public verification: UserVerificationService,
@@ -32,34 +33,42 @@ export class DetailsGameComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
-    this.actRoute.paramMap.subscribe((res: ParamMap) => {
-      const GAME_ID: string = res['params']['id'];
+    this.actRoute.paramMap
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((res: ParamMap) => {
+        const GAME_ID: string = res['params']['id'];
 
-      this.gameService.getGameDetails(GAME_ID).subscribe(() => {
-        this.subscription = this.store
-          .pipe(select((state: AppState) => state.games.details))
-          .subscribe((res: DetailsGameModel) => {
-            const SUBSCRIPTIONS: string[] = res['subscriptions'];
-            const USER_ID: string = localStorage.getItem('userId');
+        this.gameService
+          .getGameDetails(GAME_ID)
+          .pipe(takeUntil(this.ngUnsubscribe))
+          .subscribe(() => {
 
-            if (
-              SUBSCRIPTIONS.length !== 0 &&
-              SUBSCRIPTIONS.indexOf(USER_ID) !== -1
-            ) {
-              this.userExists = true;
-            } else {
-              this.userExists = false;
-            }
-            this.detailsGame = res;
-            this.showSpinner = false;
+            this.store
+              .pipe(
+                select((state: AppState) => state.games.details),
+                takeUntil(this.ngUnsubscribe)
+              )
+              .subscribe((res: DetailsGameModel) => {
+                const SUBSCRIPTIONS: string[] = res['subscriptions'];
+                const USER_ID: string = localStorage.getItem('userId');
+
+                if (
+                  SUBSCRIPTIONS.length !== 0 &&
+                  SUBSCRIPTIONS.indexOf(USER_ID) !== -1
+                ) {
+                  this.userExists = true;
+                } else {
+                  this.userExists = false;
+                }
+                this.detailsGame = res;
+                this.showSpinner = false;
+              });
           });
       });
-    });
   }
 
   public ngOnDestroy(): void {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 }

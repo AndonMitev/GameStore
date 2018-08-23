@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 
 //Services
@@ -10,7 +11,6 @@ import { UserVerificationService } from '../../../core/services/authentication-s
 import { AppState } from '../../../store/app.state';
 //Model
 import { CreateMessageInputModel } from '../../../core/models/input-models/message-model';
-import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'my-received-messages',
@@ -22,7 +22,7 @@ export class MyRecievedMessagesComponent implements OnInit, OnDestroy {
   public currPage: number;
   public pageSize: number;
   public showSpinner: boolean;
-  private subscription: Subscription;
+  private ngUnsubscribe: Subject<void> = new Subject<void>();
 
   constructor(
     public verification: UserVerificationService,
@@ -36,23 +36,28 @@ export class MyRecievedMessagesComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
-    this.subscription = this.actRoute.paramMap.subscribe((res: ParamMap) => {
-      const SENDER_ID: string = res['params']['id'];
+    this.actRoute.paramMap
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((res: ParamMap) => {
+        const SENDER_ID: string = res['params']['id'];
 
-      this.messageService.getReceivedMessages(SENDER_ID).subscribe(() => {
-        this.receivedMessages$ = this.store.pipe(
-          select((state: AppState) => state.messages.recievedMessages)
-        );
+        this.messageService
+          .getReceivedMessages(SENDER_ID)
+          .pipe(takeUntil(this.ngUnsubscribe))
+          .subscribe(() => {
+            this.receivedMessages$ = this.store.pipe(
+              select((state: AppState) => state.messages.recievedMessages),
+              takeUntil(this.ngUnsubscribe)
+            );
 
-        this.showSpinner = false;
+            this.showSpinner = false;
+          });
       });
-    });
   }
 
   public ngOnDestroy(): void {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 
   public pageChanged(newPage: number): void {

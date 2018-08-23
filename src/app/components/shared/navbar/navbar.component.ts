@@ -8,9 +8,13 @@ import { UserVerificationService } from '../../../core/services/authentication-s
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent {
-  public userId: string;
+export class NavbarComponent{
+  public username: string;
   constructor(public userVerification: UserVerificationService) {}
+
+  public getUsername(): string {
+    return localStorage.getItem('username');
+  }
 
   public getUserId(): string {
     return localStorage.getItem('userId');

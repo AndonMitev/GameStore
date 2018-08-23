@@ -16,7 +16,7 @@
       <a class="nav-link" routerLink="/game/cart">My Cart</a>
     </li>
     <li class="nav-item mr-3" *ngIf="userVerification.hasUser()">
-      <a class="nav-link" [routerLink]="['/user/profile/', getUserId()]">Profile</a>
+      <a class="nav-link" [routerLink]="['/user/profile/', getUserId()]">{{getUsername()}}</a>
     </li>
     <li class="nav-item mr-3" *ngIf="userVerification.hasUser()">
       <a class="nav-link" routerLink="/logout">Logout</a>

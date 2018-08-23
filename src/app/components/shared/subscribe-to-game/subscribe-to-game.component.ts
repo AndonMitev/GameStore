@@ -1,10 +1,13 @@
 import { Component, OnDestroy, Input } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
+import { Store, select } from '@ngrx/store';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 
 //Service
 import { SubscriptionService } from '../../../core/services/game-store-services/subscribe-game.service';
-import { Store } from '@ngrx/store';
+//State
 import { AppState } from '../../../store/app.state';
 
 @Component({
@@ -17,7 +20,7 @@ export class SubscribeToGameComponent implements OnDestroy {
   public game: any;
   public buttonText: string;
   public isClicked: boolean;
-  private subscription: Subscription;
+  private ngUnsubscribe: Subject<void> = new Subject<void>();
 
   constructor(
     private subscribeService: SubscriptionService,
@@ -31,23 +34,26 @@ export class SubscribeToGameComponent implements OnDestroy {
   public subscribeToGame(): void {
     this.buttonText = 'Processing...';
     this.isClicked = true;
-    const GAME_ID: string = this.game['_id'];
     const USER_ID: string = localStorage.getItem('userId');
+    const GAME_ID: string = this.game['_id'];
     this.game['subscriptions'].push(USER_ID);
 
-    this.subscribeService.subscriptionGame(this.game, GAME_ID).subscribe(() => {
-      this.subscription = this.store
-        .select(state => state.games.details)
-        .subscribe();
-      this.buttonText = 'Subscribe';
-      this.isClicked = false;
-      this.toast.success('Successfully subscribed to game!');
-    });
+    this.subscribeService
+      .subscriptionGame(this.game, GAME_ID)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(() => {
+        this.store.pipe(
+          select(state => state.games.details),
+          takeUntil(this.ngUnsubscribe)
+        );
+        this.buttonText = 'Subscribe';
+        this.isClicked = false;
+        this.toast.success('Successfully subscribed to game!');
+      });
   }
 
   public ngOnDestroy(): void {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 }

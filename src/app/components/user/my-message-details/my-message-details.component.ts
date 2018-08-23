@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
 
 //Service
@@ -18,7 +19,7 @@ import { CreateMessageInputModel } from '../../../core/models/input-models/messa
 })
 export class MyMessageDetailsComponent implements OnInit, OnDestroy {
   public messageDetails$: Observable<CreateMessageInputModel>;
-  private subscription: Subscription;
+  private ngUnsubscribe: Subject<void> = new Subject<void>();
 
   constructor(
     public verification: UserVerificationService,
@@ -28,23 +29,25 @@ export class MyMessageDetailsComponent implements OnInit, OnDestroy {
   ) {}
 
   public ngOnInit(): void {
-    this.subscription = this.actRoute.paramMap.subscribe((res: ParamMap) => {
-      const MESSAGE_ID: string = res['params']['id'];
+    this.actRoute.paramMap
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((res: ParamMap) => {
+        const MESSAGE_ID: string = res['params']['id'];
 
-      this.messageService
-        .getMessageDetails(MESSAGE_ID)
-        .subscribe(
-          () =>
-            (this.messageDetails$ = this.store.pipe(
-              select((state: AppState) => state.messages.details)
-            ))
-        );
-    });
+        this.messageService
+          .getMessageDetails(MESSAGE_ID)
+          .pipe(takeUntil(this.ngUnsubscribe))
+          .subscribe(() => {
+            this.messageDetails$ = this.store.pipe(
+              select((state: AppState) => state.messages.details),
+              takeUntil(this.ngUnsubscribe)
+            );
+          });
+      });
   }
 
   public ngOnDestroy(): void {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 }

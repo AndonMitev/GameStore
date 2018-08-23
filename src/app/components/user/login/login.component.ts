@@ -6,7 +6,8 @@ import {
   AbstractControl
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators'
 import { ToastrService } from 'ngx-toastr';
 
 //Model
@@ -22,7 +23,7 @@ import { UserLoginService } from '../../../core/services/authentication-services
 export class LoginComponent implements OnInit, OnDestroy {
   public loginForm: FormGroup;
   private userModel: LoginInputModel;
-  private subscription$: Subscription;
+  private ngUnsubscribe: Subject<void> = new Subject<void>();
 
   constructor(
     private fb: FormBuilder,
@@ -37,9 +38,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    if (this.subscription$) {
-      this.subscription$.unsubscribe();
-    }
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 
   public initializeLoginForm(): void {
@@ -65,10 +65,9 @@ export class LoginComponent implements OnInit, OnDestroy {
       USER_DATA['password']
     );
 
-  
-
-    this.subscription$ = this.userService
+    this.userService
       .loginUser(this.userModel)
+      .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((res: object) => {
         this.userService.saveData(res);
         this.router.navigate(['/game/all']);

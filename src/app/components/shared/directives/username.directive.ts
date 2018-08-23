@@ -17,13 +17,16 @@ export function uniqueUsernameValidator(
   return (
     c: AbstractControl
   ): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> => {
-    const username = { username: c.value };
-    return userService.checkIfUsernameExists(username).pipe(
-      debounceTime(500),
-      map(res => {
-        return res['usernameExists'] === true ? { uniqueUsername: true } : null;
-      })
-    );
+    const username: object = { username: c.value };
+
+    return userService
+      .checkIfUsernameExists(username)
+      .pipe(
+        debounceTime(500),
+        map(res => {
+          return res['usernameExists'] === true ? { uniqueUsername: true } : null;
+        })
+      );
   };
 }
 
@@ -40,7 +43,7 @@ export function uniqueUsernameValidator(
 export class UniqueUsernameValidatorDirective implements AsyncValidator {
   constructor(private userService: UserRegisterService) {}
 
-  validate(
+  public validate(
     c: AbstractControl
   ): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> {
     return uniqueUsernameValidator(this.userService)(c);

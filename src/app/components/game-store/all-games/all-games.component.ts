@@ -2,7 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, AbstractControl } from '@angular/forms';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Store, select } from '@ngrx/store';
-import { Observable, Subscription } from 'rxjs';
+import { takeUntil, switchMap } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
 
 //Serivces
 import { GetAllGamesService } from '../../../core/services/game-store-services/get-all-games.service';
@@ -30,7 +31,7 @@ export class AllGamesComponent implements OnInit, OnDestroy {
     'Desc Price',
     'Default'
   ];
-  private subscription: Subscription;
+  private ngUnsubscribe: Subject<void> = new Subject<void>();
 
   constructor(
     private gameService: GetAllGamesService,
@@ -45,22 +46,27 @@ export class AllGamesComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.initializeSearchForm();
-    this.subscription = this.router.queryParamMap.subscribe((res: ParamMap) => {
-      const CATEGORY: string = res['params']['category'];
 
-      this.gameService.getAllGames(CATEGORY).subscribe(() => {
-        this.allGames$ = this.store.pipe(
-          select((state: AppState) => state.games.all)
-        );
-        this.showSpinner = false;
+    this.router.queryParamMap
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((res: ParamMap) => {
+        const CATEGORY: string = res['params']['category'];
+
+        this.gameService
+          .getAllGames(CATEGORY)
+          .pipe(takeUntil(this.ngUnsubscribe))
+          .subscribe(() => {
+            this.allGames$ = this.store.pipe(
+              select((state: AppState) => state.games.all)
+            );
+            this.showSpinner = false;
+          });
       });
-    });
   }
 
   public ngOnDestroy(): void {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 
   public initializeSearchForm(): void {

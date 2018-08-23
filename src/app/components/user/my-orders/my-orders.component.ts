@@ -1,7 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Store, select } from '@ngrx/store';
-import { Subscription, Observable } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 //Service
 import { GetCompletedOrdersService } from '../../../core/services/order.services/get-user-orders.service';
@@ -20,7 +21,7 @@ export class MyOrdersComponent implements OnInit, OnDestroy {
   public showSpinner: boolean;
   public currPage: number;
   public pageSize: number;
-  private subscription: Subscription;
+  private ngUnsubscribe: Subject<void> = new Subject<void>();
 
   constructor(
     private store: Store<AppState>,
@@ -34,22 +35,27 @@ export class MyOrdersComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
-    this.subscription = this.actRoute.paramMap.subscribe((res: ParamMap) => {
-      const USER_ID: string = res['params']['id'];
+    this.actRoute.paramMap
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((res: ParamMap) => {
+        const USER_ID: string = res['params']['id'];
 
-      this.orderService.getCompletedOrders(USER_ID).subscribe(() => {
-        this.orders$ = this.store.pipe(
-          select((state: AppState) => state.orders.completedOrders)
-        );
-        this.showSpinner = false;
+        this.orderService
+          .getCompletedOrders(USER_ID)
+          .pipe(takeUntil(this.ngUnsubscribe))
+          .subscribe(() => {
+            this.orders$ = this.store.pipe(
+              select((state: AppState) => state.orders.completedOrders),
+              takeUntil(this.ngUnsubscribe)
+            );
+            this.showSpinner = false;
+          });
       });
-    });
   }
 
   public ngOnDestroy(): void {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 
   public getFullOrderView(orderId: string): void {

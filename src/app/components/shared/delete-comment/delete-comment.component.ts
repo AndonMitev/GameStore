@@ -1,5 +1,6 @@
 import { Component, Input, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators'
 
 import { ToastrService } from 'ngx-toastr';
 import { DeleteCommentService } from '../../../core/services/comment-services/delete-comment.service';
@@ -14,7 +15,7 @@ export class DeleteCommentComponent implements OnDestroy {
   public commentId: string;
   public buttonText: string;
   public isClicked: boolean;
-  private subscription: Subscription;
+  private ngUnsubscribe: Subject<void> = new Subject<void>();
 
   constructor(
     private commentService: DeleteCommentService,
@@ -27,8 +28,10 @@ export class DeleteCommentComponent implements OnDestroy {
   public deleteSelectedComment(): void {
     this.isClicked = true;
     this.buttonText = 'Processing...';
-    this.subscription = this.commentService
+
+    this.commentService
       .deleteComment(this.commentId)
+      .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(() => {
         this.isClicked = false;
         this.buttonText = 'Delete';
@@ -37,8 +40,7 @@ export class DeleteCommentComponent implements OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 }

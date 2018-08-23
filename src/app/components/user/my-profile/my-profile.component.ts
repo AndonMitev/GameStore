@@ -1,7 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 //Service
 import { GetProfileService } from '../../../core/services/profile-services/get-profile.service';
@@ -9,7 +10,6 @@ import { GetProfileService } from '../../../core/services/profile-services/get-p
 import { AppState } from '../../../store/app.state';
 //Model
 import { RegisterInputModel } from '../../../core/models/input-models/register.model';
-import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'my-profile',
@@ -22,7 +22,7 @@ export class MyProfileComponent implements OnInit, OnDestroy {
   public showSubscriptions: boolean;
   public showComments: boolean;
   public showSpinner: boolean;
-  private subscription: Subscription;
+  private ngUnsubscribe: Subject<void> = new Subject<void>();
 
   constructor(
     private profileService: GetProfileService,
@@ -36,23 +36,28 @@ export class MyProfileComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
-    this.subscription = this.actRoute.paramMap.subscribe((res: ParamMap) => {
-      const USER_ID: string = res['params']['id'];
+    this.actRoute.paramMap
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((res: ParamMap) => {
+        const USER_ID: string = res['params']['id'];
 
-      this.profileService.getProfile(USER_ID).subscribe(() => {
-        this.userData$ = this.store.pipe(
-          select((state: AppState) => state.users.user)
-        );
+        this.profileService
+          .getProfile(USER_ID)
+          .pipe(takeUntil(this.ngUnsubscribe))
+          .subscribe(() => {
+            this.userData$ = this.store.pipe(
+              select((state: AppState) => state.users.user),
+              takeUntil(this.ngUnsubscribe)
+            );
 
-        this.showSpinner = false;
+            this.showSpinner = false;
+          });
       });
-    });
   }
 
   public ngOnDestroy(): void {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 
   public showComponent(param: string): void {

@@ -5,7 +5,8 @@ import {
   Validators,
   AbstractControl
 } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators'
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 
@@ -28,7 +29,7 @@ export class MyCreateMessageComponent implements OnInit, OnDestroy {
   public messageForm: FormGroup;
   public buttonText: string;
   public isClicked: boolean;
-  private subscription: Subscription;
+  private ngUnsubscribe: Subject<void> = new Subject<void>();
   private messageModel: CreateMessageInputModel;
 
   constructor(
@@ -50,9 +51,8 @@ export class MyCreateMessageComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 
   public initializeMessageForm(): void {
@@ -87,33 +87,42 @@ export class MyCreateMessageComponent implements OnInit, OnDestroy {
     const CONTENT: string = this.messageForm.value['content'];
    
 
-    this.subscription = this.getUserId
+    this.getUserId
       .getUserIdByUsername(RECIPIENT)
+      .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((res: RegisterInputModel) => {
         const RECIPIENT_ID: string = res[0]['_id'];
-        this.actRoute.paramMap.subscribe((res: ParamMap) => {
-          const FROM_ID = res['params']['id'];
+        
+        this.actRoute.paramMap
+          .pipe(takeUntil(this.ngUnsubscribe))
+          .subscribe((res: ParamMap) => {
+            const FROM_ID = res['params']['id'];
 
-          this.messageModel = new CreateMessageInputModel(
-            FROM,
-            RECIPIENT,
-            TITLE,
-            CONTENT,
-            RECIPIENT_ID,
-            FROM_ID
-          );
+            this.messageModel = new CreateMessageInputModel(
+              FROM,
+              RECIPIENT,
+              TITLE,
+              CONTENT,
+              RECIPIENT_ID,
+              FROM_ID
+            );
 
-          this.createMessageService
-            .createMessage(this.messageModel)
-            .subscribe(() => {
-              this.buttonText = 'Send'
-              this.isClicked = false;
-              this.initializeMessageForm();
-              this.toast.success(`Message successfully send!`);
-              this.getSentService.getSentMessages(FROM_ID).subscribe();
-              //this.getReceivedMsg.getReceivedMessages(FROM_ID).subscribe(); PIECE OF 5#17777
-            });
-        });
+            this.createMessageService
+              .createMessage(this.messageModel)
+              .pipe(takeUntil(this.ngUnsubscribe))
+              .subscribe(() => {
+                this.buttonText = 'Send'
+                this.isClicked = false;
+                this.initializeMessageForm();
+                this.toast.success(`Message successfully send!`);
+
+                this.getSentService
+                  .getSentMessages(FROM_ID)
+                  .pipe(takeUntil(this.ngUnsubscribe))
+                  .subscribe();
+                //this.getReceivedMsg.getReceivedMessages(FROM_ID).subscribe(); PIECE OF 5#17777
+              });
+          });
       });
   }
 

@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators'
 import { ToastrService } from 'ngx-toastr';
 
 //Service
@@ -13,7 +14,7 @@ import { UserLogoutService } from '../../../core/services/authentication-service
 })
 export class LogoutComponent implements OnInit, OnDestroy {
   public showSpinner: boolean;
-  private subscription$: Subscription;
+  private ngUnsubscribe: Subject<void> = new Subject<void>();
 
   constructor(
     private userService: UserLogoutService,
@@ -24,18 +25,20 @@ export class LogoutComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
-    this.subscription$ = this.userService.logoutUser().subscribe(() => {
-      localStorage.clear();
-      sessionStorage.clear();
-      this.router.navigate(['/login']);
-      this.showSpinner = false;
-      this.toast.success('You have been successfully logged out!');
+    this.userService
+      .logoutUser()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(() => {
+        localStorage.clear();
+        sessionStorage.clear();
+        this.router.navigate(['/login']);
+        this.showSpinner = false;
+        this.toast.success('You have been successfully logged out!');
     });
   }
 
   public ngOnDestroy(): void {
-    if (this.subscription$) {
-      this.subscription$.unsubscribe();
-    }
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 }

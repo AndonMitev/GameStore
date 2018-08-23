@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
 
 //Service
@@ -21,7 +22,7 @@ export class MySentMessages implements OnInit, OnDestroy {
   public currPage: number;
   public pageSize: number;
   public showSpinner: boolean;
-  private subscription: Subscription;
+  private ngUnsubscribe: Subject<void> = new Subject<void>();
 
   constructor(
     public verification: UserVerificationService,
@@ -35,23 +36,28 @@ export class MySentMessages implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
-    this.subscription = this.actRoute.paramMap.subscribe((res: ParamMap) => {
-      const USER_ID: string = res['params']['id'];
+    this.actRoute.paramMap
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((res: ParamMap) => {
+        const USER_ID: string = res['params']['id'];
 
-      this.messageService.getSentMessages(USER_ID).subscribe(() => {
-        this.sentMessages$ = this.store.pipe(
-          select((state: AppState) => state.messages.sentMessages)
-        );
+        this.messageService
+          .getSentMessages(USER_ID)
+          .pipe(takeUntil(this.ngUnsubscribe))
+          .subscribe(() => {
+            this.sentMessages$ = this.store.pipe(
+              select((state: AppState) => state.messages.sentMessages),
+              takeUntil(this.ngUnsubscribe)
+            );
 
-        this.showSpinner = false;
+            this.showSpinner = false;
+          });
       });
-    });
   }
 
   public ngOnDestroy(): void {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 
   public pageChanged(newPage: number): void {

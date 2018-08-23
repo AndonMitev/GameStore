@@ -7,7 +7,8 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { Subscription } from 'rxjs';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators'
 
 //Model
 import { CreateGameInputModel } from '../../../core/models/input-models/create-game.model';
@@ -31,7 +32,7 @@ export class CreateGameComponent implements OnInit, OnDestroy {
     'UpComming'
   ];
   public modes: string[] = ['Single-player', 'Multiplayer'];
-  private subscription: Subscription;
+  private ngUnsubscribe: Subject<void> = new Subject<void>();
   private createGameData: CreateGameInputModel;
 
   constructor(
@@ -46,9 +47,8 @@ export class CreateGameComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 
   public submitGameForm(): void {
@@ -70,8 +70,9 @@ export class CreateGameComponent implements OnInit, OnDestroy {
       []
     );
 
-    this.subscription = this.gameService
+    this.gameService
       .createGame(this.createGameData)
+      .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(() => {
         this.toast.success(`${GAME_DATA['title']} successfully created!`);
         this.router.navigate(['/game/all']);

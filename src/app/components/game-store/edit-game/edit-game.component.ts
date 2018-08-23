@@ -7,7 +7,8 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { Store, select } from '@ngrx/store';
-import { Subscription } from 'rxjs';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators'
 import { ToastrService } from 'ngx-toastr';
 
 //Service
@@ -35,7 +36,7 @@ export class EditGameComponent implements OnInit, OnDestroy {
     'UpComming'
   ];
   public modes: string[] = ['Single-player', 'Multiplayer'];
-  private subscription: Subscription;
+  private ngUnsubscribe: Subject<void> = new Subject<void>();
   private subscriptions: string[];
   private gameId : string;
 
@@ -50,20 +51,34 @@ export class EditGameComponent implements OnInit, OnDestroy {
   ) {}
 
   public ngOnInit(): void {
-    this.subscription = this.actRoute.paramMap.subscribe((res: ParamMap) => {
-      this.gameId = res['params']['id'];
+    this.actRoute.paramMap
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((res: ParamMap) => {
+        this.gameId = res['params']['id'];
 
-      this.gameService.getGameDetails(this.gameId).subscribe(() =>
-        this.store
-          .pipe(select(state => state.games.details))
-          .subscribe((gameToEdit: CreateGameInputModel) => {
-            this.subscriptions = gameToEdit.subscriptions;
-            this.gameToEdit = gameToEdit;
-            this.initializeEditGameForm();
-            this.setValues();
-          })
-      );
-    });
+        this.gameService
+          .getGameDetails(this.gameId)
+          .pipe(takeUntil(this.ngUnsubscribe))
+          .subscribe(() =>
+            this.store
+              .pipe(
+                select(state => state.games.details),
+                takeUntil(this.ngUnsubscribe)
+              )
+              .subscribe((gameToEdit: CreateGameInputModel) => {
+                this.subscriptions = gameToEdit.subscriptions;
+                this.gameToEdit = gameToEdit;
+                this.initializeEditGameForm();
+                this.setValues();
+              })
+          );
+      });
+  }
+
+  
+  public ngOnDestroy(): void {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 
   public initializeEditGameForm(): void {
@@ -127,17 +142,17 @@ export class EditGameComponent implements OnInit, OnDestroy {
   }
 
   public setValues(): void {
-    this.editGameForm.get('title').setValue(this.gameToEdit.title);
-    this.editGameForm.get('image').setValue(this.gameToEdit.image);
-    this.editGameForm.get('publisher').setValue(this.gameToEdit.publisher);
-    this.editGameForm.get('developer').setValue(this.gameToEdit.developer);
-    this.editGameForm.get('series').setValue(this.gameToEdit.series);
-    this.editGameForm.get('selectedPlatform').setValue(this.gameToEdit.selectedPlatform);
-    this.editGameForm.get('release').setValue(this.gameToEdit.release);
-    this.editGameForm.get('genre').setValue(this.gameToEdit.genre);
-    this.editGameForm.get('description').setValue(this.gameToEdit.description);
-    this.editGameForm.get('mode').setValue(this.gameToEdit.mode);
-    this.editGameForm.get('price').setValue(this.gameToEdit.price);
+    this.title.setValue(this.gameToEdit.title);
+    this.image.setValue(this.gameToEdit.image);
+    this.publisher.setValue(this.gameToEdit.publisher);
+    this.developer.setValue(this.gameToEdit.developer);
+    this.series.setValue(this.gameToEdit.series);
+    this.selectedPlatform.setValue(this.gameToEdit.selectedPlatform);
+    this.release.setValue(this.gameToEdit.release);
+    this.genre.setValue(this.gameToEdit.genre);
+    this.description.setValue(this.gameToEdit.description);
+    this.mode.setValue(this.gameToEdit.mode);
+    this.price.setValue(this.gameToEdit.price);
   }
 
   public submitEditGameForm(): void {
@@ -159,17 +174,13 @@ export class EditGameComponent implements OnInit, OnDestroy {
       this.subscriptions
     );
 
-    this.editGameService.editGame(this.gameToEdit, this.gameId)
+    this.editGameService
+      .editGame(this.gameToEdit, this.gameId)
+      .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(() => {
         this.toast.success(`${GAME_DATA['title']} successfully edited!`);
         this.router.navigate([`/game/details/${this.gameId}`]);
       })
-  }
-
-  public ngOnDestroy(): void {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
   }
 
   public get title(): AbstractControl {

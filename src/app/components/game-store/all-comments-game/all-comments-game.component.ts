@@ -1,7 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Store, select } from '@ngrx/store';
-import { Observable, Subscription } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
 
 //Service
 import { GetAllCommentsService } from '../../../core/services/comment-services/get-all-comments-game.service';
@@ -22,7 +23,7 @@ export class AllCommentsGameComponent implements OnInit, OnDestroy {
   public currPage: number;
   public pageSize: number;
   public currentUserId: string;
-  private subscription: Subscription;
+  private ngUnsubscribe: Subject<void> = new Subject<void>();
 
   constructor(
     public verification: UserVerificationService,
@@ -35,24 +36,29 @@ export class AllCommentsGameComponent implements OnInit, OnDestroy {
     this.showSpinner = true;
   }
 
-  ngOnInit(): void {
-    this.subscription = this.router.paramMap.subscribe((res: ParamMap) => {
-      const GAME_ID: string = res['params']['id'];
+  public ngOnInit(): void {
+    this.router.paramMap
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((res: ParamMap) => {
+        const GAME_ID: string = res['params']['id'];
 
-      this.commentService.getAllComments(GAME_ID).subscribe(() => {
-        this.allComments$ = this.store.pipe(
-          select((state: AppState) => state.comments.all)
-        );
-        this.currentUserId = localStorage.getItem('userId');
-        this.showSpinner = false;
+        this.commentService
+          .getAllComments(GAME_ID)
+          .pipe(takeUntil(this.ngUnsubscribe))
+          .subscribe(() => {
+            this.allComments$ = this.store.pipe(
+              select((state: AppState) => state.comments.all),
+              takeUntil(this.ngUnsubscribe)
+            );
+            this.currentUserId = localStorage.getItem('userId');
+            this.showSpinner = false;
+          });
       });
-    });
   }
 
-  ngOnDestroy(): void {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
+  public ngOnDestroy(): void {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 
   public pageChanged(newPage: number): void {

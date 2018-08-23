@@ -7,7 +7,8 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { Subscription } from 'rxjs';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators'
 
 //Model
 import { CommentGameInputModel } from '../../../core/models/input-models/create-comment-game.model';
@@ -24,7 +25,7 @@ export class CreateCommentGameComponent implements OnInit, OnDestroy {
   public isClicked: boolean;
   public buttonText: string;
   private commentModel: CommentGameInputModel;
-  private subscription: Subscription;
+  private ngUnsubscribe: Subject<void> = new Subject<void>();
 
   constructor(
     private fb: FormBuilder,
@@ -32,7 +33,7 @@ export class CreateCommentGameComponent implements OnInit, OnDestroy {
     private commentService: CreateCommentGameService,
     private toast: ToastrService
   ) {
-    //this.isClicked = false;
+    this.isClicked = false;
     this.buttonText = 'Comment';
   }
 
@@ -42,9 +43,8 @@ export class CreateCommentGameComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 
   public initializeCommentForm(): void {
@@ -57,18 +57,22 @@ export class CreateCommentGameComponent implements OnInit, OnDestroy {
     this.isClicked = true;
     this.buttonText = 'Processing...';
 
-    this.subscription = this.actRouter.paramMap.subscribe((res: ParamMap) => {
-      const ID: string = res['params']['id'];
-      const DESCRIPTION: string = this.commentForm.value['description'];
-      const AUTHOR: string = localStorage.getItem('username');
+    this.actRouter.paramMap
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((res: ParamMap) => {
+        const ID: string = res['params']['id'];
+        const DESCRIPTION: string = this.commentForm.value['description'];
+        const AUTHOR: string = localStorage.getItem('username');
 
-      this.commentModel = new CommentGameInputModel(ID, DESCRIPTION, AUTHOR);
-      this.commentService.createComment(this.commentModel).subscribe(() => {
-        this.toast.success(`Comment successfully created!`);
-        this.isClicked = false;
-        this.buttonText = 'Comment';
-        this.initializeCommentForm();
-      });
+        this.commentModel = new CommentGameInputModel(ID, DESCRIPTION, AUTHOR);
+        this.commentService.createComment(this.commentModel)
+          .pipe(takeUntil(this.ngUnsubscribe))
+          .subscribe(() => {
+            this.toast.success(`Comment successfully created!`);
+            this.isClicked = false;
+            this.buttonText = 'Comment';
+            this.initializeCommentForm();
+        });
     });
   }
 

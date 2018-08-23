@@ -1,11 +1,13 @@
 import { Component, Input, OnDestroy } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { Subscription } from 'rxjs';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 
 //Service
 import { SubscriptionService } from '../../../core/services/game-store-services/subscribe-game.service';
 import { AppState } from '../../../store/app.state';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 
 @Component({
   selector: 'unsubscribe-from-game',
@@ -17,32 +19,36 @@ export class UnsubscribeFromGameComponent implements OnDestroy {
   public game: any;
   public buttonText: string;
   public isClicked: boolean;
-  private subscription: Subscription;
+  private ngUnsubscribe: Subject<void> = new Subject<void>();
 
   constructor(
     private unsubscribeService: SubscriptionService,
     private toast: ToastrService,
+    private actRoute: ActivatedRoute,
     private store: Store<AppState>
   ) {
     this.buttonText = 'Unsubscribe';
     this.isClicked = false;
   }
 
-  public unsubscribeUser() {
+  public unsubscribeUser(): void {
     this.buttonText = 'Processing...';
     this.isClicked = true;
-    const GAME_ID = this.game['_id'];
-    const USER_ID = localStorage.getItem('userId');
-
+    const USER_ID: string = localStorage.getItem('userId');
+    const GAME_ID: string = this.game['_id'];
     this.game['subscriptions'] = this.game['subscriptions'].filter(
       id => id !== USER_ID
     );
 
     this.unsubscribeService
       .subscriptionGame(this.game, GAME_ID)
+      .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(() => {
-        this.subscription = this.store
-          .select((state: AppState) => state.games.details)
+        this.store
+          .pipe(
+            select((state: AppState) => state.games.details),
+            takeUntil(this.ngUnsubscribe)
+          )
           .subscribe();
         this.buttonText = 'Unsubscribe';
         this.isClicked = false;
@@ -50,9 +56,8 @@ export class UnsubscribeFromGameComponent implements OnDestroy {
       });
   }
 
-  public ngOnDestroy() {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
+  public ngOnDestroy(): void {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 }
