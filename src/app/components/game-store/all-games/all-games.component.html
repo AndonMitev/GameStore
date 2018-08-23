@@ -13,7 +13,7 @@
         <div class="form-check col-md-2" *ngFor="let criteria of sortBy">
           <label class="form-check-label">
             <input type="radio" class="form-check-input" (click)="selectedSortedCriteria(criteria)" formControlName="sortedCriteria"
-              checked [value]=criteria>{{criteria | uppercase}}
+              checked [value]=criteria />{{criteria | uppercase}}
           </label>
         </div>
       </div>

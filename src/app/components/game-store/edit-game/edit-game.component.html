@@ -100,7 +100,7 @@
         <label for="exampleTextarea">
           <strong>Game description</strong>*
         </label>
-        <textarea class="form-control" rows="3" formControlName="description" ></textarea>
+        <textarea class="form-control" rows="3" formControlName="description"></textarea>
         <div class="alert alert-danger animated flipInX delay-0.5s" *ngIf="description.invalid && (description.dirty || description.touched)">
           <div *ngIf="description.errors['required']">Description is required</div>
           <div *ngIf="description.errors['minlength']">Description should be atleast 2 symbols long</div>
@@ -133,8 +133,9 @@
           </label>
         </div>
       </div>
-
-      <button [disabled]="editGameForm.invalid" type="submit" class="btn btn-primary float-right">Submit</button>
+      <div class="row">
+        <button [disabled]="editGameForm.invalid" type="submit" class="float-left btn btn-primary btn-lg">Edit game</button>
+      </div>
     </form>
   </div>
 </div>

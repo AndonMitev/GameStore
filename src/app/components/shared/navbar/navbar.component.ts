@@ -9,7 +9,6 @@ import { UserVerificationService } from '../../../core/services/authentication-s
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent{
-  public username: string;
   constructor(public userVerification: UserVerificationService) {}
 
   public getUsername(): string {

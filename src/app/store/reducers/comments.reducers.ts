@@ -6,7 +6,7 @@ const initialState: CommentsState = {
 };
 
 function getAllComments(state, allComments) {
-  console.log(allComments);
+  
   return {
     ...state,
     all: allComments.sort((a, b) => b._kmd.ect > a._kmd.ect)

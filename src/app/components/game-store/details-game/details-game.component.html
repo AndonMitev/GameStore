@@ -13,6 +13,10 @@
           <img class="img-fluid rounded" [src]=detailsGame.image [alt]=detailsGame.title />
         </ng-template>
         <h4 class="text-center">Price {{detailsGame.price | currency}}</h4>
+        <div *ngIf="verification.isAdmin()" class="mb-5">
+          <button class="btn btn-info float-left col-md-5" (click)="navigateToEditGame(detailsGame._id)">Edit game</button>
+          <delete-game [gameId]="detailsGame._id"></delete-game>
+        </div>
         <div *ngIf="!userExists">
           <subscribe-to-game [game]=detailsGame></subscribe-to-game>
           <add-to-cart class="btn-primary" [game]=detailsGame></add-to-cart>

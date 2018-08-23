@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { Store, select } from '@ngrx/store';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators'
+import { takeUntil } from 'rxjs/operators';
 
 //Service
 import { GetDetailsGameService } from '../../../core/services/game-store-services/get-details-game.service';
@@ -28,6 +28,7 @@ export class DetailsGameComponent implements OnInit, OnDestroy {
     private gameService: GetDetailsGameService,
     private store: Store<AppState>,
     private actRoute: ActivatedRoute,
+    private router: Router
   ) {
     this.showSpinner = true;
   }
@@ -42,7 +43,6 @@ export class DetailsGameComponent implements OnInit, OnDestroy {
           .getGameDetails(GAME_ID)
           .pipe(takeUntil(this.ngUnsubscribe))
           .subscribe(() => {
-
             this.store
               .pipe(
                 select((state: AppState) => state.games.details),
@@ -70,5 +70,9 @@ export class DetailsGameComponent implements OnInit, OnDestroy {
   public ngOnDestroy(): void {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
+  }
+
+  public navigateToEditGame(gameId: string): void {
+    this.router.navigate([`/game/edit/${gameId}`]);
   }
 }

@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormBuilder, FormGroup, AbstractControl } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Store, select } from '@ngrx/store';
-import { takeUntil, switchMap } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
 
 //Serivces
@@ -36,7 +36,7 @@ export class AllGamesComponent implements OnInit, OnDestroy {
   constructor(
     private gameService: GetAllGamesService,
     private store: Store<AppState>,
-    private router: ActivatedRoute,
+    private actRoute: ActivatedRoute,
     private fb: FormBuilder
   ) {
     this.currPage = 1;
@@ -47,7 +47,7 @@ export class AllGamesComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this.initializeSearchForm();
 
-    this.router.queryParamMap
+    this.actRoute.queryParamMap
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((res: ParamMap) => {
         const CATEGORY: string = res['params']['category'];
@@ -57,16 +57,21 @@ export class AllGamesComponent implements OnInit, OnDestroy {
           .pipe(takeUntil(this.ngUnsubscribe))
           .subscribe(() => {
             this.allGames$ = this.store.pipe(
-              select((state: AppState) => state.games.all)
+              select((state: AppState) => state.games.all),
+              takeUntil(this.ngUnsubscribe)
             );
             this.showSpinner = false;
+            console.log('0', this.ngUnsubscribe);
           });
       });
   }
 
   public ngOnDestroy(): void {
+    console.log('1', this.ngUnsubscribe);
     this.ngUnsubscribe.next();
+    console.log('2', this.ngUnsubscribe);
     this.ngUnsubscribe.complete();
+    console.log('3', this.ngUnsubscribe);
   }
 
   public initializeSearchForm(): void {

@@ -27,7 +27,7 @@ export class AllCommentsGameComponent implements OnInit, OnDestroy {
 
   constructor(
     public verification: UserVerificationService,
-    private router: ActivatedRoute,
+    private actRoute: ActivatedRoute,
     private store: Store<AppState>,
     private commentService: GetAllCommentsService
   ) {
@@ -37,7 +37,7 @@ export class AllCommentsGameComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
-    this.router.paramMap
+    this.actRoute.paramMap
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((res: ParamMap) => {
         const GAME_ID: string = res['params']['id'];
