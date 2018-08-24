@@ -1,14 +1,15 @@
 <div *ngIf="showSpinner">
   <loading-spinner></loading-spinner>
 </div>
-<div *ngIf="fullOrder$">
+<div *ngIf="fullOrder$ | async as fullOrder">
   <div class="container border rounded shadow-lg mt-3 bg-white">
     <h1 class="display-3 text-center">Completed Order View</h1>
+    <p class="text-center"><strong>Send as message if you want to cancel your order number: {{orderNumber}}</strong></p>
     <hr>
     <div class="row">
       <div class="col-md-12">
         <div class="row">
-          <div *ngFor="let game of fullOrder$ | async" class="col-lg-3 align-items-stretch mt-3">
+          <div *ngFor="let game of fullOrder" class="col-lg-3 align-items-stretch mt-3">
             <div class="card shadow-lg">
               <a [routerLink]="['/game/details/', game.gameId]">
                 <img class="card-img-top img-fluid  fix-img-size" [src]=game.image [alt]=game.title />

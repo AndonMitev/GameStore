@@ -9,7 +9,6 @@
       <button (click)="getFullOrderView(data._id)" class="btn btn-link offset-2 clear">
         <p class="h4 text-center">Number: {{data._id}}, Ordered at: {{data._kmd.ect | date}}</p>
       </button>
-
       <my-order-cancel *ngIf="verification.isAdmin()" [orderId]=data._id></my-order-cancel>
     </div>
     <pagination-controls id="my-orders" (pageChange)="pageChanged($event)" maxSize="9" directionLinks="true" autoHide="true"

@@ -18,6 +18,7 @@ import { CompleteOrderModel } from '../../../core/models/view-models/complete-or
 })
 export class MyFullOrderDetails implements OnInit, OnDestroy {
   public fullOrder$: Observable<CompleteOrderModel>;
+  public orderNumber: string;
   public showSpinner: boolean;
   private ngUnsubscribe: Subject<void> = new Subject<void>();
 
@@ -34,12 +35,12 @@ export class MyFullOrderDetails implements OnInit, OnDestroy {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((res: ParamMap) => {
         const ORDER_ID = res['params']['id'];
+        this.orderNumber = ORDER_ID;
 
         this.orderService
           .getCompletedOrderDetails(ORDER_ID)
           .pipe(takeUntil(this.ngUnsubscribe))
           .subscribe(() => {
-
             this.fullOrder$ = this.store.pipe(
               select((state: AppState) => state.orders.details),
               takeUntil(this.ngUnsubscribe)

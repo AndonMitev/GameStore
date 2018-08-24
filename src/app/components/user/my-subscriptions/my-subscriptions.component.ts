@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Store, select } from '@ngrx/store';
 import { Subject, Observable } from 'rxjs';
-import { takeUntil, take } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 
 //Service
 import { GetUserSubscriptionsService } from '../../../core/services/profile-services/get-user-subscrptions.service';
@@ -10,6 +10,7 @@ import { GetUserSubscriptionsService } from '../../../core/services/profile-serv
 import { AppState } from '../../../store/app.state';
 //Model
 import { CompleteOrderModel } from '../../../core/models/view-models/complete-order.model';
+
 
 @Component({
   selector: 'my-subscriptions',
@@ -22,7 +23,7 @@ export class MySubscriptionsComponent implements OnInit, OnDestroy {
   public currPage: number;
   public pageSize: number;
   private ngUnsubscribe: Subject<void> = new Subject<void>();
-  private userId: string;
+  public userId: string;
 
   constructor(
     private userSubs: GetUserSubscriptionsService,

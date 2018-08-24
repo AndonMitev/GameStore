@@ -1,10 +1,8 @@
+import { NavbarComponent } from './navbar/navbar.component';
 import { AddToCartComponent } from './add-to-cart/add-to-cart.component';
 import { CategoriesComponent } from './categories/categories.component';
 import { DeleteCommentComponent } from './delete-comment/delete-comment.component';
-import { FooterComponent } from './footer/footer.component';
-import { NavbarComponent } from './navbar/navbar.component';
 import { SpinnerComponent } from './loading-spinner/loading-spinner.component';
-import { SubscribeToGameComponent } from './subscribe-to-game/subscribe-to-game.component';
 import { UnsubscribeFromGameComponent } from './unsubscribe-from-game/unsubscribe-from-game.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 
@@ -17,13 +15,11 @@ import { FilterPipe } from './pipes/filter.pipe';
 
 
 export const sharedComponentsImp = [
+  NavbarComponent,
   AddToCartComponent,
   CategoriesComponent,
   DeleteCommentComponent,
-  FooterComponent,
-  NavbarComponent,
   SpinnerComponent,
-  SubscribeToGameComponent,
   UnsubscribeFromGameComponent,
   CompareValidatorDirective,
   UniqueUsernameValidatorDirective,
