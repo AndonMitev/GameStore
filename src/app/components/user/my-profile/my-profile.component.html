@@ -4,6 +4,7 @@
 <div *ngIf="userData$ | async as profile">
   <div class="container border rounded shadow-lg mt-3 bg-white">
     <h1 class="display-3 text-center">Profile</h1>
+    <search-user *ngIf="verification.isAdmin()"></search-user>
     <hr>
     <div class="row">
       <div class="col-md-3 mb-3">
@@ -13,7 +14,7 @@
         <h2>Username: {{profile.username}}</h2>
         <h2>Age: {{profile.age}}</h2>
         <h2>Email: {{profile.email}}</h2>
-        <a routerLink="/user/profile/edit/{{profile._id}}" class="nav-link">Edit Profile</a>
+        <a routerLink="/user/profile/edit/{{profile._id}}" class="btn btn-link btn-lg bg-light">Edit Profile</a>
       </div>
       <div class="col-md-4">
         <h2>Country: {{profile.countryData.country}}</h2>

@@ -16,10 +16,10 @@ export function uniqueUsernameValidator(
   userService: UserRegisterService | EditUserProfileService
 ): AsyncValidatorFn {
   return (
-    c: AbstractControl
+    control: AbstractControl
   ): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> => {
-    const username: object = { username: c.value };
-
+    const username: object = { username: control.value };
+    
     return userService
       .checkIfUsernameExists(username)
       .pipe(
@@ -45,8 +45,8 @@ export class UniqueUsernameValidatorDirective implements AsyncValidator {
   constructor(private userService: UserRegisterService) {}
 
   public validate(
-    c: AbstractControl
+    control: AbstractControl
   ): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> {
-    return uniqueUsernameValidator(this.userService)(c);
+    return uniqueUsernameValidator(this.userService)(control);
   }
 }

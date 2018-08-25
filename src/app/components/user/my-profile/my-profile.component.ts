@@ -6,6 +6,7 @@ import { takeUntil } from 'rxjs/operators';
 
 //Service
 import { GetProfileService } from '../../../core/services/profile-services/get-profile.service';
+import { UserVerificationService } from '../../../core/services/authentication-services/verification.service';
 //State
 import { AppState } from '../../../store/app.state';
 //Model
@@ -18,6 +19,7 @@ import { RegisterInputModel } from '../../../core/models/input-models/register.m
 })
 export class MyProfileComponent implements OnInit, OnDestroy {
   public userData$: Observable<RegisterInputModel>;
+
   public showOrders: boolean;
   public showSubscriptions: boolean;
   public showComments: boolean;
@@ -25,6 +27,7 @@ export class MyProfileComponent implements OnInit, OnDestroy {
   private ngUnsubscribe: Subject<void> = new Subject<void>();
 
   constructor(
+    public verification: UserVerificationService,
     private profileService: GetProfileService,
     private store: Store<AppState>,
     private actRoute: ActivatedRoute

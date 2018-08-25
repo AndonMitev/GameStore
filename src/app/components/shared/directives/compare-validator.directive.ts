@@ -9,20 +9,20 @@ import {
 import { Subscription } from 'rxjs';
 
 export const compareValidator = (controlNameToCompare: string): ValidatorFn => {
-  return (c: AbstractControl): ValidationErrors | null => {
-    if (c.value === null || c.value.length === 0) {
+  return (control: AbstractControl): ValidationErrors | null => {
+    if (control.value === null || control.value.length === 0) {
       return null;
     }
-    const controlToCompare = c.root.get(controlNameToCompare);
+    const controlToCompare = control.root.get(controlNameToCompare);
     if (controlToCompare) {
       const subscription: Subscription = controlToCompare.valueChanges.subscribe(
         () => {
-          c.updateValueAndValidity();
+          control.updateValueAndValidity();
           subscription.unsubscribe();
         }
       );
     }
-    return controlToCompare && controlToCompare.value !== c.value
+    return controlToCompare && controlToCompare.value !== control.value
       ? { compare: true }
       : null;
   };
