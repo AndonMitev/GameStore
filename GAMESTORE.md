@@ -25,7 +25,7 @@ Simple game store where authenticated users are alowed to view games, subscribe 
 
 - Create game for selling in store
 - Edit game
-- Delete game 
+- Delete game
 - Delete all comments
 - Receive and sent messages from/to users
 - Delete user orders
@@ -35,11 +35,13 @@ Simple game store where authenticated users are alowed to view games, subscribe 
 ## Components
 
 ## Modules
+
 - GameStore Module
 - User Module
 - Shared Module
 
 ### GameStore Module Structure
+
 - AllCommentsComponent
 - AllGamesComponent
 - CartComponent
@@ -51,6 +53,7 @@ Simple game store where authenticated users are alowed to view games, subscribe 
 - SubscribeToGameComponent
 
 ### Shared Module Structure
+
 - AddToCartComponent
 - CategoriesComponent
 - DeleteCommentComponent
@@ -61,10 +64,12 @@ Simple game store where authenticated users are alowed to view games, subscribe 
 - PipesComponent
 - UnsubscribeFromGameComponent
 
-### Shared Module Structure
+### User Module Structure
+
 - RegisterComponent
 - LoginComponent
 - LogoutComponent
+- SearchUserComponent
 - MyCommentsComponent
 - MyCreateMessageComponent
 - MyFullOrderDetailsComponent
@@ -73,6 +78,7 @@ Simple game store where authenticated users are alowed to view games, subscribe 
 - MyOrderCancelComponent
 - MyOrdersComponent
 - MyProfileComponent
+- MyPorfileEditComponent
 - MyReceivedMessagesComponent
 - MySentMessagesComponent
 - MySubscriptionsComponent
@@ -80,11 +86,13 @@ Simple game store where authenticated users are alowed to view games, subscribe 
 # Core
 
 ## Guards
+
 - Admin Guard
 - Auth Guard
 - UnAuth Guard
 
 ## Interceptors
+
 - Caching Interceptor
 - Error Interceptor
 - Token Interceptor
@@ -92,6 +100,7 @@ Simple game store where authenticated users are alowed to view games, subscribe 
 ## Models
 
 ### Input-Models
+
 - CreateComment Model
 - CreateGame Model
 - Login Model
@@ -99,6 +108,7 @@ Simple game store where authenticated users are alowed to view games, subscribe 
 - Register Model
 
 ### View-Models
+
 - AllCommentsGame Model
 - AllGames Model
 - CompleteOrder Model
@@ -107,18 +117,21 @@ Simple game store where authenticated users are alowed to view games, subscribe 
 ## Services
 
 ### Authentication Services
+
 - Login Service
 - Logout Service
 - Register Service
 - Verification Service
 
 ### Comment Services
+
 - CreateComment Service
 - DeleteComment Service
 - GetAllComments Service
 - GetUserComments Service
 
 ### CRUD Methods
+
 - GENERATE BASE_URL Method
 - CREATE Method
 - GET Method
@@ -126,6 +139,7 @@ Simple game store where authenticated users are alowed to view games, subscribe 
 - DELETE Methos
 
 ### GameStore Services
+
 - CreateGame Service
 - DeleteGame Service
 - EditGame Service
@@ -134,12 +148,14 @@ Simple game store where authenticated users are alowed to view games, subscribe 
 - SubsribeToGame Service
 
 ### Message Services
+
 - CreateMessage Service
 - GetMessageDetails Service
 - GetReceivedMessages Service
 - GetSentMessages Service
 
 ### Order Services
+
 - CompleteOrder Service
 - GetCompleteOrder Service
 - GetUserOrders Service
@@ -147,6 +163,7 @@ Simple game store where authenticated users are alowed to view games, subscribe 
 - OrderGame Service
 
 ### Profile Services
+
 - GetProfile Service
 - GetUserIdByUsername Service
 - GetUsernameByUserId Service
@@ -154,6 +171,7 @@ Simple game store where authenticated users are alowed to view games, subscribe 
 # Store
 
 ## Actions
+
 - Comment Actions
 - Game Actions
 - Message Actions
@@ -161,6 +179,7 @@ Simple game store where authenticated users are alowed to view games, subscribe 
 - User Actions
 
 ## Reducers
+
 - Comment Reducers
 - Game Reducers
 - Message Reducers
@@ -168,14 +187,15 @@ Simple game store where authenticated users are alowed to view games, subscribe 
 - User Reducers
 
 ## State
+
 - Comment State
 - Game State
 - Message State
 - Order State
 - User State
 
-
 # GitHub Repo Link: [Repo Link](https://github.com/AndonMitev/GameStore).
+
 - run npm install to install all of the packages
 
-# Uploaded Web Site Link: [Uploaded version link](https://upbeat-bose-37155f.netlify.com/).
+# Uploaded Web Site Link: [Uploaded version link](https://vigorous-meitner-6ae235.netlify.com/login/).
