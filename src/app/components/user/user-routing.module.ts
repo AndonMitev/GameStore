@@ -6,12 +6,18 @@ import { MyProfileComponent } from './my-profile/my-profile.component';
 import { MyFullOrderDetails } from './my-full-order-details/my-full-order-details.component';
 import { MyMessageDetailsComponent } from './my-message-details/my-message-details.component';
 import { MyMessagesComponent } from './my-messages/my-messages.component';
+import { MyProfileEditComponent } from './my-profile-edit/my-profile-edit.component';
 
 const routes: Routes = [
   {
     path: 'profile/:id',
     canActivate: [AuthGuard],
     component: MyProfileComponent
+  },
+  {
+    path: 'profile/edit/:id',
+    canActivate: [AuthGuard],
+    component: MyProfileEditComponent
   },
   {
     path: 'profile/messages/:id',

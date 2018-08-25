@@ -1,25 +1,24 @@
-<div>
-  <ul class="nav nav-pills">
-    <li class="nav-item mr-3" *ngIf="userVerification.hasUser()">
-      <a class="nav-link" routerLink="/game/all">Store</a>
-    </li>
-    <li class="nav-item mr-3" *ngIf="!userVerification.hasUser()">
-      <a class="nav-link" routerLink="/register">Register</a>
-    </li>
-    <li class="nav-item mr-3" *ngIf="!userVerification.hasUser()">
-      <a class="nav-link" routerLink="/login" class="nav-link">Login</a>
-    </li>
-    <li class="nav-item mr-3" *ngIf="userVerification.isAdmin()">
-      <a class="nav-link" routerLink="/game/create">Create game</a>
-    </li>
-    <li class="nav-item mr-3" *ngIf="userVerification.hasUser()">
-      <a class="nav-link" routerLink="/game/cart">My Cart</a>
-    </li>
-    <li class="nav-item mr-3" *ngIf="userVerification.hasUser()">
-      <a class="nav-link" [routerLink]="['/user/profile/', getUserId()]">Hello, {{getUsername() | titlecase}}</a>
-    </li>
-    <li class="nav-item mr-3" *ngIf="userVerification.hasUser()">
-      <a class="nav-link" routerLink="/logout">Logout</a>
-    </li>
-  </ul>
-</div>
+<ul class="nav nav-pills">
+  <li class="nav-item ml-3" *ngIf="userVerification.hasUser()">
+    <a routerLinkActive="active" class="nav-link" routerLink="/game/all">Store</a>
+  </li>
+  <li class="nav-item ml-3" *ngIf="!userVerification.hasUser()">
+    <a routerLinkActive="active" class="nav-link" routerLink="/register">Register</a>
+  </li>
+  <li class="nav-item ml-5" *ngIf="!userVerification.hasUser()">
+    <a routerLinkActive="active" class="nav-link" routerLink="/login" class="nav-link">Login</a>
+  </li>
+  <li class="nav-item ml-3" *ngIf="userVerification.isAdmin()">
+    <a routerLinkActive="active" class="nav-link" routerLink="/game/create">Create game</a>
+  </li>
+  <li class="nav-item ml-3" *ngIf="userVerification.hasUser()">
+    <a routerLinkActive="active" class="nav-link" routerLink="/game/cart">My Cart</a>
+  </li>
+  <li class="nav-item ml-3" *ngIf="userVerification.hasUser()">
+    <a routerLinkActive="active" class="nav-link" [routerLink]="['/user/profile/', getUserId()]">Hello, {{getUsername() |
+      titlecase}}</a>
+  </li>
+  <li class="nav-item ml-3" *ngIf="userVerification.hasUser()">
+    <a routerLinkActive="active" class="nav-link" routerLink="/logout">Logout</a>
+  </li>
+</ul>

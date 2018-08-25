@@ -28,8 +28,8 @@
         <div class="row">
           <div *ngFor="let game of allGames | orderBy: selectedCriteria | filter:searchedGames.value | paginate: { id: 'all-games' , itemsPerPage: pageSize, currentPage: currPage }; let i = index"
             class="col-lg-4 align-items-stretch mt-3">
-            <div class="card shadow-lg animated bounceInUp delay-0.5s">
-              <a routerLink="/game/details/{{game._id}}">
+            <div class="card shadow-lg animated bounceIn delay-0.5s">
+              <a routerLinkActive="active" routerLink="/game/details/{{game._id}}">
                 <img class="card-img-top fix-img-size" [src]=game.image [alt]=game.title />
               </a>
               <div class="card-body bg-secondary text-center h-25 edit-color">

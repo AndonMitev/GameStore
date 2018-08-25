@@ -10,9 +10,10 @@ import { Observable } from 'rxjs';
 import { map, debounceTime } from 'rxjs/operators';
 
 import { UserRegisterService } from '../../../core/services/authentication-services/register.service';
+import { EditUserProfileService } from '../../../core/services/profile-services/edit-profile.service';
 
 export function uniqueUsernameValidator(
-  userService: UserRegisterService
+  userService: UserRegisterService | EditUserProfileService
 ): AsyncValidatorFn {
   return (
     c: AbstractControl

@@ -1,0 +1,99 @@
+<div *ngIf="userData">
+  <div>
+    <h1 class="display-3 text-center animated infinite bounce slow">Edit your profile</h1>
+    <div *ngIf="showSpinner">
+      <loading-spinner></loading-spinner>
+    </div>
+    <hr>
+    <p class="mt-3">Fields with * are required!</p>
+    <form class="form-group" [formGroup]=editUserForm (ngSubmit)="submitEditUserForm()">
+
+      <h3>Country</h3>
+
+      <div class="form-group" class="row" formGroupName="countryData">
+        <div class="col-md-3">
+          <label>
+            <strong>Country / Region</strong>*
+          </label>
+          <input type="text" class="form-control" formControlName="country" placeholder="Bulgaria" />
+          <div class="alert alert-danger animated flipInX delay-0.5s" *ngIf="country.invalid && (country.dirty || country.touched)">
+            Country is required.
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <label>
+            <strong>City</strong>*
+          </label>
+          <input type="text" class="form-control" formControlName="city" placeholder="Sofia" />
+          <div class="alert alert-danger animated flipInX delay-0.5s" *ngIf="city.invalid && (city.dirty || city.touched)">
+            City is required.
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <label>
+            <strong>State / Province / Region</strong>*
+          </label>
+          <input type="text" class="form-control" formControlName="state" placeholder="Sofia" />
+          <div class="alert alert-danger animated flipInX delay-0.5s" *ngIf="state.invalid && (state.dirty || state.touched)">
+            State is required.
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <label>
+            <strong>Zip Code</strong>*
+          </label>
+          <input type="text" class="form-control" formControlName="zipcode" placeholder="1000" />
+          <div class="alert alert-danger animated flipInX delay-0.5s" *ngIf="zipcode.invalid && (zipcode.dirty || zipcode.touched)">
+            Zip Code is required.
+          </div>
+        </div>
+      </div>
+
+      <h3 class="mt-2">Address</h3>
+      <div formArrayName="streetAddress">
+        <div *ngFor="let adress of streetAddress.controls; let i = index">
+          <div [formGroupName]="i" class="row form-group">
+
+            <div class="col-md-3">
+              <label>
+                <strong>Street</strong>*
+              </label>
+              <input type="text" class="form-control" formControlName="street" placeholder="Your street" />
+              <div class="alert alert-danger animated flipInX delay-0.5s" *ngIf="adress.controls.street.invalid && (adress.controls.street.dirty || adress.controls.street.touched)">
+                Street is required.
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <label>
+                <strong>Apartment N</strong>*
+              </label>
+              <input type="text" class="form-control" formControlName="apartment" placeholder="Apartment number 22" />
+              <div class="alert alert-danger animated flipInX delay-0.5s" *ngIf="adress.controls.apartment.invalid && (adress.controls.apartment.dirty || adress.controls.apartment.touched)">
+                Apartment is required.
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <label>
+                <strong>Phone number</strong>*
+              </label>
+              <input type="text" class="form-control" formControlName="phoneNumber" placeholder="0888 888 888" />
+              <div class="alert alert-danger animated flipInX delay-0.5s" *ngIf="adress.controls.phoneNumber.invalid && (adress.controls.phoneNumber.dirty || adress.controls.phoneNumber.touched)">
+                Phone number is required.
+              </div>
+            </div>
+
+            <button class="btn btn-danger col-md-3 w-75 fixButtonSize" (click)="deleteStreetAddress(i)">Delete</button>
+          </div>
+        </div>
+      </div>
+      <button type="button" class="btn btn-dark float-right mt-3 offset-11" (click)="addStreetAddress()">Add address</button>
+      <hr>
+      <button type="submit" [disabled]="editUserForm.invalid" class="btn btn-primary offset-3 mt-3 col-md-6">Edit profile</button>
+    </form>
+  </div>
+</div>

@@ -121,7 +121,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
           '',
           Validators.required
         ],
-      apartament: 
+      apartment: 
         [ 
           '',
           Validators.required
@@ -161,8 +161,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   public addStreetAddress(): void {
-    const streetAddress = this.initializeStreetAddress();
-    this.streetAddress.push(streetAddress);
+    const STREET_ADDRESS = this.initializeStreetAddress();
+    this.streetAddress.push(STREET_ADDRESS);
   }
 
   public deleteStreetAddress(i: number): void {
@@ -217,7 +217,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     return this.registerForm.get('streetAddress');
   }
 
-  public get apartament(): AbstractControl {
+  public get apartment(): AbstractControl {
     return this.registerForm.get('streetAddress');
   }
 

@@ -9,6 +9,7 @@ import { MyMessageDetailsComponent } from './my-message-details/my-message-detai
 import { MyRecievedMessagesComponent } from './my-received-messages/my-received-messages.component';
 import { MyMessagesComponent } from './my-messages/my-messages.component';
 import { MyOrderCancelComponent } from './my-order-cancel/my-order-cancel.component';
+import { MyProfileEditComponent } from './my-profile-edit/my-profile-edit.component';
 
 export const userComponentsImp = [
   MyProfileComponent,
@@ -21,5 +22,6 @@ export const userComponentsImp = [
   MyMessageDetailsComponent,
   MyRecievedMessagesComponent,
   MyMessagesComponent,
-  MyOrderCancelComponent
+  MyOrderCancelComponent,
+  MyProfileEditComponent
 ];
