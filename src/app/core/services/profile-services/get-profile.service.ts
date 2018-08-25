@@ -16,10 +16,10 @@ import { GetUserByIdAction } from '../../../store/actions/user.actions';
   providedIn: 'root'
 })
 export class GetProfileService {
-  constructor(private http: GetMethod, private store: Store<AppState>) {}
+  constructor(private method: GetMethod, private store: Store<AppState>) {}
 
   public getProfile(userId: string): Observable<void> {
-    return this.http.get<RegisterInputModel>(userId, 'user').pipe(
+    return this.method.get<RegisterInputModel>(userId, 'user').pipe(
       map((res: RegisterInputModel) => {
         this.store.dispatch(new GetUserByIdAction(res));
       })

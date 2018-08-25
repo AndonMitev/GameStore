@@ -10,15 +10,14 @@ import { AppState } from '../../../store/app.state';
 //Action
 import { DeleteGameAction } from '../../../store/actions/game.actions';
 
-
 @Injectable({
   providedIn: 'root'
 })
 export class DeleteGameService {
-  constructor(private http: DeleteMethod, private store: Store<AppState>) {}
+  constructor(private method: DeleteMethod, private store: Store<AppState>) {}
 
   public deleteGame(id: string): Observable<void> {
-    return this.http
+    return this.method
       .delete(`gamestore/${id}`, 'appdata')
       .pipe(map(() => this.store.dispatch(new DeleteGameAction(id))));
   }

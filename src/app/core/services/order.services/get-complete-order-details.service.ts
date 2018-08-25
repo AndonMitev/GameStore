@@ -16,10 +16,10 @@ import { GetCompletedOrderDetailsAction } from '../../../store/actions/order.act
   providedIn: 'root'
 })
 export class GetCompletedOrderDetailsService {
-  constructor(private http: GetMethod, private store: Store<AppState>) {}
+  constructor(private method: GetMethod, private store: Store<AppState>) {}
 
   public getCompletedOrderDetails(id: string): Observable<void> {
-    return this.http.get<CompleteOrderModel>(`orders/${id}`, 'appdata').pipe(
+    return this.method.get<CompleteOrderModel>(`orders/${id}`, 'appdata').pipe(
       map((res: CompleteOrderModel) => {
         this.store.dispatch(new GetCompletedOrderDetailsAction(res));
       })

@@ -8,9 +8,9 @@ import { PostMethod } from '../crud-methods/post-method.service';
   providedIn: 'root'
 })
 export class UserLogoutService {
-  constructor(private http: PostMethod) {}
+  constructor(private method: PostMethod) {}
 
   public logoutUser(): Observable<Object> {
-    return this.http.post(undefined, '_logout', 'user');
+    return this.method.post(undefined, '_logout', 'user');
   }
 }

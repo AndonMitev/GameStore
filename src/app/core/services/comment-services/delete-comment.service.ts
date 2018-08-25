@@ -14,10 +14,10 @@ import { DeleteCommentAction } from '../../../store/actions/comment.actions';
   providedIn: 'root'
 })
 export class DeleteCommentService {
-  constructor(private http: DeleteMethod, private store: Store<AppState>) {}
+  constructor(private method: DeleteMethod, private store: Store<AppState>) {}
 
   public deleteComment(id: string): Observable<void> {
-    return this.http
+    return this.method
       .delete<string>(`comments/${id}`, 'appdata')
       .pipe(map(() => this.store.dispatch(new DeleteCommentAction(id))));
   }

@@ -17,10 +17,10 @@ import { UnsubscribeUserAction } from '../../../store/actions/user.actions';
   providedIn: 'root'
 })
 export class SubscriptionService {
-  constructor(private http: PutMethod, private store: Store<AppState>) {}
+  constructor(private method: PutMethod, private store: Store<AppState>) {}
 
   public subscriptionGame(game: CreateGameInputModel, id: string): Observable<void> {
-    return this.http.put(game, `gamestore/${id}`, 'appdata').pipe(
+    return this.method.put(game, `gamestore/${id}`, 'appdata').pipe(
       map((res: CreateGameInputModel) => {
         this.store.dispatch(new SubscribeUserAction(res));
         this.store.dispatch(new UnsubscribeUserAction(id));

@@ -10,10 +10,10 @@ import { CreateGameInputModel } from '../../models/input-models/create-game.mode
   providedIn: 'root'
 })
 export class CreateGameService {
-  constructor(private http: PostMethod) {}
+  constructor(private method: PostMethod) {}
 
   public createGame(gameData: CreateGameInputModel): Observable<Object> {
-    return this.http.post<CreateGameInputModel>(
+    return this.method.post<CreateGameInputModel>(
       gameData,
       'gamestore',
       'appdata'

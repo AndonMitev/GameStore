@@ -12,10 +12,10 @@ import { CreateGameInputModel } from '../../models/input-models/create-game.mode
   providedIn: 'root'
 })
 export class EditGameService {
-  constructor(private http: PutMethod, private store: Store<AppState>) {}
+  constructor(private method: PutMethod, private store: Store<AppState>) {}
 
   editGame(game: CreateGameInputModel, gameId: string) {
-    return this.http
+    return this.method
       .put(game, `gamestore/${gameId}`, 'appdata')
       .pipe(
         map((res: CreateGameInputModel) =>

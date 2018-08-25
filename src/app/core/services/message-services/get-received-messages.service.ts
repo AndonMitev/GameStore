@@ -16,10 +16,10 @@ import { GetReceivedMessagesAction } from '../../../store/actions/message.action
   providedIn: 'root'
 })
 export class GetReceivedMessagesService {
-  constructor(private http: GetMethod, private store: Store<AppState>) {}
+  constructor(private method: GetMethod, private store: Store<AppState>) {}
 
   public getReceivedMessages(SENDER_ID: string): Observable<void> {
-    return this.http
+    return this.method
       .get<CreateMessageInputModel[]>(
         `messages?query={"recepientId":"${SENDER_ID}"}&sort={"_kmd.ect": -1}`,
         'appdata'

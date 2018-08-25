@@ -16,10 +16,10 @@ import { GetAllCommentsAction } from '../../../store/actions/comment.actions';
   providedIn: 'root'
 })
 export class GetAllCommentsService {
-  constructor(private http: GetMethod, private store: Store<AppState>) {}
+  constructor(private method: GetMethod, private store: Store<AppState>) {}
 
   public getAllComments(gameId: string): Observable<void> {
-    return this.http
+    return this.method
       .get<AllCommentsGameModel[]>(
         `comments?query={"id":"${gameId}"}&sort={"_kmd.ect": -1}`,
         'appdata'

@@ -16,7 +16,7 @@ import { GetAllGamesAction } from '../../../store/actions/game.actions';
   providedIn: 'root'
 })
 export class GetAllGamesService {
-  constructor(private http: GetMethod, private store: Store<AppState>) {}
+  constructor(private method: GetMethod, private store: Store<AppState>) {}
 
   public getAllGames(selectedPlatform: string): Observable<void> {
     let correctQuery: string = 'gamestore';
@@ -27,7 +27,7 @@ export class GetAllGamesService {
         `?query={"selectedPlatform":"${selectedPlatform}"}&sort={"_kmd.ect": -1}`;
     }
 
-    return this.http.get<AllGamesModel[]>(correctQuery, 'appdata').pipe(
+    return this.method.get<AllGamesModel[]>(correctQuery, 'appdata').pipe(
       map((res: AllGamesModel[]) => {
         this.store.dispatch(new GetAllGamesAction(res));
       })

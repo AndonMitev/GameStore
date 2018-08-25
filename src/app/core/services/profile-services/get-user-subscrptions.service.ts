@@ -17,10 +17,10 @@ import { GetUserSubscriptionsAction } from '../../../store/actions/user.actions'
   providedIn: 'root'
 })
 export class GetUserSubscriptionsService {
-  constructor(private http: GetMethod, private store: Store<AppState>) {}
+  constructor(private method: GetMethod, private store: Store<AppState>) {}
 
   public getUserSubscriptions(userId: string): Observable<void> {
-    return this.http
+    return this.method
       .get<CompleteOrderModel[]>(
         `gamestore?query={"subscriptions":"${userId}"}`,
         'appdata'

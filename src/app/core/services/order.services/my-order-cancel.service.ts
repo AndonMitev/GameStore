@@ -12,10 +12,10 @@ import { CancelMyCompletedOrderAction } from '../../../store/actions/order.actio
   providedIn: 'root'
 })
 export class CancelMyOrderService {
-  constructor(private http: DeleteMethod, private store: Store<AppState>) {}
+  constructor(private method: DeleteMethod, private store: Store<AppState>) {}
 
   cancelMyOrder(id: string): Observable<void> {
-    return this.http
+    return this.method
       .delete(`orders/${id}`, 'appdata')
       .pipe(
         map(() => this.store.dispatch(new CancelMyCompletedOrderAction(id)))

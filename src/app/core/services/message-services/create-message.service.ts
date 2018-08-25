@@ -16,10 +16,10 @@ import { CreateMessageAction } from '../../../store/actions/message.actions';
   providedIn: 'root'
 })
 export class CreateMessageService {
-  constructor(private http: PostMethod, private store: Store<AppState>) {}
+  constructor(private method: PostMethod, private store: Store<AppState>) {}
 
   createMessage(message: CreateMessageInputModel): Observable<void> {
-    return this.http
+    return this.method
       .post<CreateMessageInputModel>(message, 'messages', 'appdata')
       .pipe(
         map((res: CreateMessageInputModel) => {

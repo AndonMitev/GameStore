@@ -16,12 +16,10 @@ import { CompleteOrderAction } from '../../../store/actions/order.actions';
   providedIn: 'root'
 })
 export class CompleteOrderService {
-  constructor(private http: PostMethod, private store: Store<AppState>) {}
+  constructor(private method: PostMethod, private store: Store<AppState>) {}
 
   public finishOrder(order): Observable<void> {
-    console.log(order);
-
-    return this.http.post(order, 'orders', 'appdata').pipe(
+    return this.method.post(order, 'orders', 'appdata').pipe(
       map((res: CompleteOrderModel) => {
         this.store.dispatch(new CompleteOrderAction(order));
       })

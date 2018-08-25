@@ -12,16 +12,16 @@ import { UserVerificationService } from './verification.service';
 })
 export class UserRegisterService {
   constructor(
-    private http: PostMethod,
+    private method: PostMethod,
     private observeToken: UserVerificationService
   ) {}
 
   public registerUser(userData: RegisterInputModel): Observable<Object> {
-    return this.http.post<RegisterInputModel>(userData, '', 'user');
+    return this.method.post<RegisterInputModel>(userData, '', 'user');
   }
 
   public checkIfUsernameExists(userData: Object): Observable<Object> {
-    return this.http.post<Object>(userData, 'check-username-exists', 'rpc');
+    return this.method.post<Object>(userData, 'check-username-exists', 'rpc');
   }
 
   public saveData(userData): void {

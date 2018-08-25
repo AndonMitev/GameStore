@@ -10,10 +10,10 @@ import { RegisterInputModel } from '../../models/input-models/register.model';
   providedIn: 'root'
 })
 export class GetUserIdByUsernameService {
-  constructor(private http: GetMethod) {}
+  constructor(private method: GetMethod) {}
 
   public getUserIdByUsername(username: string): Observable<Object> {
-    return this.http.get<RegisterInputModel>(
+    return this.method.get<RegisterInputModel>(
       `?query={"username":"${username}"}`,
       'user'
     );

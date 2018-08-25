@@ -17,10 +17,10 @@ import { CreateGameInputModel } from '../../models/input-models/create-game.mode
   providedIn: 'root'
 })
 export class GetDetailsGameService {
-  constructor(private http: GetMethod, private store: Store<AppState>) {}
+  constructor(private method: GetMethod, private store: Store<AppState>) {}
 
   public getGameDetails(id: string): Observable<void> {
-    return this.http.get<CreateGameInputModel>(`gamestore/${id}`, 'appdata').pipe(
+    return this.method.get<CreateGameInputModel>(`gamestore/${id}`, 'appdata').pipe(
       map((res: CreateGameInputModel) => {
         this.store.dispatch(new GetDetailsGameAction(res));
       })

@@ -12,12 +12,12 @@ import { LoginInputModel } from '../../models/input-models/login.model';
 })
 export class UserLoginService {
   constructor(
-    private http: PostMethod,
+    private method: PostMethod,
     private observeToken: UserVerificationService
   ) {}
 
   public loginUser(userData: LoginInputModel): Observable<Object> {
-    return this.http.post<LoginInputModel>(userData, 'login', 'user');
+    return this.method.post<LoginInputModel>(userData, 'login', 'user');
   }
 
   public saveData(userData): void {

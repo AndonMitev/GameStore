@@ -16,10 +16,10 @@ import { AddCommentAction } from '../../../store/actions/comment.actions';
   providedIn: 'root'
 })
 export class CreateCommentGameService {
-  constructor(private http: PostMethod, private store: Store<AppState>) {}
+  constructor(private method: PostMethod, private store: Store<AppState>) {}
 
   public createComment(comment: CommentGameInputModel): Observable<void> {
-    return this.http
+    return this.method
       .post<CommentGameInputModel>(comment, 'comments', 'appdata')
       .pipe(
         map((res: CommentGameInputModel) => {

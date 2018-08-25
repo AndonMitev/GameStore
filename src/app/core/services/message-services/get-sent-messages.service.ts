@@ -16,10 +16,10 @@ import { GetSentMessagesAction } from '../../../store/actions/message.actions';
   providedIn: 'root'
 })
 export class GetAllUserMessagesService {
-  constructor(private http: GetMethod, private store: Store<AppState>) {}
+  constructor(private method: GetMethod, private store: Store<AppState>) {}
 
   public getSentMessages(userId: string): Observable<void> {
-    return this.http
+    return this.method
       .get<CreateMessageInputModel[]>(
         `messages?query={"fromId":"${userId}"}`,
         'appdata'
