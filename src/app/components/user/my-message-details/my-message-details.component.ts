@@ -19,7 +19,7 @@ import { CreateMessageInputModel } from '../../../core/models/input-models/messa
 })
 export class MyMessageDetailsComponent implements OnInit, OnDestroy {
   public messageDetails$: Observable<CreateMessageInputModel>;
-  private ngUnsubscribe: Subject<void> = new Subject<void>();
+  private ngUnsubscribe$: Subject<void> = new Subject<void>();
 
   constructor(
     public verification: UserVerificationService,
@@ -30,24 +30,24 @@ export class MyMessageDetailsComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.actRoute.paramMap
-      .pipe(takeUntil(this.ngUnsubscribe))
+      .pipe(takeUntil(this.ngUnsubscribe$))
       .subscribe((res: ParamMap) => {
         const MESSAGE_ID: string = res['params']['id'];
 
         this.messageService
           .getMessageDetails(MESSAGE_ID)
-          .pipe(takeUntil(this.ngUnsubscribe))
+          .pipe(takeUntil(this.ngUnsubscribe$))
           .subscribe(() => {
             this.messageDetails$ = this.store.pipe(
               select((state: AppState) => state.messages.details),
-              takeUntil(this.ngUnsubscribe)
+              takeUntil(this.ngUnsubscribe$)
             );
           });
       });
   }
 
   public ngOnDestroy(): void {
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
+    this.ngUnsubscribe$.next();
+    this.ngUnsubscribe$.complete();
   }
 }

@@ -31,7 +31,7 @@ export class AllGamesComponent implements OnInit, OnDestroy {
     'Desc Price',
     'Default'
   ];
-  private ngUnsubscribe: Subject<void> = new Subject<void>();
+  private ngUnsubscribe$: Subject<void> = new Subject<void>();
 
   constructor(
     private gameService: GetAllGamesService,
@@ -48,30 +48,30 @@ export class AllGamesComponent implements OnInit, OnDestroy {
     this.initializeSearchForm();
 
     this.actRoute.queryParamMap
-      .pipe(takeUntil(this.ngUnsubscribe))
+      .pipe(takeUntil(this.ngUnsubscribe$))
       .subscribe((res: ParamMap) => {
         const CATEGORY: string = res['params']['category'];
 
         this.gameService
           .getAllGames(CATEGORY)
-          .pipe(takeUntil(this.ngUnsubscribe))
+          .pipe(takeUntil(this.ngUnsubscribe$))
           .subscribe(() => {
             this.allGames$ = this.store.pipe(
               select((state: AppState) => state.games.all),
-              takeUntil(this.ngUnsubscribe)
+              takeUntil(this.ngUnsubscribe$)
             );
             this.showSpinner = false;
-            console.log('0', this.ngUnsubscribe);
+            console.log('0', this.ngUnsubscribe$);
           });
       });
   }
 
   public ngOnDestroy(): void {
-    console.log('1', this.ngUnsubscribe);
-    this.ngUnsubscribe.next();
-    console.log('2', this.ngUnsubscribe);
-    this.ngUnsubscribe.complete();
-    console.log('3', this.ngUnsubscribe);
+    console.log('1', this.ngUnsubscribe$);
+    this.ngUnsubscribe$.next();
+    console.log('2', this.ngUnsubscribe$);
+    this.ngUnsubscribe$.complete();
+    console.log('3', this.ngUnsubscribe$);
   }
 
   public initializeSearchForm(): void {

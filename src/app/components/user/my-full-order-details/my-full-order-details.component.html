@@ -27,7 +27,10 @@
             </div>
           </div>
         </div>
+        <button *ngIf="verification.isAdmin()" class="btn btn-danger btn-lg float-right mt-5 mb-3" (click)="deleteCurrentOrder()">Delete</button>
       </div>
     </div>
+
   </div>
+
 </div>

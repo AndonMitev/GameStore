@@ -3,7 +3,6 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 import { Store, select } from '@ngrx/store';
-import { ActivatedRoute, ParamMap } from '@angular/router';
 
 //Service
 import { SubscriptionService } from '../../../core/services/game-store-services/subscribe-game.service';
@@ -20,7 +19,7 @@ export class SubscribeToGameComponent implements OnDestroy {
   public game: any;
   public buttonText: string;
   public isClicked: boolean;
-  private ngUnsubscribe: Subject<void> = new Subject<void>();
+  private ngUnsubscribe$: Subject<void> = new Subject<void>();
 
   constructor(
     private subscribeService: SubscriptionService,
@@ -40,11 +39,11 @@ export class SubscribeToGameComponent implements OnDestroy {
 
     this.subscribeService
       .subscriptionGame(this.game, GAME_ID)
-      .pipe(takeUntil(this.ngUnsubscribe))
+      .pipe(takeUntil(this.ngUnsubscribe$))
       .subscribe(() => {
         this.store.pipe(
           select(state => state.games.details),
-          takeUntil(this.ngUnsubscribe)
+          takeUntil(this.ngUnsubscribe$)
         );
         this.buttonText = 'Subscribe';
         this.isClicked = false;
@@ -53,7 +52,7 @@ export class SubscribeToGameComponent implements OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
+    this.ngUnsubscribe$.next();
+    this.ngUnsubscribe$.complete();
   }
 }

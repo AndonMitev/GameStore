@@ -29,7 +29,7 @@ import { RegisterInputModel } from '../../../core/models/input-models/register.m
 export class MyProfileEditComponent implements OnInit, OnDestroy {
   public userData: RegisterInputModel;
   public editUserForm: FormGroup;
-  private ngUnsubscribe: Subject<void> = new Subject<void>();
+  private ngUnsubscribe$: Subject<void> = new Subject<void>();
   private userInfo: Object;
   private userId: string;
 
@@ -45,18 +45,18 @@ export class MyProfileEditComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.actRoute.paramMap
-      .pipe(takeUntil(this.ngUnsubscribe))
+      .pipe(takeUntil(this.ngUnsubscribe$))
       .subscribe((res: ParamMap) => {
         this.userId = res['params']['id'];
 
         this.profileService
           .getProfile(this.userId)
-          .pipe(takeUntil(this.ngUnsubscribe))
+          .pipe(takeUntil(this.ngUnsubscribe$))
           .subscribe(() => {
             this.store
               .pipe(
                 select(state => state.users.user),
-                takeUntil(this.ngUnsubscribe)
+                takeUntil(this.ngUnsubscribe$)
               )
               .subscribe((res: RegisterInputModel) => {
                 this.userInfo = {
@@ -73,8 +73,8 @@ export class MyProfileEditComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
+    this.ngUnsubscribe$.next();
+    this.ngUnsubscribe$.complete();
   }
 
   public initializeEditUserForm(): void {
@@ -129,7 +129,7 @@ export class MyProfileEditComponent implements OnInit, OnDestroy {
 
     this.profileEditService
       .editUserProfile(this.userInfo, this.userId)
-      .pipe(takeUntil(this.ngUnsubscribe))
+      .pipe(takeUntil(this.ngUnsubscribe$))
       .subscribe((res) => {
         this.toast.success(
           `${this.userInfo['username']} profile was successfully edited.`

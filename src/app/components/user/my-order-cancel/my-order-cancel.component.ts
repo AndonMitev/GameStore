@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
@@ -11,10 +11,10 @@ import { CancelMyOrderService } from '../../../core/services/order.services/my-o
   templateUrl: './my-order-cancel.component.html',
   styleUrls: ['./my-order-cancel.component.css']
 })
-export class MyOrderCancelComponent {
+export class MyOrderCancelComponent implements OnDestroy {
   @Input('orderId')
   private orderId: string;
-  private ngUnsubscribe: Subject<void> = new Subject<void>();
+  private ngUnsubscribe$: Subject<void> = new Subject<void>();
 
   public buttonText: string;
   public isClicked: boolean;
@@ -27,13 +27,18 @@ export class MyOrderCancelComponent {
     this.isClicked = false;
   }
 
+  public ngOnDestroy(): void {
+    this.ngUnsubscribe$.next();
+    this.ngUnsubscribe$.complete();
+  }
+
   public cancelSelectedOrder(): void {
     this.buttonText = 'Processing...';
     this.isClicked = true;
 
     this.orderService
       .cancelMyOrder(this.orderId)
-      .pipe(takeUntil(this.ngUnsubscribe))
+      .pipe(takeUntil(this.ngUnsubscribe$))
       .subscribe(() => {
         this.buttonText = 'Cancel';
         this.isClicked = false;

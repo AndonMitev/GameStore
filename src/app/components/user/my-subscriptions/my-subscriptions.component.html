@@ -13,7 +13,7 @@
           <em>{{subscrptionGame.title}}</em>
         </small>
       </a>
-      <unsubscribe-from-game *ngIf="userId === subscrptionGame._acl.creator" class="float-right" [game]=subscrptionGame></unsubscribe-from-game>
+      <unsubscribe-from-game *ngIf="validUser" class="float-right" [game]=subscrptionGame></unsubscribe-from-game>
     </span>
   </div>
   <pagination-controls id="my-subs" (pageChange)="pageChanged($event)" maxSize="9" directionLinks="true" autoHide="true" responsive="true"

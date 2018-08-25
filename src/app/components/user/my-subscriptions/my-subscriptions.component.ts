@@ -11,7 +11,6 @@ import { AppState } from '../../../store/app.state';
 //Model
 import { CompleteOrderModel } from '../../../core/models/view-models/complete-order.model';
 
-
 @Component({
   selector: 'my-subscriptions',
   templateUrl: './my-subscriptions.component.html',
@@ -22,8 +21,8 @@ export class MySubscriptionsComponent implements OnInit, OnDestroy {
   public showSpinner: boolean;
   public currPage: number;
   public pageSize: number;
-  private ngUnsubscribe: Subject<void> = new Subject<void>();
-  public userId: string;
+  public validUser: boolean;
+  private ngUnsubscribe$: Subject<void> = new Subject<void>();
 
   constructor(
     private userSubs: GetUserSubscriptionsService,
@@ -37,17 +36,18 @@ export class MySubscriptionsComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.actRoute.paramMap
-      .pipe(takeUntil(this.ngUnsubscribe))
+      .pipe(takeUntil(this.ngUnsubscribe$))
       .subscribe((res: ParamMap) => {
-        this.userId = res['params']['id'];
+        const USER_ID = res['params']['id'];
+        this.validUser = localStorage.getItem('userId') === USER_ID;
 
         this.userSubs
-          .getUserSubscriptions(this.userId)
-          .pipe(takeUntil(this.ngUnsubscribe))
+          .getUserSubscriptions(USER_ID)
+          .pipe(takeUntil(this.ngUnsubscribe$))
           .subscribe(() => {
             this.userSubscriptions$ = this.store.pipe(
               select((state: AppState) => state.users.subscriptions),
-              takeUntil(this.ngUnsubscribe)
+              takeUntil(this.ngUnsubscribe$)
             );
 
             this.showSpinner = false;
@@ -56,8 +56,8 @@ export class MySubscriptionsComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
+    this.ngUnsubscribe$.next();
+    this.ngUnsubscribe$.complete();
   }
 
   public pageChanged(newPage: number): void {

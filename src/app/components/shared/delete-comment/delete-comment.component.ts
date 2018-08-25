@@ -15,7 +15,7 @@ export class DeleteCommentComponent implements OnDestroy {
   public commentId: string;
   public buttonText: string;
   public isClicked: boolean;
-  private ngUnsubscribe: Subject<void> = new Subject<void>();
+  private ngUnsubscribe$: Subject<void> = new Subject<void>();
 
   constructor(
     private commentService: DeleteCommentService,
@@ -31,7 +31,7 @@ export class DeleteCommentComponent implements OnDestroy {
 
     this.commentService
       .deleteComment(this.commentId)
-      .pipe(takeUntil(this.ngUnsubscribe))
+      .pipe(takeUntil(this.ngUnsubscribe$))
       .subscribe(() => {
         this.isClicked = false;
         this.buttonText = 'Delete';
@@ -40,7 +40,7 @@ export class DeleteCommentComponent implements OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
+    this.ngUnsubscribe$.next();
+    this.ngUnsubscribe$.complete();
   }
 }

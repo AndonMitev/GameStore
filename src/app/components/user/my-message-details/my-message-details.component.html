@@ -4,11 +4,15 @@
   <div class="row">
     <div class="col-md-12">
       <div *ngIf="messageDetails$ | async as messageDetails">
-        <h2 class="text-justify">Title: {{messageDetails.title}}</h2>
+        <a *ngIf="verification.isAdmin(); else normalTitle" [routerLink]="['/user/profile/orders/details/', messageDetails.title]"><h2
+            class="text-justify">Title: {{messageDetails.title}}</h2></a>
         <p class="text-justify">Content: {{messageDetails.content}}</p>
         <a *ngIf="verification.isAdmin()" routerLink="/user/profile/{{messageDetails._acl.creator}}">
           <p class="text-justify">From: {{messageDetails.from}}</p>
         </a>
+        <ng-template #normalTitle>
+          <h2 class="text-justify">Title: {{messageDetails.title}}</h2>
+        </ng-template>
       </div>
     </div>
   </div>

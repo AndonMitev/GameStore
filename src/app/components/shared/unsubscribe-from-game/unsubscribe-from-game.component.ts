@@ -19,7 +19,7 @@ export class UnsubscribeFromGameComponent implements OnDestroy {
   public game: any;
   public buttonText: string;
   public isClicked: boolean;
-  private ngUnsubscribe: Subject<void> = new Subject<void>();
+  private ngUnsubscribe$: Subject<void> = new Subject<void>();
 
   constructor(
     private unsubscribeService: SubscriptionService,
@@ -42,12 +42,12 @@ export class UnsubscribeFromGameComponent implements OnDestroy {
 
     this.unsubscribeService
       .subscriptionGame(this.game, GAME_ID)
-      .pipe(takeUntil(this.ngUnsubscribe))
+      .pipe(takeUntil(this.ngUnsubscribe$))
       .subscribe(() => {
         this.store
           .pipe(
             select((state: AppState) => state.games.details),
-            takeUntil(this.ngUnsubscribe)
+            takeUntil(this.ngUnsubscribe$)
           )
           .subscribe();
         this.buttonText = 'Unsubscribe';
@@ -57,7 +57,7 @@ export class UnsubscribeFromGameComponent implements OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
+    this.ngUnsubscribe$.next();
+    this.ngUnsubscribe$.complete();
   }
 }

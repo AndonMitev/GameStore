@@ -32,7 +32,7 @@ export class CreateGameComponent implements OnInit, OnDestroy {
     'UpComming'
   ];
   public modes: string[] = ['Single-player', 'Multiplayer'];
-  private ngUnsubscribe: Subject<void> = new Subject<void>();
+  private ngUnsubscribe$: Subject<void> = new Subject<void>();
   private createGameData: CreateGameInputModel;
 
   constructor(
@@ -47,8 +47,8 @@ export class CreateGameComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
+    this.ngUnsubscribe$.next();
+    this.ngUnsubscribe$.complete();
   }
 
   public submitGameForm(): void {
@@ -72,7 +72,7 @@ export class CreateGameComponent implements OnInit, OnDestroy {
 
     this.gameService
       .createGame(this.createGameData)
-      .pipe(takeUntil(this.ngUnsubscribe))
+      .pipe(takeUntil(this.ngUnsubscribe$))
       .subscribe(() => {
         this.toast.success(`${GAME_DATA['title']} successfully created!`);
         this.router.navigate(['/game/all']);

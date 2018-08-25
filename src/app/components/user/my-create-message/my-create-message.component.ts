@@ -29,7 +29,7 @@ export class MyCreateMessageComponent implements OnInit, OnDestroy {
   public messageForm: FormGroup;
   public buttonText: string;
   public isClicked: boolean;
-  private ngUnsubscribe: Subject<void> = new Subject<void>();
+  private ngUnsubscribe$: Subject<void> = new Subject<void>();
   private messageModel: CreateMessageInputModel;
 
   constructor(
@@ -51,8 +51,8 @@ export class MyCreateMessageComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
+    this.ngUnsubscribe$.next();
+    this.ngUnsubscribe$.complete();
   }
 
   public initializeMessageForm(): void {
@@ -89,12 +89,12 @@ export class MyCreateMessageComponent implements OnInit, OnDestroy {
 
     this.getUserId
       .getUserIdByUsername(RECIPIENT)
-      .pipe(takeUntil(this.ngUnsubscribe))
+      .pipe(takeUntil(this.ngUnsubscribe$))
       .subscribe((res: RegisterInputModel) => {
         const RECIPIENT_ID: string = res[0]['_id'];
         
         this.actRoute.paramMap
-          .pipe(takeUntil(this.ngUnsubscribe))
+          .pipe(takeUntil(this.ngUnsubscribe$))
           .subscribe((res: ParamMap) => {
             const FROM_ID = res['params']['id'];
 
@@ -109,7 +109,7 @@ export class MyCreateMessageComponent implements OnInit, OnDestroy {
 
             this.createMessageService
               .createMessage(this.messageModel)
-              .pipe(takeUntil(this.ngUnsubscribe))
+              .pipe(takeUntil(this.ngUnsubscribe$))
               .subscribe(() => {
                 this.buttonText = 'Send'
                 this.isClicked = false;
@@ -118,7 +118,7 @@ export class MyCreateMessageComponent implements OnInit, OnDestroy {
 
                 this.getSentService
                   .getSentMessages(FROM_ID)
-                  .pipe(takeUntil(this.ngUnsubscribe))
+                  .pipe(takeUntil(this.ngUnsubscribe$))
                   .subscribe();
                 //this.getReceivedMsg.getReceivedMessages(FROM_ID).subscribe(); PIECE OF 5#17777
               });

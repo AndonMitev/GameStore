@@ -22,7 +22,7 @@ export class MyRecievedMessagesComponent implements OnInit, OnDestroy {
   public currPage: number;
   public pageSize: number;
   public showSpinner: boolean;
-  private ngUnsubscribe: Subject<void> = new Subject<void>();
+  private ngUnsubscribe$: Subject<void> = new Subject<void>();
 
   constructor(
     public verification: UserVerificationService,
@@ -37,17 +37,17 @@ export class MyRecievedMessagesComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.actRoute.paramMap
-      .pipe(takeUntil(this.ngUnsubscribe))
+      .pipe(takeUntil(this.ngUnsubscribe$))
       .subscribe((res: ParamMap) => {
         const SENDER_ID: string = res['params']['id'];
 
         this.messageService
           .getReceivedMessages(SENDER_ID)
-          .pipe(takeUntil(this.ngUnsubscribe))
+          .pipe(takeUntil(this.ngUnsubscribe$))
           .subscribe(() => {
             this.receivedMessages$ = this.store.pipe(
               select((state: AppState) => state.messages.recievedMessages),
-              takeUntil(this.ngUnsubscribe)
+              takeUntil(this.ngUnsubscribe$)
             );
 
             this.showSpinner = false;
@@ -56,8 +56,8 @@ export class MyRecievedMessagesComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
+    this.ngUnsubscribe$.next();
+    this.ngUnsubscribe$.complete();
   }
 
   public pageChanged(newPage: number): void {

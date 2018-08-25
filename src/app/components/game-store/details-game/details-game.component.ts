@@ -21,7 +21,7 @@ export class DetailsGameComponent implements OnInit, OnDestroy {
   public detailsGame: DetailsGameModel;
   public showSpinner: boolean;
   public userExists: boolean;
-  private ngUnsubscribe: Subject<void> = new Subject<void>();
+  private ngUnsubscribe$: Subject<void> = new Subject<void>();
 
   constructor(
     public verification: UserVerificationService,
@@ -35,18 +35,18 @@ export class DetailsGameComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.actRoute.paramMap
-      .pipe(takeUntil(this.ngUnsubscribe))
+      .pipe(takeUntil(this.ngUnsubscribe$))
       .subscribe((res: ParamMap) => {
         const GAME_ID: string = res['params']['id'];
 
         this.gameService
           .getGameDetails(GAME_ID)
-          .pipe(takeUntil(this.ngUnsubscribe))
+          .pipe(takeUntil(this.ngUnsubscribe$))
           .subscribe(() => {
             this.store
               .pipe(
                 select((state: AppState) => state.games.details),
-                takeUntil(this.ngUnsubscribe)
+                takeUntil(this.ngUnsubscribe$)
               )
               .subscribe((res: DetailsGameModel) => {
                 const SUBSCRIPTIONS: string[] = res['subscriptions'];
@@ -68,8 +68,8 @@ export class DetailsGameComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
+    this.ngUnsubscribe$.next();
+    this.ngUnsubscribe$.complete();
   }
 
   public navigateToEditGame(gameId: string): void {

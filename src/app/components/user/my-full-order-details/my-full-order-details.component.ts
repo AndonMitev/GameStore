@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { Store, select } from '@ngrx/store';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -10,6 +10,9 @@ import { GetCompletedOrderDetailsService } from '../../../core/services/order.se
 import { AppState } from '../../../store/app.state';
 //Model
 import { CompleteOrderModel } from '../../../core/models/view-models/complete-order.model';
+import { UserVerificationService } from '../../../core/services/authentication-services/verification.service';
+import { CancelMyOrderService } from '../../../core/services/order.services/my-order-cancel.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'my-full-order-details',
@@ -23,15 +26,19 @@ export class MyFullOrderDetails implements OnInit, OnDestroy {
   private ngUnsubscribe: Subject<void> = new Subject<void>();
 
   constructor(
+    public verification: UserVerificationService,
     private store: Store<AppState>,
-    private router: ActivatedRoute,
-    private orderService: GetCompletedOrderDetailsService
+    private actRoute: ActivatedRoute,
+    private orderService: GetCompletedOrderDetailsService,
+    private orderServiceDelete: CancelMyOrderService,
+    private router: Router,
+    private toast: ToastrService
   ) {
     this.showSpinner = true;
   }
 
   public ngOnInit(): void {
-    this.router.paramMap
+    this.actRoute.paramMap
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((res: ParamMap) => {
         const ORDER_ID = res['params']['id'];
@@ -53,5 +60,15 @@ export class MyFullOrderDetails implements OnInit, OnDestroy {
   public ngOnDestroy(): void {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
+  }
+
+  public deleteCurrentOrder(): void {
+    this.orderServiceDelete
+      .cancelMyOrder(this.orderNumber)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(() => {
+        this.toast.success('Order successfully deleted.');
+        this.router.navigate(['/game/all']);
+      });
   }
 }

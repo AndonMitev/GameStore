@@ -28,7 +28,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   public registerForm: FormGroup;
   public showSpinner: boolean;
   private userModel: RegisterInputModel;
-  private ngUnsubscribe: Subject<void> = new Subject<void>();
+  private ngUnsubscribe$: Subject<void> = new Subject<void>();
 
   constructor(
     private fb: FormBuilder,
@@ -44,8 +44,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
+    this.ngUnsubscribe$.next();
+    this.ngUnsubscribe$.complete();
   }
 
   public initializeRegisterForm(): void {
@@ -151,7 +151,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
     this.userService
       .registerUser(this.userModel)
-      .pipe(takeUntil(this.ngUnsubscribe))
+      .pipe(takeUntil(this.ngUnsubscribe$))
       .subscribe((data: object) => {
         this.userService.saveData(data);
         this.router.navigate(['/game/all']);

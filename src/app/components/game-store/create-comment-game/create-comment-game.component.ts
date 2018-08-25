@@ -25,7 +25,7 @@ export class CreateCommentGameComponent implements OnInit, OnDestroy {
   public isClicked: boolean;
   public buttonText: string;
   private commentModel: CommentGameInputModel;
-  private ngUnsubscribe: Subject<void> = new Subject<void>();
+  private ngUnsubscribe$: Subject<void> = new Subject<void>();
 
   constructor(
     private fb: FormBuilder,
@@ -43,8 +43,8 @@ export class CreateCommentGameComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
+    this.ngUnsubscribe$.next();
+    this.ngUnsubscribe$.complete();
   }
 
   public initializeCommentForm(): void {
@@ -58,7 +58,7 @@ export class CreateCommentGameComponent implements OnInit, OnDestroy {
     this.buttonText = 'Processing...';
 
     this.actRouter.paramMap
-      .pipe(takeUntil(this.ngUnsubscribe))
+      .pipe(takeUntil(this.ngUnsubscribe$))
       .subscribe((res: ParamMap) => {
         const ID: string = res['params']['id'];
         const DESCRIPTION: string = this.commentForm.value['description'];
@@ -66,7 +66,7 @@ export class CreateCommentGameComponent implements OnInit, OnDestroy {
 
         this.commentModel = new CommentGameInputModel(ID, DESCRIPTION, AUTHOR);
         this.commentService.createComment(this.commentModel)
-          .pipe(takeUntil(this.ngUnsubscribe))
+          .pipe(takeUntil(this.ngUnsubscribe$))
           .subscribe(() => {
             this.toast.success(`Comment successfully created!`);
             this.isClicked = false;

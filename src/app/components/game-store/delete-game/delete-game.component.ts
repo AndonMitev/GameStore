@@ -14,7 +14,7 @@ import { DeleteGameService } from '../../../core/services/game-store-services/de
 export class DeleteGameComponent implements OnDestroy {
   @Input('gameId')
   public gameId: string;
-  private ngUnsubscribe: Subject<void> = new Subject<void>();
+  private ngUnsubscribe$: Subject<void> = new Subject<void>();
 
   constructor(
     private gameService: DeleteGameService,
@@ -24,14 +24,14 @@ export class DeleteGameComponent implements OnDestroy {
   public deleteGame(): void {
     this.gameService
       .deleteGame(this.gameId)
-      .pipe(takeUntil(this.ngUnsubscribe))
+      .pipe(takeUntil(this.ngUnsubscribe$))
       .subscribe(() => {
         this.router.navigate(['/game/all']);
       });
   }
 
   public ngOnDestroy(): void {
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
+    this.ngUnsubscribe$.next();
+    this.ngUnsubscribe$.complete();
   }
 }

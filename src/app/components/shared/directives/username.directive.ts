@@ -19,12 +19,13 @@ export function uniqueUsernameValidator(
     control: AbstractControl
   ): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> => {
     const username: object = { username: control.value };
-    
+    console.log(username);
     return userService
       .checkIfUsernameExists(username)
       .pipe(
         debounceTime(500),
         map(res => {
+          console.log(res);
           return res['usernameExists'] === true ? { uniqueUsername: true } : null;
         })
       );

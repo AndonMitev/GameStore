@@ -23,7 +23,7 @@ export class AllCommentsGameComponent implements OnInit, OnDestroy {
   public currPage: number;
   public pageSize: number;
   public currentUserId: string;
-  private ngUnsubscribe: Subject<void> = new Subject<void>();
+  private ngUnsubscribe$: Subject<void> = new Subject<void>();
 
   constructor(
     public verification: UserVerificationService,
@@ -38,17 +38,17 @@ export class AllCommentsGameComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.actRoute.paramMap
-      .pipe(takeUntil(this.ngUnsubscribe))
+      .pipe(takeUntil(this.ngUnsubscribe$))
       .subscribe((res: ParamMap) => {
         const GAME_ID: string = res['params']['id'];
 
         this.commentService
           .getAllComments(GAME_ID)
-          .pipe(takeUntil(this.ngUnsubscribe))
+          .pipe(takeUntil(this.ngUnsubscribe$))
           .subscribe(() => {
             this.allComments$ = this.store.pipe(
               select((state: AppState) => state.comments.all),
-              takeUntil(this.ngUnsubscribe)
+              takeUntil(this.ngUnsubscribe$)
             );
             this.currentUserId = localStorage.getItem('userId');
             this.showSpinner = false;
@@ -57,8 +57,8 @@ export class AllCommentsGameComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
+    this.ngUnsubscribe$.next();
+    this.ngUnsubscribe$.complete();
   }
 
   public pageChanged(newPage: number): void {

@@ -14,7 +14,7 @@ import { UserLogoutService } from '../../../core/services/authentication-service
 })
 export class LogoutComponent implements OnInit, OnDestroy {
   public showSpinner: boolean;
-  private ngUnsubscribe: Subject<void> = new Subject<void>();
+  private ngUnsubscribe$: Subject<void> = new Subject<void>();
 
   constructor(
     private userService: UserLogoutService,
@@ -27,7 +27,7 @@ export class LogoutComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this.userService
       .logoutUser()
-      .pipe(takeUntil(this.ngUnsubscribe))
+      .pipe(takeUntil(this.ngUnsubscribe$))
       .subscribe(() => {
         localStorage.clear();
         sessionStorage.clear();
@@ -38,7 +38,7 @@ export class LogoutComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
+    this.ngUnsubscribe$.next();
+    this.ngUnsubscribe$.complete();
   }
 }

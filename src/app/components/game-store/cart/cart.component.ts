@@ -24,7 +24,7 @@ export class CartComponent implements OnInit, OnDestroy {
   public pageSize: number;
   public buttonText: string;
   public isClicked: boolean;
-  private ngUnsubscribe: Subject<void> = new Subject<void>();
+  private ngUnsubscribe$: Subject<void> = new Subject<void>();
 
   constructor(
     private cartService: OrderGameService,
@@ -44,14 +44,14 @@ export class CartComponent implements OnInit, OnDestroy {
     this.store
       .pipe(
         select((state: AppState) => (this.order = state.orders.all)),
-        takeUntil(this.ngUnsubscribe)
+        takeUntil(this.ngUnsubscribe$)
       )
       .subscribe();
   }
 
   public ngOnDestroy(): void {
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
+    this.ngUnsubscribe$.next();
+    this.ngUnsubscribe$.complete();
   }
 
   public removeItem(gameId: string): void {
@@ -63,7 +63,7 @@ export class CartComponent implements OnInit, OnDestroy {
     this.store
       .pipe(
         select(state => state.orders.all),
-        takeUntil(this.ngUnsubscribe)
+        takeUntil(this.ngUnsubscribe$)
       )
       .subscribe(res => {
         this.buttonText = 'Processing...';
@@ -75,7 +75,7 @@ export class CartComponent implements OnInit, OnDestroy {
 
         this.completeService
           .finishOrder(FINAL_ORDER)
-          .pipe(takeUntil(this.ngUnsubscribe))
+          .pipe(takeUntil(this.ngUnsubscribe$))
           .subscribe(() => {
             sessionStorage.clear();
 

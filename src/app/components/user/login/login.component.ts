@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   public loginForm: FormGroup;
   public showSpinner: boolean;
   private userModel: LoginInputModel;
-  private ngUnsubscribe: Subject<void> = new Subject<void>();
+  private ngUnsubscribe$: Subject<void> = new Subject<void>();
 
   constructor(
     private fb: FormBuilder,
@@ -40,8 +40,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
+    this.ngUnsubscribe$.next();
+    this.ngUnsubscribe$.complete();
   }
 
   public initializeLoginForm(): void {
@@ -61,7 +61,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.showSpinner = true;
     this.userService
       .loginUser(this.userModel)
-      .pipe(takeUntil(this.ngUnsubscribe))
+      .pipe(takeUntil(this.ngUnsubscribe$))
       .subscribe(
         (res: object) => {
           this.userService.saveData(res);

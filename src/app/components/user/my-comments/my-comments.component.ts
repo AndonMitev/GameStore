@@ -21,7 +21,7 @@ export class MyCommentsComponent implements OnInit, OnDestroy {
   public showSpinner: boolean;
   public currPage: number;
   public pageSize: number;
-  private ngUnsubscribe: Subject<void> = new Subject<void>();
+  private ngUnsubscribe$: Subject<void> = new Subject<void>();
 
   constructor(
     private commentService: GetUserCommentsService,
@@ -35,17 +35,17 @@ export class MyCommentsComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.actRoute.paramMap
-      .pipe(takeUntil(this.ngUnsubscribe))
+      .pipe(takeUntil(this.ngUnsubscribe$))
       .subscribe((res: ParamMap) => {
         const USER_ID: string = res['params']['id'];
 
         this.commentService
           .getUserComments(USER_ID)
-          .pipe(takeUntil(this.ngUnsubscribe))
+          .pipe(takeUntil(this.ngUnsubscribe$))
           .subscribe(() => {
             this.userComments$ = this.store.pipe(
               select((state: AppState) => state.comments.all),
-              takeUntil(this.ngUnsubscribe)
+              takeUntil(this.ngUnsubscribe$)
             );
             this.showSpinner = false;
           });
@@ -53,8 +53,8 @@ export class MyCommentsComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
+    this.ngUnsubscribe$.next();
+    this.ngUnsubscribe$.complete();
   }
 
   public pageChanged(newPage: number): void {

@@ -22,7 +22,7 @@ export class MyOrdersComponent implements OnInit, OnDestroy {
   public showSpinner: boolean;
   public currPage: number;
   public pageSize: number;
-  private ngUnsubscribe: Subject<void> = new Subject<void>();
+  private ngUnsubscribe$: Subject<void> = new Subject<void>();
 
   constructor(
     public verification: UserVerificationService,
@@ -38,18 +38,18 @@ export class MyOrdersComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.actRoute.paramMap
-      .pipe(takeUntil(this.ngUnsubscribe))
+      .pipe(takeUntil(this.ngUnsubscribe$))
       .subscribe((res: ParamMap) => {
         const USER_ID: string = res['params']['id'];
 
         this.orderService
           .getCompletedOrders(USER_ID)
-          .pipe(takeUntil(this.ngUnsubscribe))
+          .pipe(takeUntil(this.ngUnsubscribe$))
           .subscribe(() => {
             this.store
               .pipe(
                 select((state: AppState) => state.orders.completedOrders),
-                takeUntil(this.ngUnsubscribe)
+                takeUntil(this.ngUnsubscribe$)
               )
               .subscribe(res => (this.orders = res));
             this.showSpinner = false;
@@ -58,8 +58,8 @@ export class MyOrdersComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
+    this.ngUnsubscribe$.next();
+    this.ngUnsubscribe$.complete();
   }
 
   public getFullOrderView(orderId: string): void {

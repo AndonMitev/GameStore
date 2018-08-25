@@ -36,7 +36,7 @@ export class EditGameComponent implements OnInit, OnDestroy {
     'UpComming'
   ];
   public modes: string[] = ['Single-player', 'Multiplayer'];
-  private ngUnsubscribe: Subject<void> = new Subject<void>();
+  private ngUnsubscribe$: Subject<void> = new Subject<void>();
   private subscriptions: string[];
   private gameId : string;
 
@@ -52,18 +52,18 @@ export class EditGameComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.actRoute.paramMap
-      .pipe(takeUntil(this.ngUnsubscribe))
+      .pipe(takeUntil(this.ngUnsubscribe$))
       .subscribe((res: ParamMap) => {
         this.gameId = res['params']['id'];
 
         this.gameService
           .getGameDetails(this.gameId)
-          .pipe(takeUntil(this.ngUnsubscribe))
+          .pipe(takeUntil(this.ngUnsubscribe$))
           .subscribe(() =>
             this.store
               .pipe(
                 select(state => state.games.details),
-                takeUntil(this.ngUnsubscribe)
+                takeUntil(this.ngUnsubscribe$)
               )
               .subscribe((gameToEdit: CreateGameInputModel) => {
                 this.subscriptions = gameToEdit.subscriptions;
@@ -77,8 +77,8 @@ export class EditGameComponent implements OnInit, OnDestroy {
 
   
   public ngOnDestroy(): void {
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
+    this.ngUnsubscribe$.next();
+    this.ngUnsubscribe$.complete();
   }
 
   public initializeEditGameForm(): void {
@@ -176,7 +176,7 @@ export class EditGameComponent implements OnInit, OnDestroy {
 
     this.editGameService
       .editGame(this.gameToEdit, this.gameId)
-      .pipe(takeUntil(this.ngUnsubscribe))
+      .pipe(takeUntil(this.ngUnsubscribe$))
       .subscribe(() => {
         this.toast.success(`${GAME_DATA['title']} successfully edited!`);
         this.router.navigate([`/game/details/${this.gameId}`]);
